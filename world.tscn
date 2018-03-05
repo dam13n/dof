@@ -1,32 +1,71 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://hand.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Discard.gd" type="Script" id=2]
-[ext_resource path="res://DiscardCollision.gd" type="Script" id=3]
-[ext_resource path="res://enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://deck.tscn" type="PackedScene" id=4]
+[ext_resource path="res://draw_pile.gd" type="Script" id=5]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	pass
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 15.1893, 20.6487 )
 
-[node name="world" type="Node" index="0"]
+[sub_resource type="GDScript" id=3]
 
-[node name="GridContainer" parent="." index="0" instance=ExtResource( 1 )]
+script/source = "extends CollisionShape2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	pass
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
+"
+
+[sub_resource type="RectangleShape2D" id=4]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10.4167, 10.3077 )
+
+[node name="world" type="Node"]
+
+script = SubResource( 1 )
+
+[node name="Hand" parent="." index="0" instance=ExtResource( 1 )]
 
 margin_left = 168.0
 margin_top = 451.0
 margin_right = 802.0
 margin_bottom = 595.0
 
-[node name="GridContainer2" parent="." index="1" instance=ExtResource( 1 )]
-
-margin_left = 168.0
-margin_top = 451.0
-margin_right = 802.0
-margin_bottom = 595.0
-
-[node name="Discard" type="Area2D" parent="." index="2"]
+[node name="Discard" type="Area2D" parent="." index="1"]
 
 position = Vector2( 890.645, 454.163 )
 input_pickable = true
@@ -38,13 +77,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 2 )
 
-[node name="DiscardCollision" type="CollisionShape2D" parent="Discard" index="0"]
-
-shape = SubResource( 1 )
-script = ExtResource( 3 )
-_sections_unfolded = [ "Visibility" ]
-
-[node name="ColorRect" type="ColorRect" parent="Discard" index="1"]
+[node name="ColorRect" type="ColorRect" parent="Discard" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -62,16 +95,22 @@ size_flags_vertical = 1
 color = Color( 1, 1, 1, 1 )
 _sections_unfolded = [ "Mouse" ]
 
-[node name="Label" type="Label" parent="Discard/ColorRect" index="0"]
+[node name="DiscardCollision" type="CollisionShape2D" parent="Discard" index="1"]
+
+shape = SubResource( 2 )
+script = SubResource( 3 )
+_sections_unfolded = [ "Visibility" ]
+
+[node name="Label" type="Label" parent="Discard" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -11.0
-margin_top = 47.0
-margin_right = 46.0
-margin_bottom = 61.0
+margin_left = -26.0
+margin_top = 26.0
+margin_right = 31.0
+margin_bottom = 40.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
@@ -82,8 +121,71 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Enemy" parent="." index="3" instance=ExtResource( 4 )]
+[node name="Enemy" parent="." index="2" instance=ExtResource( 3 )]
 
 position = Vector2( 823.172, 190.288 )
+
+[node name="Deck" parent="." index="3" instance=ExtResource( 4 )]
+
+[node name="DrawPile" type="Area2D" parent="." index="4"]
+
+position = Vector2( 120.828, 412.262 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 5 )
+_sections_unfolded = [ "Pickable" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="DrawPile" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -31.0
+margin_top = -30.0
+margin_right = 32.0
+margin_bottom = 27.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 1, 1, 1, 1 )
+_sections_unfolded = [ "Mouse" ]
+
+[node name="Label" type="Label" parent="DrawPile" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -18.0
+margin_top = 39.0
+margin_right = 22.0
+margin_bottom = 53.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "draw"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="DrawCollision" type="CollisionShape2D" parent="DrawPile" index="2"]
+
+position = Vector2( 0.389244, -2.3735 )
+scale = Vector2( 3.05811, 2.7608 )
+shape = SubResource( 4 )
+_sections_unfolded = [ "Visibility" ]
 
 

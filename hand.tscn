@@ -3,10 +3,8 @@
 [ext_resource path="res://hand.gd" type="Script" id=1]
 [ext_resource path="res://card.tscn" type="PackedScene" id=2]
 
-[node name="Hand" type="HBoxContainer"]
+[node name="Hand" type="HBoxContainer" index="0"]
 
-modulate = Color( 0.679688, 0.270413, 0.270413, 0.38 )
-self_modulate = Color( 0.554688, 0.347425, 0.347425, 0.44 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -24,21 +22,19 @@ alignment = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Grow Direction", "Mouse", "Rect", "Size Flags", "Visibility" ]
 
-[node name="Card" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Card2" parent="." index="0" instance=ExtResource( 2 )]
 
-modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 156.654, 89.4701 )
-
-[node name="Card2" parent="." index="1" instance=ExtResource( 2 )]
-
-modulate = Color( 0.0544739, 0, 0.996094, 1 )
-self_modulate = Color( 0.220913, 0.309809, 0.613281, 1 )
+self_modulate = Color( 1, 1, 1, 1 )
+show_behind_parent = true
 position = Vector2( 317.062, 63.1515 )
 
-[node name="Card3" parent="." index="2" instance=ExtResource( 2 )]
+[node name="Card3" parent="." index="1" instance=ExtResource( 2 )]
 
-modulate = Color( 0.157006, 0.65625, 0.235013, 1 )
-self_modulate = Color( 0.200292, 0.632812, 0.151399, 1 )
+self_modulate = Color( 1, 1, 1, 1 )
 position = Vector2( 37.7701, 65.6036 )
+
+[node name="Card" parent="." index="2" instance=ExtResource( 2 )]
+
+position = Vector2( 195.879, 59.8752 )
 
 

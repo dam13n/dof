@@ -21,7 +21,7 @@ func organize():
 	for i in range(0, active_hand.size()):
 		var child = active_hand[i]
 		child.reset_position()
-		print('child count:', active_hand.size())
+#		print('child count:', active_hand.size())
 		
 func remove_card(card):
 	print('removing card')

@@ -9,13 +9,24 @@ var destination = Vector2()
 var move_to_destination = false
 var speed = 10
 var active = true
+var card_name = 'blank'
+var cost = 1
+
 
 
 func _ready():
+	randomize()
 	#    set_fixed_process(true)
 	connect("mouse_entered", self, "_mouse_over", [true])
 	connect("mouse_exited",  self, "_mouse_over", [false])
 #	print(get_viewport().get_size())
+	$CardName.text = card_name
+	$Cost.text = str(cost)
+	$Damage.text = str(damage)
+	var redness = rand_range(0,1)
+	var blueness = rand_range(0,1)
+	var greenness = rand_range(0,1)
+	$Background.color = Color(redness, blueness, greenness, 1)
 
 
 func _mouse_over(over):

@@ -1,16 +1,43 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://card.gd" type="Script" id=1]
-[ext_resource path="res://CollisionShape2D.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 26.0067, 26.0836 )
+extents = Vector2( 40.0082, 54.8255 )
 
-[node name="Card" type="KinematicBody2D"]
+[sub_resource type="StyleBoxFlat" id=2]
 
-self_modulate = Color( 0.613281, 0.220913, 0.220913, 1 )
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0.6, 0.6, 0.6, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+
+[node name="Card" type="KinematicBody2D" index="0"]
+
+self_modulate = Color( 1, 1, 1, 0 )
 position = Vector2( -3.07553, -0.504135 )
 z_index = 1
 input_pickable = true
@@ -18,49 +45,121 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility", "Z Index" ]
-__meta__ = {
-"_edit_group_": true
-}
+_sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility", "Z Index", "collision" ]
 
-[node name="ColorRect" type="ColorRect" parent="." index="0"]
+[node name="Background" type="ColorRect" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -36.0
+margin_top = -57.0
+margin_right = 43.0
+margin_bottom = 52.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0, 0, 0, 1 )
+_sections_unfolded = [ "Anchor", "Focus", "Mouse", "Rect", "Visibility" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+
+visible = false
+position = Vector2( 3.05154, -2.12785 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Material", "Transform", "Visibility" ]
+
+[node name="CardName" type="Label" parent="." index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -17.0
+margin_top = -27.0
+margin_right = 27.0
+margin_bottom = -13.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "default"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Visibility", "custom_colors" ]
+
+[node name="DamageLabel" type="Label" parent="." index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = -24.0
-margin_top = -26.0
-margin_right = 35.0
-margin_bottom = 27.0
+margin_right = 36.0
+margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
-size_flags_vertical = 1
-color = Color( 1, 1, 1, 1 )
-_sections_unfolded = [ "Anchor", "Focus", "Mouse", "Rect", "Visibility" ]
+size_flags_vertical = 4
+text = "damage: "
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+[node name="Cost" type="Label" parent="." index="4"]
 
-modulate = Color( 0.914062, 0.0147429, 0.0147429, 1 )
-position = Vector2( 3.26602, 0.445938 )
-shape = SubResource( 1 )
-script = ExtResource( 2 )
-_sections_unfolded = [ "Material", "Transform", "Visibility" ]
-
-[node name="Control" type="Control" parent="." index="2"]
-
+self_modulate = Color( 0, 1, 0.0625, 1 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = -37.0
+margin_top = -57.0
+margin_right = -9.0
+margin_bottom = -30.0
 rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
+mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
-size_flags_vertical = 1
+size_flags_vertical = 4
+custom_styles/normal = SubResource( 2 )
+text = "0"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Visibility", "custom_styles" ]
+
+[node name="Damage" type="Label" parent="." index="5"]
+
+self_modulate = Color( 0, 0, 0, 1 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -16.0
+margin_top = 23.0
+margin_right = 24.0
+margin_bottom = 37.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "1"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags", "Visibility" ]
 
 

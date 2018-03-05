@@ -11,12 +11,12 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	_update_health()
-	$EnemyShape/HP/HealthBar.max_value = starting_health
-	$EnemyShape/HP/HealthBar.min_value = 0	
+	$EnemyShape/HealthBar.max_value = starting_health
+	$EnemyShape/HealthBar.min_value = 0	
 
 func _update_health():
 	$EnemyShape/HP.text = "hp: " + str(health)
-	$EnemyShape/HP/HealthBar.value = health
+	$EnemyShape/HealthBar.value = health
 	
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
