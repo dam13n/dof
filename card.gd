@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var is_hovering = false
+var is_scaled_up = false
 var pos = Vector2()
 var grabbed = false
 var local_mouse_pos = Vector2()
@@ -20,20 +21,27 @@ func _ready():
 	connect("mouse_entered", self, "_mouse_over", [true])
 	connect("mouse_exited",  self, "_mouse_over", [false])
 #	print(get_viewport().get_size())
-	$CardName.text = card_name
-	$Cost.text = str(cost)
-	$Damage.text = str(damage)
+	$Display/CardName.text = card_name
+	$Display/Cost.text = str(cost)
+	$Display/Damage.text = str(damage)
 	var redness = rand_range(0,1)
 	var blueness = rand_range(0,1)
 	var greenness = rand_range(0,1)
-	$Background.color = Color(redness, blueness, greenness, 1)
+	$Display/Background.color = Color(redness, greenness, blueness, 1)
 
 
 func _mouse_over(over):
 	if over == true:
 		is_hovering = true
+		$Display.apply_scale(Vector2(1.5,1.5))
+		is_scaled_up = true
+		$Display.z_index = 10
 	else:
 		is_hovering = false
+		if is_scaled_up == true:
+			$Display.apply_scale(Vector2(0.66666,0.66666))
+			is_scaled_up = false
+			$Display.z_index = 1
 
 
 func _input(event):
@@ -53,6 +61,10 @@ func _input(event):
 		_move_by_mouse()
 
 func reset_position():
+	if is_scaled_up == true:
+		$Display.apply_scale(Vector2(0.66666,0.66666))
+		is_scaled_up = false
+		$Display.z_index = 1
 	move_to_destination = true
 
 func _physics_process(delta):

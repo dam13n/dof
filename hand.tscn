@@ -1,9 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://hand.gd" type="Script" id=1]
-[ext_resource path="res://card.tscn" type="PackedScene" id=2]
 
-[node name="Hand" type="HBoxContainer" index="0"]
+[node name="Hand" type="HBoxContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -21,20 +20,5 @@ size_flags_vertical = 1
 alignment = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Grow Direction", "Mouse", "Rect", "Size Flags", "Visibility" ]
-
-[node name="Card2" parent="." index="0" instance=ExtResource( 2 )]
-
-self_modulate = Color( 1, 1, 1, 1 )
-show_behind_parent = true
-position = Vector2( 317.062, 63.1515 )
-
-[node name="Card3" parent="." index="1" instance=ExtResource( 2 )]
-
-self_modulate = Color( 1, 1, 1, 1 )
-position = Vector2( 37.7701, 65.6036 )
-
-[node name="Card" parent="." index="2" instance=ExtResource( 2 )]
-
-position = Vector2( 195.879, 59.8752 )
 
 
