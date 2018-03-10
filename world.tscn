@@ -1,36 +1,18 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://hand.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Discard.gd" type="Script" id=2]
-[ext_resource path="res://enemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://deck.tscn" type="PackedScene" id=4]
-[ext_resource path="res://draw_pile.gd" type="Script" id=5]
+[ext_resource path="res://discard.gd" type="Script" id=2]
+[ext_resource path="res://deck.tscn" type="PackedScene" id=3]
+[ext_resource path="res://draw_pile.gd" type="Script" id=4]
+[ext_resource path="res://player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://mob.tscn" type="PackedScene" id=6]
 
-[sub_resource type="GDScript" id=1]
-
-script/source = "extends Node
-
-# class member variables go here, for example:
-# var a = 2
-# var b = \"textvar\"
-
-func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
-"
-
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 15.1893, 20.6487 )
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=2]
 
 script/source = "extends CollisionShape2D
 
@@ -49,14 +31,12 @@ func _ready():
 #	pass
 "
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10.4167, 10.3077 )
 
 [node name="world" type="Node"]
-
-script = SubResource( 1 )
 
 [node name="Hand" parent="." index="0" instance=ExtResource( 1 )]
 
@@ -67,7 +47,7 @@ margin_bottom = 595.0
 
 [node name="Discard" type="Area2D" parent="." index="1"]
 
-position = Vector2( 890.645, 454.163 )
+position = Vector2( 971.698, 541.97 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -76,6 +56,9 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="ColorRect" type="ColorRect" parent="Discard" index="0"]
 
@@ -97,8 +80,8 @@ _sections_unfolded = [ "Mouse" ]
 
 [node name="DiscardCollision" type="CollisionShape2D" parent="Discard" index="1"]
 
-shape = SubResource( 2 )
-script = SubResource( 3 )
+shape = SubResource( 1 )
+script = SubResource( 2 )
 _sections_unfolded = [ "Visibility" ]
 
 [node name="Label" type="Label" parent="Discard" index="2"]
@@ -121,15 +104,11 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Enemy" parent="." index="2" instance=ExtResource( 3 )]
+[node name="Deck" parent="." index="2" instance=ExtResource( 3 )]
 
-position = Vector2( 823.172, 190.288 )
+[node name="DrawPile" type="Area2D" parent="." index="3"]
 
-[node name="Deck" parent="." index="3" instance=ExtResource( 4 )]
-
-[node name="DrawPile" type="Area2D" parent="." index="4"]
-
-position = Vector2( 120.828, 412.262 )
+position = Vector2( 57.7871, 540.595 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -137,7 +116,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 _sections_unfolded = [ "Pickable" ]
 __meta__ = {
 "_edit_group_": true
@@ -185,7 +164,19 @@ max_lines_visible = -1
 
 position = Vector2( 0.389244, -2.3735 )
 scale = Vector2( 3.05811, 2.7608 )
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 _sections_unfolded = [ "Visibility" ]
+
+[node name="Player" parent="." index="4" instance=ExtResource( 5 )]
+
+position = Vector2( 201.266, 209.32 )
+_sections_unfolded = [ "Pickable" ]
+
+[node name="HBoxContainer" parent="." index="5" instance=ExtResource( 6 )]
+
+margin_left = 484.0
+margin_top = 199.0
+margin_right = 949.0
+margin_bottom = 269.0
 
 

@@ -1,8 +1,5 @@
 extends Area2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
 var starting_health = 20
 var health = 20
 var overlapping_bodies = []

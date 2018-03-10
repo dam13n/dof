@@ -20,6 +20,7 @@ func make_cards():
 #		card.visible = false
 #		card.input_pickable = false
 		card.card_name = card_data['name']
+		card.effect = card_data['effect']
 		card.damage = card_data['damage']
 		card.cost = card_data['cost']
 		hand.add_child(card)
@@ -31,27 +32,32 @@ func make_cards():
 func get_deck_data():
 	return [
 		{ 
-			"name" : "attack",
+			"name" : "slash",
+			"effect" : "attack",
 			"cost" : 2,
 			"damage" : 10
 		},
 		{ 
-			"name" : "attack",
+			"name" : "slash",
+			"effect" : "attack",
 			"cost" : 1,
 			"damage" : 5
 		},
 		{ 
-			"name" : "attack",
+			"name" : "slash",
+			"effect" : "attack",
 			"cost" : 1,
 			"damage" : 3
 		},
 		{ 
-			"name" : "attack",
+			"name" : "slash",
+			"effect" : "attack",
 			"cost" : 3,
 			"damage" : 15
 		},
 		{ 
-			"name" : "attack",
+			"name" : "slash",
+			"effect" : "attack",
 			"cost" : 2,
 			"damage" : 11
 		}

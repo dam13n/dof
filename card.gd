@@ -12,7 +12,9 @@ var speed = 10
 var active = true
 var card_name = 'blank'
 var cost = 1
-
+var effect
+var scale_ratio = 1.25
+var inverse_scale_ratio = pow(scale_ratio, -1)
 
 
 func _ready():
@@ -21,28 +23,34 @@ func _ready():
 	connect("mouse_entered", self, "_mouse_over", [true])
 	connect("mouse_exited",  self, "_mouse_over", [false])
 #	print(get_viewport().get_size())
-	$Display/CardName.text = card_name
-	$Display/Cost.text = str(cost)
-	$Display/Damage.text = str(damage)
+	$Container/Display/CardName.text = card_name
+	$Container/Display/Cost.text = str(cost)
+	$Container/Display/Damage.text = str(damage)
 	var redness = rand_range(0,1)
 	var blueness = rand_range(0,1)
 	var greenness = rand_range(0,1)
-	$Display/Background.color = Color(redness, greenness, blueness, 1)
+	$Container/Display/Background.color = Color(redness, greenness, blueness, 1)
 
 
 func _mouse_over(over):
 	if over == true:
 		is_hovering = true
-		$Display.apply_scale(Vector2(1.5,1.5))
-		is_scaled_up = true
-		$Display.z_index = 10
+		_scale_up()
 	else:
 		is_hovering = false
 		if is_scaled_up == true:
-			$Display.apply_scale(Vector2(0.66666,0.66666))
-			is_scaled_up = false
-			$Display.z_index = 1
+			_scale_down()
 
+			
+func _scale_up():
+	$Container/Display.apply_scale(Vector2(scale_ratio,scale_ratio))
+	is_scaled_up = true
+	$Container/Display.z_index = 10
+	
+func _scale_down():
+	$Container/Display.apply_scale(Vector2(inverse_scale_ratio,inverse_scale_ratio))
+	is_scaled_up = false
+	$Container/Display.z_index = 1
 
 func _input(event):
 #	if Input.is_mouse_button_pressed(BUTTON_LEFT):
@@ -62,9 +70,7 @@ func _input(event):
 
 func reset_position():
 	if is_scaled_up == true:
-		$Display.apply_scale(Vector2(0.66666,0.66666))
-		is_scaled_up = false
-		$Display.z_index = 1
+		_scale_down()
 	move_to_destination = true
 
 func _physics_process(delta):
