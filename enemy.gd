@@ -3,6 +3,7 @@ extends Area2D
 var starting_health = 20
 var health = 20
 var overlapping_bodies = []
+var enemy_name = 'baddie'
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -34,4 +35,4 @@ func _physics_process(delta):
 			
 func _check_alive():
 	if health <= 0:
-		queue_free()
+		get_parent().queue_free()

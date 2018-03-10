@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://hand.tscn" type="PackedScene" id=1]
 [ext_resource path="res://discard.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://draw_pile.gd" type="Script" id=4]
 [ext_resource path="res://player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://mob.tscn" type="PackedScene" id=6]
+[ext_resource path="res://SpawnButton.gd" type="Script" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -172,11 +173,36 @@ _sections_unfolded = [ "Visibility" ]
 position = Vector2( 201.266, 209.32 )
 _sections_unfolded = [ "Pickable" ]
 
-[node name="HBoxContainer" parent="." index="5" instance=ExtResource( 6 )]
+[node name="Mob" parent="." index="5" instance=ExtResource( 6 )]
 
 margin_left = 484.0
 margin_top = 199.0
 margin_right = 949.0
 margin_bottom = 269.0
+
+[node name="SpawnButton" type="Button" parent="." index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 730.0
+margin_top = 32.0
+margin_right = 830.0
+margin_bottom = 52.0
+rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "spawn enemy"
+flat = false
+align = 1
+script = ExtResource( 7 )
 
 
