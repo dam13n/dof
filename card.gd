@@ -15,6 +15,7 @@ var cost = 1
 var effect
 var scale_ratio = 1.25
 var inverse_scale_ratio = pow(scale_ratio, -1)
+var player
 
 
 func _ready():
@@ -30,6 +31,7 @@ func _ready():
 	var blueness = rand_range(0,1)
 	var greenness = rand_range(0,1)
 	$Container/Display/Background.color = Color(redness, greenness, blueness, 1)
+	player = get_parent().get_parent().get_node('Player')
 
 
 func _mouse_over(over):
@@ -84,8 +86,14 @@ func _physics_process(delta):
 		if direction.length() < 0.1:
 			move_to_destination = false
 			
+func can_be_played():
+	return player.energy >= cost
+			
 func remove():
 	if active == true:
+		player.energy -= cost
+		player.update_energy()
+		
 		active = false
 		get_parent().remove_card(self)
 		queue_free()

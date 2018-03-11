@@ -11,6 +11,11 @@ func _ready():
 	set_card_destinations()
 	organize()
 	
+func discard_cards():
+	for card in active_hand:		
+		card.queue_free()
+	active_hand = []
+	
 func set_card_destinations():
 	for i in range(0, active_hand.size()):
 		var child = active_hand[i]
@@ -24,7 +29,7 @@ func organize():
 #		print('child count:', active_hand.size())
 		
 func remove_card(card):
-	print('removing card')
+#	print('removing card')
 	var card_index = active_hand.find(card)
 	active_hand.remove(card_index)
 	set_card_destinations()

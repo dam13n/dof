@@ -4,6 +4,7 @@ var starting_health = 20
 var health = 20
 var overlapping_bodies = []
 var enemy_name = 'baddie'
+var damage = 10
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -27,7 +28,7 @@ func _physics_process(delta):
 		print("found object")
 		var ovlb = overlapping_bodies[0]
 
-		if ovlb.grabbed == false && ovlb.active == true:
+		if ovlb.grabbed == false && ovlb.active == true && ovlb.can_be_played():
 			health -= ovlb.damage
 			_update_health()
 			ovlb.remove()
