@@ -5,17 +5,21 @@ var is_scaled_up = false
 var pos = Vector2()
 var grabbed = false
 var local_mouse_pos = Vector2()
-var damage = 5
+
 var destination = Vector2()
 var move_to_destination = false
 var speed = 10
 var active = true
-var card_name = 'blank'
-var cost = 1
-var effect
+
 var scale_ratio = 1.25
 var inverse_scale_ratio = pow(scale_ratio, -1)
 var player
+
+var card_name = 'blank'
+
+var damage = 5
+var cost = 1
+var effect
 
 
 func _ready():
@@ -24,15 +28,18 @@ func _ready():
 	connect("mouse_entered", self, "_mouse_over", [true])
 	connect("mouse_exited",  self, "_mouse_over", [false])
 #	print(get_viewport().get_size())
-	$Container/Display/CardName.text = card_name
-	$Container/Display/Cost.text = str(cost)
-	$Container/Display/Damage.text = str(damage)
+
 	var redness = rand_range(0,1)
 	var blueness = rand_range(0,1)
 	var greenness = rand_range(0,1)
 	$Container/Display/Background.color = Color(redness, greenness, blueness, 1)
 	player = get_parent().get_parent().get_node('Player')
+	update_display()
 
+func update_display():
+	$Container/Display/CardName.text = card_name
+	$Container/Display/Cost.text = str(cost)
+	$Container/Display/Damage.text = str(damage)
 
 func _mouse_over(over):
 	if over == true:

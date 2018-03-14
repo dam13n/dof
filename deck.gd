@@ -2,6 +2,7 @@ extends Node
 
 var deck_data
 var hand
+var deck_owner
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -27,6 +28,10 @@ func make_cards():
 		hand.set_card_destinations()
 		hand.organize()
 		
+func get_deck_from_file():
+	var deck_file = File.new()
+	if not deck_file.file_exists("user://deck.csv"):
+        return # Error!  We don't have a save to load.
 	
 func get_deck_data():
 	return [
@@ -37,25 +42,25 @@ func get_deck_data():
 			"damage" : 10
 		},
 		{ 
-			"name" : "slash",
+			"name" : "bite",
 			"effect" : "attack",
 			"cost" : 1,
 			"damage" : 5
 		},
 		{ 
-			"name" : "slash",
+			"name" : "poke",
 			"effect" : "attack",
 			"cost" : 1,
 			"damage" : 3
 		},
 		{ 
-			"name" : "slash",
+			"name" : "defenestrate",
 			"effect" : "attack",
 			"cost" : 3,
 			"damage" : 15
 		},
 		{ 
-			"name" : "slash",
+			"name" : "eviscerate",
 			"effect" : "attack",
 			"cost" : 2,
 			"damage" : 11

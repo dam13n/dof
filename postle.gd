@@ -2,7 +2,6 @@ extends Area2D
 
 var starting_health = 60
 var health = 60
-var energy = 4
 var front_row = true
 
 var is_hovering = false
@@ -13,10 +12,8 @@ func _ready():
 	update_health()
 	$PlayerShape/HealthBar.max_value = starting_health
 	$PlayerShape/HealthBar.min_value = 0
-	update_energy()
 	
 func reset_energy():
-	energy = 4
 	update_energy()
 	
 func update_health():
@@ -26,10 +23,7 @@ func update_health():
 		you_dead()
 
 func you_dead():
-	print('dead')
-	
-func update_energy():
-	$PlayerShape/Energy.text = "Energy: " + str(energy)
+	queue_free()
 	
 func _check_alive():
 	if health <= 0:

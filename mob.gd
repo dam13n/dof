@@ -15,7 +15,7 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
-func spawn():
+func spawn(type):
 	print('spawn enemy')
 	enemy_1_count += 1
 	var mc = MarginContainer.new()

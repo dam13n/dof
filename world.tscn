@@ -1,14 +1,16 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://world.gd" type="Script" id=1]
-[ext_resource path="res://hand.tscn" type="PackedScene" id=2]
-[ext_resource path="res://discard.gd" type="Script" id=3]
-[ext_resource path="res://deck.tscn" type="PackedScene" id=4]
-[ext_resource path="res://draw_pile.gd" type="Script" id=5]
-[ext_resource path="res://player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://mob.tscn" type="PackedScene" id=7]
-[ext_resource path="res://SpawnButton.gd" type="Script" id=8]
-[ext_resource path="res://EndTurn.gd" type="Script" id=9]
+[ext_resource path="res://images/backgrounds/sunsetintheswamp.png" type="Texture" id=2]
+[ext_resource path="res://hand.tscn" type="PackedScene" id=3]
+[ext_resource path="res://discard.gd" type="Script" id=4]
+[ext_resource path="res://deck.tscn" type="PackedScene" id=5]
+[ext_resource path="res://draw_pile.gd" type="Script" id=6]
+[ext_resource path="res://player.tscn" type="PackedScene" id=7]
+[ext_resource path="res://mob.tscn" type="PackedScene" id=8]
+[ext_resource path="res://SpawnButton.gd" type="Script" id=9]
+[ext_resource path="res://EndTurn.gd" type="Script" id=10]
+[ext_resource path="res://postle.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -43,14 +45,21 @@ extents = Vector2( 10.4167, 10.3077 )
 
 script = ExtResource( 1 )
 
-[node name="Hand" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+position = Vector2( 495.384, 347.388 )
+scale = Vector2( 1.1, 1.1 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Hand" parent="." index="1" instance=ExtResource( 3 )]
 
 margin_left = 168.0
 margin_top = 451.0
 margin_right = 802.0
 margin_bottom = 595.0
 
-[node name="Discard" type="Area2D" parent="." index="1"]
+[node name="Discard" type="Area2D" parent="." index="2"]
 
 position = Vector2( 971.698, 541.97 )
 input_pickable = true
@@ -60,7 +69,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -109,9 +118,9 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Deck" parent="." index="2" instance=ExtResource( 4 )]
+[node name="Deck" parent="." index="3" instance=ExtResource( 5 )]
 
-[node name="DrawPile" type="Area2D" parent="." index="3"]
+[node name="DrawPile" type="Area2D" parent="." index="4"]
 
 position = Vector2( 57.7871, 540.595 )
 input_pickable = true
@@ -121,7 +130,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 _sections_unfolded = [ "Pickable" ]
 __meta__ = {
 "_edit_group_": true
@@ -172,19 +181,19 @@ scale = Vector2( 3.05811, 2.7608 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="Player" parent="." index="4" instance=ExtResource( 6 )]
+[node name="Player" parent="." index="5" instance=ExtResource( 7 )]
 
-position = Vector2( 201.266, 209.32 )
+position = Vector2( 127.139, 212.808 )
 _sections_unfolded = [ "Pickable" ]
 
-[node name="Mob" parent="." index="5" instance=ExtResource( 7 )]
+[node name="Mob" parent="." index="6" instance=ExtResource( 8 )]
 
-margin_left = 484.0
-margin_top = 199.0
-margin_right = 949.0
-margin_bottom = 269.0
+margin_left = 485.0
+margin_top = 252.0
+margin_right = 1011.0
+margin_bottom = 322.0
 
-[node name="SpawnButton" type="Button" parent="." index="6"]
+[node name="SpawnButton1" type="Button" parent="." index="7"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -192,7 +201,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 730.0
 margin_top = 32.0
-margin_right = 830.0
+margin_right = 804.0
 margin_bottom = 52.0
 rect_pivot_offset = Vector2( 0, 0 )
 focus_mode = 2
@@ -204,12 +213,12 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "spawn enemy"
+text = "Enemy 1"
 flat = false
 align = 1
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 
-[node name="EndTurn" type="Button" parent="." index="7"]
+[node name="EndTurn" type="Button" parent="." index="8"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -232,6 +241,10 @@ group = null
 text = "End Turn"
 flat = false
 align = 1
-script = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Postle" parent="." index="9" instance=ExtResource( 11 )]
+
+position = Vector2( 326.328, 210.351 )
 
 
