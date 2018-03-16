@@ -3,7 +3,7 @@ extends Area2D
 var starting_health = 60
 var health = 60
 var energy = 4
-var front_row = true
+var front_row = false
 
 var is_hovering = false
 

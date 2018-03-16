@@ -1,5 +1,9 @@
 extends KinematicBody2D
 
+#############################################
+### card physics and display
+#############################################
+
 var is_hovering = false
 var is_scaled_up = false
 var pos = Vector2()
@@ -9,18 +13,26 @@ var local_mouse_pos = Vector2()
 var destination = Vector2()
 var move_to_destination = false
 var speed = 10
-var active = true
 
 var scale_ratio = 1.25
 var inverse_scale_ratio = pow(scale_ratio, -1)
 var player
+
+#############################################
+### card mechanic related stuff
+#############################################
+
+# active means it's available in the game
+var active = true
 
 var card_name = 'blank'
 
 var damage = 5
 var cost = 1
 var effect
+var actions = []
 
+#############################################
 
 func _ready():
 	randomize()
@@ -34,12 +46,48 @@ func _ready():
 	var greenness = rand_range(0,1)
 	$Container/Display/Background.color = Color(redness, greenness, blueness, 1)
 	player = get_parent().get_parent().get_node('Player')
+	
 	update_display()
+	
+func load_action(action_data):
+	var action_scene = load("res://cards/Action.tscn")
+	var action = action_scene.instance()
+	
+	action.action_name = action_data['action_name']
+	action.description = action_data['description']
+	
+	action.priority = action_data['priority']
+	action.trigger = action_data['trigger']
+	action.multiplier = action_data['multiplier']
+	action.turn = action_data['turn']
+	action.duration = action_data['duration']
+	action.enemy_targeting = action_data['enemy_targeting']
+#	action.enemy_targeting = {
+#		'attribute' : 'health',
+#		'target' : 'single',
+#		'value_min' : 10,
+#		'value_max' : 20,
+#		'status' : null
+#	}	
+	
+	actions.append(action)
+	
+func get_playable_actions(target):
+	var playable_actions = []
+	for action in actions:
+		if target.type == 'enemy' && action.enemy_targeting != null:
+			playable_actions.append(action)
+	if not player.energy >= cost:
+		playable_actions = []
+	return playable_actions
 
 func update_display():
 	$Container/Display/CardName.text = card_name
 	$Container/Display/Cost.text = str(cost)
-	$Container/Display/Damage.text = str(damage)
+	var description = ''
+	for action in actions:
+		description += action.description
+	$Container/Display/Description.text = description
 
 func _mouse_over(over):
 	if over == true:
@@ -92,9 +140,6 @@ func _physics_process(delta):
 		position += motion
 		if direction.length() < 0.1:
 			move_to_destination = false
-			
-func can_be_played():
-	return player.energy >= cost
 			
 func remove():
 	if active == true:
