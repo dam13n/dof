@@ -23,6 +23,7 @@ func make_cards():
 		card.effect = card_data['effect']
 #		card.damage = card_data['damage']
 		card.cost = card_data['cost']
+		card.description = card_data['description']
 		for action_data in card_data['actions']:
 			card.load_action(action_data)
 		card.update_display()
@@ -58,6 +59,48 @@ func get_deck_data():
 						'target' : 'single',
 						'value_min' : 10,
 						'value_max' : 20,
+						'status' : null
+					}	
+					
+				}
+			]
+		},
+		{ 
+			"name" : "double punch",
+			"effect" : "attack",
+			"cost" : 1,
+			"description" : 'Does 5 damage twice.',
+			"actions" : [
+				{
+					'action_name' : 'attack',
+					'description' : '',
+					'priority' : 'fast',
+					'trigger' : null,
+					'multiplier' : null,
+					'turn' : 0,
+					'duration' : 1,
+					'enemy_targeting' : {
+						'attribute' : 'health',
+						'target' : 'single',
+						'value_min' : 5,
+						'value_max' : 5,
+						'status' : null
+					}	
+					
+				},
+				{
+					'action_name' : 'attack',
+					'description' : '',
+					'priority' : 'fast',
+					'trigger' : null,
+					'multiplier' : null,
+					'turn' : 0,
+					'duration' : 1,
+					'enemy_targeting' : {
+						'attribute' : 'health',
+						'target' : 'single',
+						'value_min' : 5,
+						'value_max' : 5,
 						'status' : null
 					}	
 					

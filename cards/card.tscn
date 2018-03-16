@@ -44,7 +44,7 @@ anti_aliasing_size = 1
 custom_solver_bias = 0.0
 extents = Vector2( 61.7495, 84.4394 )
 
-[node name="Card" type="KinematicBody2D" index="0"]
+[node name="Card" type="KinematicBody2D"]
 
 self_modulate = Color( 1, 1, 1, 0 )
 position = Vector2( -3.07553, -0.504135 )

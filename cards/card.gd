@@ -26,6 +26,7 @@ var player
 var active = true
 
 var card_name = 'blank'
+var description = ''
 
 var damage = 5
 var cost = 1
@@ -84,7 +85,6 @@ func get_playable_actions(target):
 func update_display():
 	$Container/Display/CardName.text = card_name
 	$Container/Display/Cost.text = str(cost)
-	var description = ''
 	for action in actions:
 		description += action.description
 	$Container/Display/Description.text = description
