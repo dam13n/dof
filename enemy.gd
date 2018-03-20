@@ -24,7 +24,7 @@ func _process(delta):
 		print("found object")
 		var ovlb = overlapping_bodies[0]
 
-		if ovlb.grabbed == false && ovlb.active == true:
+		if ovlb.grabbed == false && ovlb.active == true && ovlb.target == type:
 			var actions = ovlb.get_playable_actions(self)
 			if actions.size() > 0:
 				for action in actions:

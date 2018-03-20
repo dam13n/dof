@@ -2,8 +2,9 @@ extends Area2D
 
 var starting_health = 60
 var health = 60
+var max_energy = 4
 var energy = 4
-var front_row = false
+var front_row = true
 
 var is_hovering = false
 
@@ -16,7 +17,7 @@ func _ready():
 	update_energy()
 	
 func reset_energy():
-	energy = 4
+	energy = max_energy
 	update_energy()
 	
 func update_health():

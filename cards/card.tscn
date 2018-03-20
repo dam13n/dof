@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://cards/card.gd" type="Script" id=1]
 [ext_resource path="res://fonts/Lato2OFL/Lato-Medium.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/Lato2OFL/Lato-Thin.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -11,7 +12,15 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Font/fallback", "Resource", "Settings" ]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="DynamicFont" id=2]
+
+size = 5
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 3 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="StyleBoxFlat" id=3]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -39,7 +48,7 @@ shadow_size = 0
 anti_aliasing = true
 anti_aliasing_size = 1
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
 extents = Vector2( 61.7495, 84.4394 )
@@ -47,7 +56,8 @@ extents = Vector2( 61.7495, 84.4394 )
 [node name="Card" type="KinematicBody2D"]
 
 self_modulate = Color( 1, 1, 1, 0 )
-position = Vector2( -3.07553, -0.504135 )
+position = Vector2( 0.331108, -8.73537 )
+scale = Vector2( 2.28016, 2.39503 )
 z_index = 1
 input_pickable = true
 collision_layer = 1
@@ -133,18 +143,21 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -24.0
+margin_left = -32.0
 margin_right = 36.0
-margin_bottom = 20.0
+margin_bottom = 48.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
+custom_fonts/font = SubResource( 2 )
 text = "damage: "
+autowrap = true
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "Size Flags", "Theme", "custom_colors", "custom_fonts" ]
 
 [node name="Cost" type="Label" parent="Container/Display" index="3"]
 
@@ -162,7 +175,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_styles/normal = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
 text = "0"
 align = 1
 valign = 1
@@ -173,9 +186,8 @@ _sections_unfolded = [ "Visibility", "custom_styles" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-visible = false
 position = Vector2( 3.05154, -2.12785 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 _sections_unfolded = [ "Material", "Transform", "Visibility" ]
 
 

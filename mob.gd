@@ -19,7 +19,7 @@ func spawn(type):
 	print('spawn enemy')
 	enemy_1_count += 1
 	var mc = MarginContainer.new()
-	mc.rect_min_size = Vector2(100,70)
+	mc.rect_min_size = Vector2(250,70)
 	add_child(mc)
 	var enemy_scene = load("res://enemy.tscn")
 	var enemy = enemy_scene.instance()

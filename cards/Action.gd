@@ -11,8 +11,22 @@ var turn # 0 for now, 1 for next turn
 var duration # e.g. 2 means action happens/lasts for 2 turns
 
 # main character targeting
+var main_targeting = {
+	'attribute' : null,
+	'target' : null,
+	'value_min' : null,
+	'value_max' : null,
+	'status' : null
+}
 
 # friend targeting
+var friend_targeting = {
+	'attribute' : null,
+	'target' : null,
+	'value_min' : null,
+	'value_max' : null,
+	'status' : null
+}
 
 # enemy targeting
 var enemy_targeting = {
