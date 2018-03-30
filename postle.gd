@@ -12,8 +12,8 @@ func _ready():
 	connect("mouse_entered", self, "_mouse_over", [true])
 	connect("mouse_exited",  self, "_mouse_over", [false])
 	update_health()
-	$PlayerShape/HealthBar.max_value = starting_health
-	$PlayerShape/HealthBar.min_value = 0
+	$HealthBar.max_value = starting_health
+	$HealthBar.min_value = 0
 	
 func _process(delta):
 	overlapping_bodies = get_overlapping_bodies()
@@ -21,7 +21,7 @@ func _process(delta):
 		print("found object")
 		var ovlb = overlapping_bodies[0]
 
-		if ovlb.grabbed == false && ovlb.active == true && ovlb.target == type:
+		if is_hovering == true && ovlb.enough_energy() && ovlb.grabbed == false && ovlb.active == true && ovlb.target == type:
 			var actions = ovlb.get_playable_actions(self)
 			if actions.size() > 0:
 				for action in actions:
@@ -45,8 +45,8 @@ func reset_energy():
 func update_health():
 	if health >= starting_health:
 		health = starting_health
-	$PlayerShape/HP.text = "hp: " + str(health)
-	$PlayerShape/HealthBar.value = health
+	$HP.text = "hp: " + str(health)
+	$HealthBar.value = health
 	if health <= 0:
 		you_dead()
 

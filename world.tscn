@@ -58,7 +58,6 @@ margin_left = 472.0
 margin_top = 862.0
 margin_right = 1618.0
 margin_bottom = 1146.0
-rect_clip_content = false
 
 [node name="Discard" type="Area2D" parent="." index="2"]
 
@@ -86,7 +85,6 @@ margin_top = -21.0
 margin_right = 15.0
 margin_bottom = 21.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -111,7 +109,6 @@ margin_top = 26.0
 margin_right = 31.0
 margin_bottom = 40.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -150,7 +147,6 @@ margin_top = -30.0
 margin_right = 32.0
 margin_bottom = 27.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -169,7 +165,6 @@ margin_top = 39.0
 margin_right = 22.0
 margin_bottom = 53.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -197,7 +192,6 @@ margin_left = 1081.0
 margin_top = 444.0
 margin_right = 1943.0
 margin_bottom = 696.0
-rect_clip_content = false
 
 [node name="SpawnButton1" type="Button" parent="." index="7"]
 
@@ -210,7 +204,6 @@ margin_top = 22.0
 margin_right = 1901.0
 margin_bottom = 76.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -236,7 +229,6 @@ margin_top = 856.0
 margin_right = 1957.0
 margin_bottom = 903.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
