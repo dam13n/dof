@@ -1,14 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://postle.gd" type="Script" id=1]
 [ext_resource path="res://images/cordyceps-testosterone.jpg" type="Texture" id=2]
+[ext_resource path="res://FriendRowButton.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10.6092, 11.4116 )
 
-[node name="Postle" type="Area2D"]
+[node name="Postle" type="Area2D" index="0"]
 
 position = Vector2( -0.488926, -2.92902 )
 scale = Vector2( 2.11826, 2.61144 )
@@ -80,5 +81,30 @@ position = Vector2( 0.504307, 0.443556 )
 scale = Vector2( 2.86357, 2.67636 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="Button" type="Button" parent="." index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -34.0
+margin_top = 79.0
+margin_right = 39.0
+margin_bottom = 99.0
+rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "In Front"
+flat = false
+align = 1
+script = ExtResource( 3 )
 
 
