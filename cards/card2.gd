@@ -104,6 +104,9 @@ func load_action(action_data):
 func enough_energy():
 	return get_parent().get_parent().get_node('Player').energy >= cost
 	
+func playable(target_object):
+	return enough_energy() && !grabbed && active && target == target_object.type
+	
 func get_playable_actions(target):
 	var playable_actions = []
 	for action in actions:
