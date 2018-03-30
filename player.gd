@@ -1,7 +1,7 @@
 extends Area2D
 
-var starting_health = 60
-var health = 60
+var starting_health = 80
+var health = 80
 var max_energy = 4
 var energy = 4
 var front_row = true

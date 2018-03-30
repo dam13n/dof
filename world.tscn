@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://world.gd" type="Script" id=1]
 [ext_resource path="res://images/backgrounds/sunsetintheswamp.png" type="Texture" id=2]
@@ -6,11 +6,10 @@
 [ext_resource path="res://discard.gd" type="Script" id=4]
 [ext_resource path="res://deck.tscn" type="PackedScene" id=5]
 [ext_resource path="res://draw_pile.gd" type="Script" id=6]
-[ext_resource path="res://player.tscn" type="PackedScene" id=7]
-[ext_resource path="res://mob.tscn" type="PackedScene" id=8]
-[ext_resource path="res://SpawnButton.gd" type="Script" id=9]
-[ext_resource path="res://EndTurn.gd" type="Script" id=10]
-[ext_resource path="res://postle.tscn" type="PackedScene" id=11]
+[ext_resource path="res://mob.tscn" type="PackedScene" id=7]
+[ext_resource path="res://SpawnButton.gd" type="Script" id=8]
+[ext_resource path="res://EndTurn.gd" type="Script" id=9]
+[ext_resource path="res://postle.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -41,7 +40,7 @@ func _ready():
 custom_solver_bias = 0.0
 extents = Vector2( 10.4167, 10.3077 )
 
-[node name="world" type="Node"]
+[node name="world" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
@@ -181,19 +180,14 @@ scale = Vector2( 3.05811, 2.7608 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="Player" parent="." index="5" instance=ExtResource( 7 )]
-
-position = Vector2( 251.776, 480.782 )
-_sections_unfolded = [ "Pickable" ]
-
-[node name="Mob" parent="." index="6" instance=ExtResource( 8 )]
+[node name="Mob" parent="." index="5" instance=ExtResource( 7 )]
 
 margin_left = 1081.0
 margin_top = 444.0
 margin_right = 1943.0
 margin_bottom = 696.0
 
-[node name="SpawnButton1" type="Button" parent="." index="7"]
+[node name="SpawnButton1" type="Button" parent="." index="6"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -216,9 +210,9 @@ group = null
 text = "Enemy 1"
 flat = false
 align = 1
-script = ExtResource( 9 )
+script = ExtResource( 8 )
 
-[node name="EndTurn" type="Button" parent="." index="8"]
+[node name="EndTurn" type="Button" parent="." index="7"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -241,10 +235,11 @@ group = null
 text = "End Turn"
 flat = false
 align = 1
-script = ExtResource( 10 )
+script = ExtResource( 9 )
 
-[node name="Postle" parent="." index="9" instance=ExtResource( 11 )]
+[node name="Postle" parent="." index="8" instance=ExtResource( 10 )]
 
 position = Vector2( 511.373, 475.808 )
+_sections_unfolded = [ "Transform" ]
 
 

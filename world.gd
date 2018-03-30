@@ -1,14 +1,18 @@
 extends Node
 
 var friends = []
+var player = player_singleton
 
 func _ready():
+	add_child(player)
+	player.position = Vector2(500,500)
+	player.scale = Vector2(2,2)
 	load_friends()
 	get_node('Deck').make_cards()
 	
 func load_friends():
 	friends = []
-	var player = get_node('Player')
+	 # get_node('Player')
 	var postle = get_node('Postle')
 	
 	#check for deleted nodes
@@ -21,7 +25,7 @@ func next_turn():
 	if friends.size() > 0:
 		print(friends)
 		process_enemy_actions()
-		$Player.reset_energy()
+		player.reset_energy()
 		
 func process_enemy_actions():
 	for enemy in $Mob.get_children():
