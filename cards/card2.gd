@@ -16,6 +16,10 @@ var speed = 10
 
 var scale_ratio = 1.25
 var inverse_scale_ratio = pow(scale_ratio, -1)
+
+var scale_ratio_slow = 10
+var inverse_scale_ratio_slow = pow(scale_ratio_slow, -1)
+
 var player
 
 #############################################
@@ -105,7 +109,7 @@ func enough_energy():
 	return get_parent().get_parent().get_node('Player').energy >= cost
 	
 func playable(target_object):
-	return enough_energy() && !grabbed && active && target == target_object.type
+	return active && enough_energy() && !grabbed && active && target == target_object.type
 	
 func get_playable_actions(target):
 	var playable_actions = []
@@ -148,6 +152,10 @@ func _scale_down():
 	card_display.apply_scale(Vector2(inverse_scale_ratio,inverse_scale_ratio))
 	is_scaled_up = false
 	card_display.z_index = 1
+	
+func scale_for_slow_card():
+	card_display.apply_scale(Vector2(inverse_scale_ratio_slow,inverse_scale_ratio_slow))
+	input_pickable = false
 
 func _input(event):
 #	if Input.is_mouse_button_pressed(BUTTON_LEFT):

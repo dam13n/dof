@@ -52,7 +52,7 @@ func get_deck_data():
 				{
 					'action_name' : 'attack',
 					'description' : 'Does 10-20 damage. ',
-					'priority' : 'fast',
+					'priority' : 'slow',
 					'trigger' : null,
 					'multiplier' : null,
 					'turn' : 0,

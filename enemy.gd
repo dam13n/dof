@@ -25,17 +25,37 @@ func _process(delta):
 	if overlapping_bodies.size() > 0:
 		print("found object")
 		var ovlb = overlapping_bodies[0]
-
+	
 		if is_hovering && ovlb.playable(self):
+			var do_not_remove = false
 			var actions = ovlb.get_playable_actions(self)
+
+
 			if actions.size() > 0:
+				
 				for action in actions:
 	#				health -= ovlb.damage
-					process_action(action)
-					_update_health()
+					if action.priority == 'fast':
+						process_action(action)
+						_update_health()
+					elif action.priority == 'slow':
+						ovlb.move_to_destination = false
+						ovlb.active = false
+						do_not_remove = true
+						
+
 					
 				_check_alive()
-			ovlb.remove()
+			if do_not_remove:
+				ovlb.scale_for_slow_card()
+				ovlb.get_parent().remove_card(ovlb)
+				ovlb.get_parent().remove_child(ovlb)
+				$SlowCards.add_child(ovlb)
+#				ovlb.move_to_destination = false
+				ovlb.position = Vector2(0,0)
+				print('do not remove')
+			else:
+				ovlb.remove()
 
 func process_action(action):
 	if action.enemy_targeting['attribute'] == 'health':
