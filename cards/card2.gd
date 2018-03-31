@@ -109,6 +109,7 @@ func enough_energy():
 	return get_parent().get_parent().get_node('Player').energy >= cost
 	
 func playable(target_object):
+	print('active: ', active)
 	return active && enough_energy() && !grabbed && active && target == target_object.type
 	
 func get_playable_actions(target):
@@ -162,8 +163,8 @@ func _input(event):
 	if event is InputEventMouseButton && event.pressed:
 
 		if is_hovering == true && grabbed == false:
-			print("input_pickable is: ")
-			print(input_pickable)
+#			print("input_pickable is: ")
+#			print(input_pickable)
 			grabbed = true
 			local_mouse_pos = get_local_mouse_position()
 		else:

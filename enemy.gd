@@ -23,7 +23,7 @@ func _update_health():
 func _process(delta):
 	overlapping_bodies = get_overlapping_bodies()
 	if overlapping_bodies.size() > 0:
-		print("found object")
+		print("overlapping body count: ", overlapping_bodies.size())
 		var ovlb = overlapping_bodies[0]
 	
 		if is_hovering && ovlb.playable(self):
@@ -50,9 +50,14 @@ func _process(delta):
 				ovlb.scale_for_slow_card()
 				ovlb.get_parent().remove_card(ovlb)
 				ovlb.get_parent().remove_child(ovlb)
+				var detection_area = ovlb.get_node('DetectionArea')
+				detection_area.disabled = true
 				$SlowCards.add_child(ovlb)
+				
 #				ovlb.move_to_destination = false
-				ovlb.position = Vector2(0,0)
+				var slow_cards_count = $SlowCards.get_children().size()
+				ovlb.position = Vector2((slow_cards_count-1)*10,0)
+				ovlb.z_index = slow_cards_count
 				print('do not remove')
 			else:
 				ovlb.remove()
