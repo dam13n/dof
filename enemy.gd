@@ -62,9 +62,21 @@ func process_action(action):
 #		action.enemy_targeting['attribute']
 		var value = int(rand_range(action.enemy_targeting['value_min'],action.enemy_targeting['value_max'])+0.5)
 		health -= value
+
+func process_slow_cards():
+	for card in $SlowCards.get_children():
+		var actions = card.get_playable_actions(self)
+		for action in actions:
+			process_action(action)
+			_update_health()
+	_check_alive()
 			
 func _check_alive():
 	if health <= 0:
+		# free up all tree (to take care of slow cards)
+		propagate_call("queue_free", [])
+		
+		# free parent holder
 		get_parent().queue_free()
 		
 func _mouse_over(over):

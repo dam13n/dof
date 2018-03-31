@@ -21,7 +21,12 @@ func next_turn():
 	if friends.size() > 0:
 		print(friends)
 		process_enemy_actions()
+		process_slow_cards()
 		$Player.reset_energy()
+		
+func process_slow_cards():
+	for enemy_container in $Mob.get_children():
+		enemy_container.get_children()[0].process_slow_cards()	
 		
 func process_enemy_actions():
 	for enemy in $Mob.get_children():

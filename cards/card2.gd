@@ -160,7 +160,10 @@ func scale_for_slow_card():
 func _input(event):
 #	if Input.is_mouse_button_pressed(BUTTON_LEFT):
 	if event is InputEventMouseButton && event.pressed:
+
 		if is_hovering == true && grabbed == false:
+			print("input_pickable is: ")
+			print(input_pickable)
 			grabbed = true
 			local_mouse_pos = get_local_mouse_position()
 		else:
