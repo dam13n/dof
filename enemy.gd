@@ -7,7 +7,10 @@ var is_hovering = false
 
 var enemy_name = 'baddie'
 var damage = 10
+var defense = 1 # base defense
 var type = 'enemy'
+
+var status_effects = []
 
 func _ready():
 	connect("mouse_entered", self, "_mouse_over", [true])
@@ -23,7 +26,7 @@ func _update_health():
 func _process(delta):
 	overlapping_bodies = get_overlapping_bodies()
 	if overlapping_bodies.size() > 0:
-		print("overlapping body count: ", overlapping_bodies.size())
+#		print("overlapping body count: ", overlapping_bodies.size())
 		var ovlb = overlapping_bodies[0]
 	
 		if is_hovering && ovlb.playable(self):
@@ -32,9 +35,8 @@ func _process(delta):
 
 
 			if actions.size() > 0:
-				
+				print('actioning')
 				for action in actions:
-	#				health -= ovlb.damage
 					if action.priority == 'fast':
 						process_action(action)
 						_update_health()
@@ -63,10 +65,24 @@ func _process(delta):
 				ovlb.remove()
 
 func process_action(action):
-	if action.enemy_targeting['attribute'] == 'health':
+	print('process_action: ', action.effect)
+	if action.attribute == 'health':
 #		action.enemy_targeting['attribute']
-		var value = int(rand_range(action.enemy_targeting['value_min'],action.enemy_targeting['value_max'])+0.5)
+		var value = int(rand_range(action.value_min, action.value_max)+0.5)
 		health -= value
+	elif action.effect == 'status':
+		print('effect is status')
+		_add_status(action)
+		
+func _add_status(action):
+	var status_scene = load("res://status_effects.tscn")
+	var status = status_scene.instance()
+	status.attribute = action.attribute
+	status.value_min = action.value_min
+	status.value_max = action.value_max
+	print('here')
+	$Statuses.text += action.action_name
+
 
 func process_slow_cards():
 	for card in $SlowCards.get_children():

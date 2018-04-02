@@ -78,7 +78,7 @@ func _ready():
 	update_display()
 	
 func load_action(action_data):
-	var action_scene = load("res://cards/Action.tscn")
+	var action_scene = load("res://cards/action.tscn")
 	var action = action_scene.instance()
 	
 	action.action_name = action_data['action_name']
@@ -89,19 +89,20 @@ func load_action(action_data):
 	action.multiplier = action_data['multiplier']
 	action.turn = action_data['turn']
 	action.duration = action_data['duration']
-	if action_data.has('enemy_targeting'):
-		action.enemy_targeting = action_data['enemy_targeting']
-	if action_data.has('friend_targeting'):
-		action.friend_targeting = action_data['friend_targeting']
-	if action_data.has('main_targeting'):	
-		action.main_targeting = action_data['main_targeting']
-#	action.enemy_targeting = {
-#		'attribute' : 'health',
-#		'target' : 'single',
-#		'value_min' : 10,
-#		'value_max' : 20,
-#		'status' : null
-#	}	
+#	if action_data.has('enemy_targeting'):
+#		action.enemy_targeting = action_data['enemy_targeting']
+#	if action_data.has('friend_targeting'):
+#		action.friend_targeting = action_data['friend_targeting']
+#	if action_data.has('main_targeting'):	
+#		action.main_targeting = action_data['main_targeting']
+	
+	action.attribute = action_data['attribute']
+	action.effect	 = action_data['effect']
+	action.value_min = action_data['value_min']
+	action.value_max = action_data['value_max']
+
+	
+
 	
 	actions.append(action)
 	
@@ -109,18 +110,19 @@ func enough_energy():
 	return get_parent().get_parent().get_node('Player').energy >= cost
 	
 func playable(target_object):
-	print('active: ', active)
+#	print('active: ', active)
 	return active && enough_energy() && !grabbed && active && target == target_object.type
 	
 func get_playable_actions(target):
 	var playable_actions = []
 	for action in actions:
-		if target.type == 'enemy' && action.enemy_targeting != null:
-			playable_actions.append(action)
-		if target.type == 'friend' && action.friend_targeting != null:
-			playable_actions.append(action)
-		if target.type == 'main' && action.main_targeting != null:
-			playable_actions.append(action)
+		playable_actions.append(action)
+#		if target.type == 'enemy' && action.enemy_targeting != null:
+#			playable_actions.append(action)
+#		if target.type == 'friend' && action.friend_targeting != null:
+#			playable_actions.append(action)
+#		if target.type == 'main' && action.main_targeting != null:
+#			playable_actions.append(action)
 
 	if not player.energy >= cost:
 		playable_actions = []

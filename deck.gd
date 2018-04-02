@@ -20,7 +20,7 @@ func make_cards():
 #		card.visible = false
 #		card.input_pickable = false
 		card.card_name = card_data['name']
-		card.target = card_data['target']
+		card.target = card_data['card_target']
 		card.effect = card_data['effect']
 #		card.damage = card_data['damage']
 		card.cost = card_data['cost']
@@ -44,151 +44,129 @@ func get_deck_data():
 	return [
 		{ 
 			"name" : "slash",
-			"target" : 'enemy',
+			"card_target" : 'enemy',
 			"effect" : "attack",
 			"cost" : 2,
 			"description" : '',
 			"actions" : [
 				{
 					'action_name' : 'attack',
+					"effect" : "attack",
 					'description' : 'Does 10-20 damage. ',
 					'priority' : 'slow',
 					'trigger' : null,
 					'multiplier' : null,
 					'turn' : 0,
 					'duration' : 1,
-					'enemy_targeting' : {
-						'attribute' : 'health',
-						'target' : 'single',
-						'value_min' : 10,
-						'value_max' : 20,
-						'status' : null
-					}	
-					
+					'attribute' : 'health',
+					'target' : 'single',
+					'value_min' : 10,
+					'value_max' : 20,
+					'status' : null
 				}
 			]
 		},
 		{ 
 			"name" : "double punch",
-			"target" : 'enemy',
+			"card_target" : 'enemy',
 			"effect" : "attack",
 			"cost" : 1,
 			"description" : 'Does 5 damage twice.',
 			"actions" : [
 				{
 					'action_name' : 'attack',
+					"effect" : "attack",
 					'description' : '',
 					'priority' : 'fast',
 					'trigger' : null,
 					'multiplier' : null,
 					'turn' : 0,
 					'duration' : 1,
-					'enemy_targeting' : {
-						'attribute' : 'health',
-						'target' : 'single',
-						'value_min' : 5,
-						'value_max' : 5,
-						'status' : null
-					}	
+					'attribute' : 'health',
+					'target' : 'single',
+					'value_min' : 5,
+					'value_max' : 5,
+					'status' : null
 					
 				},
 				{
 					'action_name' : 'attack',
+					"effect" : "attack",
 					'description' : '',
 					'priority' : 'fast',
 					'trigger' : null,
 					'multiplier' : null,
 					'turn' : 0,
 					'duration' : 1,
-					'enemy_targeting' : {
-						'attribute' : 'health',
-						'target' : 'single',
-						'value_min' : 5,
-						'value_max' : 5,
-						'status' : null
-					}	
-					
+					'attribute' : 'health',
+					'target' : 'single',
+					'value_min' : 5,
+					'value_max' : 5,
+					'status' : null
 				}
 			]
 		},
 		{ 
 			"name" : "team heal",
-			"target" : 'friend',
+			"card_target" : 'friend',
 			"effect" : "attack",
 			"cost" : 2,
 			"description" : '',
 			"actions" : [
 				{
 					'action_name' : 'attack',
+					"effect" : "attack",
 					'description' : 'Heals postle for 20 hp.',
 					'priority' : 'fast',
 					'trigger' : null,
 					'multiplier' : null,
 					'turn' : 0,
 					'duration' : 1,
-					'friend_targeting' : {
-						'attribute' : 'health',
-						'target' : 'single',
-						'value_min' : 20,
-						'value_max' : 20,
-						'status' : null
-					}	
-					
+					'attribute' : 'health',
+					'target' : 'single',
+					'value_min' : 20,
+					'value_max' : 20,
+					'status' : null
 				},
 				{
 					'action_name' : 'attack',
+					"effect" : "attack",
 					'description' : 'Heals main for 10 hp.',
 					'priority' : 'fast',
 					'trigger' : null,
 					'multiplier' : null,
 					'turn' : 0,
 					'duration' : 1,
-					'main_targeting' : {
-						'attribute' : 'health',
-						'target' : 'single',
-						'value_min' : 10,
-						'value_max' : 10,
-						'status' : null
-					}	
-					
+					'attribute' : 'health',
+					'target' : 'single',
+					'value_min' : 10,
+					'value_max' : 10,
+					'status' : null
+				}
+			]
+		},
+		{ 
+			"name" : 'make vulnerable',
+			"card_target" : 'enemy',
+			"effect" : 'status',
+			"cost" : 1,
+			"description" : 'Gives enemy a 25% vulnerability.',
+			"actions" : [
+				{
+					'action_name' : 'vuln',
+					'effect' : 'status',
+					'description' : '',
+					'priority' : 'fast',
+					'trigger' : null,
+					'multiplier' : true,
+					'turn' : 0,
+					'duration' : 1,
+					'attribute' : 'defense',
+					'target' : 'single',
+					'value_min' : 0.75,
+					'value_max' : 0.75,
+					'status' : null	
 				}
 			]
 		}
 	]
-	
-	
-	
-#func get_deck_data():
-#	return [
-#		{ 
-#			"name" : "slash",
-#			"effect" : "attack",
-#			"cost" : 2,
-#			"damage" : 10
-#		},
-#		{ 
-#			"name" : "bite",
-#			"effect" : "attack",
-#			"cost" : 1,
-#			"damage" : 5
-#		},
-#		{ 
-#			"name" : "poke",
-#			"effect" : "attack",
-#			"cost" : 1,
-#			"damage" : 3
-#		},
-#		{ 
-#			"name" : "defenestrate",
-#			"effect" : "attack",
-#			"cost" : 3,
-#			"damage" : 15
-#		},
-#		{ 
-#			"name" : "eviscerate",
-#			"effect" : "attack",
-#			"cost" : 2,
-#			"damage" : 11
-#		}
-#	]
-
