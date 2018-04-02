@@ -39,8 +39,10 @@ func _check_alive():
 func _mouse_over(over):
 	if over == true:
 		is_hovering = true
+		$CharacterInfo.visible = true
 	else:
 		is_hovering = false
+		$CharacterInfo.visible = false
 
 func _input(event):
 	if event is InputEventMouseButton && event.pressed && is_hovering == true:

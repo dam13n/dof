@@ -10,7 +10,7 @@
 [ext_resource path="res://mob.tscn" type="PackedScene" id=8]
 [ext_resource path="res://SpawnButton.gd" type="Script" id=9]
 [ext_resource path="res://EndTurn.gd" type="Script" id=10]
-[ext_resource path="res://postle.tscn" type="PackedScene" id=11]
+[ext_resource path="res://friend.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -41,7 +41,7 @@ func _ready():
 custom_solver_bias = 0.0
 extents = Vector2( 10.4167, 10.3077 )
 
-[node name="world" type="Node"]
+[node name="world" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
@@ -183,15 +183,15 @@ _sections_unfolded = [ "Visibility" ]
 
 [node name="Player" parent="." index="5" instance=ExtResource( 7 )]
 
-position = Vector2( 251.776, 480.782 )
+position = Vector2( 255.842, 335.754 )
 _sections_unfolded = [ "Pickable" ]
 
 [node name="Mob" parent="." index="6" instance=ExtResource( 8 )]
 
-margin_left = 1081.0
-margin_top = 444.0
-margin_right = 1943.0
-margin_bottom = 696.0
+margin_left = 1055.0
+margin_top = 291.0
+margin_right = 1917.0
+margin_bottom = 543.0
 
 [node name="SpawnButton1" type="Button" parent="." index="7"]
 
@@ -245,6 +245,6 @@ script = ExtResource( 10 )
 
 [node name="Postle" parent="." index="9" instance=ExtResource( 11 )]
 
-position = Vector2( 511.373, 475.808 )
+position = Vector2( 515.439, 330.78 )
 
 

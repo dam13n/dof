@@ -84,7 +84,7 @@ func _add_status(action):
 	status.status_name = action.action_name
 	print('here')
 	status_effects.append(status)
-	$Statuses.text += action.action_name
+	$CharacterInfo.get_node('Statuses').text += action.action_name
 	
 func get_defense():
 	for status in status_effects:
@@ -101,6 +101,8 @@ func process_slow_cards():
 		for action in actions:
 			process_action(action)
 			_update_health()
+		$SlowCards.remove_child(card)
+		card.remove()
 	_check_alive()
 			
 func _check_alive():
@@ -114,5 +116,7 @@ func _check_alive():
 func _mouse_over(over):
 	if over == true:
 		is_hovering = true
+		$CharacterInfo.visible = true
 	else:
 		is_hovering = false
+		$CharacterInfo.visible = false

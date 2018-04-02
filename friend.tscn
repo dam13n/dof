@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://postle.gd" type="Script" id=1]
+[ext_resource path="res://friend.gd" type="Script" id=1]
 [ext_resource path="res://images/cordyceps-testosterone.jpg" type="Texture" id=2]
 [ext_resource path="res://FriendRowButton.gd" type="Script" id=3]
+[ext_resource path="res://character_info.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -106,5 +107,11 @@ text = "In Front"
 flat = false
 align = 1
 script = ExtResource( 3 )
+
+[node name="CharacterInfo" parent="." index="5" instance=ExtResource( 4 )]
+
+visible = false
+position = Vector2( 59.607, 17.828 )
+scale = Vector2( 0.916181, 1.44602 )
 
 

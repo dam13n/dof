@@ -51,7 +51,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Material", "Rect", "Transform", "Visibility" ]
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Display" index="0"]
 

@@ -33,9 +33,9 @@ func _process(delta):
 			ovlb.remove()
 
 func process_action(action):
-	if action.friend_targeting['attribute'] == 'health':
+	if action.attribute == 'health':
 #		action.enemy_targeting['attribute']
-		var value = int(rand_range(action.friend_targeting['value_min'],action.friend_targeting['value_max'])+0.5)
+		var value = int(rand_range(action.value_min, action.value_max)+0.5)
 		health += value
 		update_health()
 	
@@ -57,15 +57,17 @@ func _check_alive():
 	if health <= 0:
 		get_parent().queue_free()
 
-func _mouse_over(over):
+func _mouse_over(over):	
 	if over == true:
 		is_hovering = true
+		$CharacterInfo.visible = true
 	else:
 		is_hovering = false
+		$CharacterInfo.visible = false
 
 func _input(event):
 	if event is InputEventMouseButton && event.pressed && is_hovering == true:
-		print('show player stats')
+		print('switch decks')
 		
 # may be useful later
 #func _input(ev):
