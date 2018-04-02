@@ -84,8 +84,8 @@ func get_deck_data():
 					'duration' : 1,
 					'attribute' : 'health',
 					'target' : 'single',
-					'value_min' : 5,
-					'value_max' : 5,
+					'value_min' : 3,
+					'value_max' : 3,
 					'status' : null
 					
 				},
@@ -100,8 +100,8 @@ func get_deck_data():
 					'duration' : 1,
 					'attribute' : 'health',
 					'target' : 'single',
-					'value_min' : 5,
-					'value_max' : 5,
+					'value_min' : 3,
+					'value_max' : 3,
 					'status' : null
 				}
 			]
@@ -153,7 +153,7 @@ func get_deck_data():
 			"description" : 'Gives enemy a 25% vulnerability.',
 			"actions" : [
 				{
-					'action_name' : 'vuln',
+					'action_name' : 'vulnerable',
 					'effect' : 'status',
 					'description' : '',
 					'priority' : 'fast',

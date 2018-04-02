@@ -67,8 +67,9 @@ func _process(delta):
 func process_action(action):
 	print('process_action: ', action.effect)
 	if action.attribute == 'health':
-#		action.enemy_targeting['attribute']
+		var current_defense = get_defense()
 		var value = int(rand_range(action.value_min, action.value_max)+0.5)
+		value = (1+(1-current_defense))*value
 		health -= value
 	elif action.effect == 'status':
 		print('effect is status')
@@ -80,8 +81,18 @@ func _add_status(action):
 	status.attribute = action.attribute
 	status.value_min = action.value_min
 	status.value_max = action.value_max
+	status.status_name = action.action_name
 	print('here')
+	status_effects.append(status)
 	$Statuses.text += action.action_name
+	
+func get_defense():
+	for status in status_effects:
+		if status.status_name == 'vulnerable':
+			print('vulned')
+			return status.value_min
+		
+	return defense
 
 
 func process_slow_cards():
