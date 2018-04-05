@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+var card_owner
+
 #############################################
 ### card physics and display
 #############################################
@@ -115,9 +117,6 @@ func load_action(action_data):
 	action.effect	 = action_data['effect']
 	action.value_min = action_data['value_min']
 	action.value_max = action_data['value_max']
-
-	
-
 	
 	actions.append(action)
 	
@@ -148,6 +147,8 @@ func update_display():
 		card_title.text = card_name
 		card_cost.text = str(cost)
 		for action in actions:
+			if description == null:
+				description = ''
 			description += action.description
 		card_description.text = description
 

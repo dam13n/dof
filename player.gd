@@ -68,18 +68,23 @@ func draw_hand():
 func show_hand():
 	hand.clear_cards()
 	for card in hand_pile:
-		hand.add_child(card)
-		hand.active_hand.append(card)
+		hand.add_card(card.to_data())
+		#hand.active_hand.append(card)
 		hand.set_card_destinations()
 		hand.organize()
 
 func prepare_deck_and_draw_pile():
 	var deck_data = player_deck.deck_data()
-
 	for card_data in deck_data:
-		
+		var card = make_card(card_data)
+		draw_pile.append(card)
+	draw_hand()
+
+func make_card(card_data ):
 		var card_scene = load("res://cards/card2.tscn")
 		var card = card_scene.instance()
+		
+		card.card_owner = self
 
 		card.card_name = card_data['name']
 		card.target = card_data['card_target']
@@ -91,9 +96,8 @@ func prepare_deck_and_draw_pile():
 			card.load_action(action_data)
 		card.update_display()
 		card.apply_scale(Vector2(0.25,0.25))
-			
-		draw_pile.append(card)
-	draw_hand()
+
+		return card
 	
 		
 # may be useful later

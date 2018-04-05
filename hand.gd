@@ -9,6 +9,28 @@ func _ready():
 #	set_card_destinations()
 #	organize()
 
+func add_card(card_data):
+	var card = make_card(card_data)
+	add_child(card)
+
+func make_card(card_data ):
+	var card_scene = load("res://cards/card2.tscn")
+	var card = card_scene.instance()
+
+	card.card_name = card_data['name']
+	card.target = card_data['card_target']
+	card.effect = card_data['effect']
+
+	card.cost = card_data['cost']
+	card.description = card_data['description']
+	for action_data in card_data['actions']:
+		card.load_action(action_data)
+	card.update_display()
+	card.apply_scale(Vector2(0.25,0.25))
+
+	return card
+
+
 func clear_cards():
 	for child in get_children():
 		remove_child(child)
@@ -33,8 +55,8 @@ func organize():
 		
 func remove_card(card):
 #	print('removing card')
-	var card_index = active_hand.find(card)
-	active_hand.remove(card_index)
+#	var card_index = active_hand.find(card)
+#	active_hand.remove(card_index)
 	set_card_destinations()
 	organize()
 
