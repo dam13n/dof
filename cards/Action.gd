@@ -15,6 +15,24 @@ var target
 var value_min
 var value_max
 var effect
+
+func to_data():
+	return {
+		'action_name' : action_name,
+		"effect" : effect,
+		'description' : description,
+		'priority' : priority,
+		'trigger' : trigger,
+		'multiplier' : multiplier,
+		'turn' : turn,
+		'duration' : duration,
+		'attribute' : attribute,
+		'target' : target,
+		'value_min' : value_min,
+		'value_max' : value_max,
+		'status' : null
+	}
+
 #
 ## main character targeting
 #var main_targeting = {

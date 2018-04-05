@@ -1,32 +1,35 @@
 extends HBoxContainer
 
 var width
-var active_hand
+var active_hand = []
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	width = get_size().x
-	active_hand = get_children()
-	set_card_destinations()
-	organize()
+#	active_hand = get_children()
+#	set_card_destinations()
+#	organize()
+
+func clear_cards():
+	for child in get_children():
+		remove_child(child)
 	
-func discard_cards():
-	for card in active_hand:		
-		card.queue_free()
-	active_hand = []
+#func discard_cards():
+#	for card in active_hand:		
+#		card.queue_free()
+#	active_hand = []
 	
 func set_card_destinations():
-	for i in range(0, active_hand.size()):
-		var child = active_hand[i]
-		var pos_x = width/(active_hand.size()+1)*(i+1)
+	for i in range(0, get_children().size()):
+		var child = get_children()[i]
+		var pos_x = width/(get_children().size()+1)*(i+1)
 		child.destination = Vector2(pos_x, 0)
 
 func organize():
-	for i in range(0, active_hand.size()):
-		var child = active_hand[i]
+	print('active hand size: ', get_children().size())
+	for i in range(0, get_children().size()):
+		var child = get_children()[i]
 		child.reset_position()
-#		print('child count:', active_hand.size())
+#		print('child count:', get_children().size())
 		
 func remove_card(card):
 #	print('removing card')

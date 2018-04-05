@@ -76,15 +76,32 @@ func process_action(action):
 		_add_status(action)
 		
 func _add_status(action):
-	var status_scene = load("res://status_effects.tscn")
-	var status = status_scene.instance()
-	status.attribute = action.attribute
-	status.value_min = action.value_min
-	status.value_max = action.value_max
-	status.status_name = action.action_name
-	print('here')
-	status_effects.append(status)
-	$CharacterInfo.get_node('Statuses').text += action.action_name
+	var status_already_applied = false
+	for status in status_effects:
+		if status.status_name == action.action_name:
+			status_already_applied = true
+			status.duration += action.duration
+	
+	if not status_already_applied:
+		var status_scene = load("res://status_effects.tscn")
+		var status = status_scene.instance()
+		status.attribute = action.attribute
+		status.value_min = action.value_min
+		status.value_max = action.value_max
+		status.status_name = action.action_name
+		status_effects.append(status)
+	update_info_node()
+	
+
+func update_info_node():
+	$CharacterInfo.get_node('Statuses').text = ''
+	for status in status_effects:
+		$CharacterInfo.get_node('Statuses').text += str(status.duration) + ' ' + status.status_name
+		
+func clear_statuses():
+	for status in status_effects:
+		if status.duration == 0:
+			status_effects.erase(status)
 	
 func get_defense():
 	for status in status_effects:

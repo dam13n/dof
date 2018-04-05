@@ -4,7 +4,7 @@ var friends = []
 
 func _ready():
 	load_friends()
-	get_node('Deck').make_cards()
+#	get_node('Deck').make_cards()
 	
 func load_friends():
 	friends = []
@@ -22,7 +22,20 @@ func next_turn():
 		print(friends)
 		process_enemy_actions()
 		process_slow_cards()
+		for enemy in enemies():
+			for status in enemy.status_effects:
+				status.next_turn()
+			enemy.clear_statuses()
+			enemy.update_info_node()
 		$Player.reset_energy()
+		
+		
+func enemies():
+	var enemies = []
+	for container in $Mob.get_children():
+		enemies.append(container.get_children()[0])
+	return enemies
+		
 		
 func process_slow_cards():
 	for enemy_container in $Mob.get_children():

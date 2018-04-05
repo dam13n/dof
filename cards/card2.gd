@@ -50,8 +50,21 @@ var card_title
 var card_cost
 var card_description
 
-#func _on_tree_enter():
-	
+func to_data():
+	return { 
+		"name" : card_name,
+		"card_target" : target,
+		"effect" : effect,
+		"cost" : cost,
+		"description" : card_description,
+		"actions" : action_data()
+	}
+
+func action_data():
+	var action_data_temp = [] 
+	for action in actions:
+		action_data_temp.append(action.to_data())
+	return action_data_temp
 
 func _ready():
 	card_display = get_node('Display')
@@ -76,6 +89,8 @@ func _ready():
 	player = get_parent().get_parent().get_node('Player')
 	
 	update_display()
+	
+	print(to_data())
 	
 func load_action(action_data):
 	var action_scene = load("res://cards/action.tscn")
@@ -229,4 +244,6 @@ func _move_by_mouse():
 #		this_pos.y = view_size.y
 
 	position = this_pos
+	
+
 

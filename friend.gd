@@ -8,12 +8,45 @@ var type = 'friend'
 var overlapping_bodies = []
 var is_hovering = false
 
-func _ready():
-	connect("mouse_entered", self, "_mouse_over", [true])
-	connect("mouse_exited",  self, "_mouse_over", [false])
-	update_health()
-	$HealthBar.max_value = starting_health
-	$HealthBar.min_value = 0
+var status_effects = []
+
+var deck
+var hand_pile = []
+var draw_pile = []
+var discard_pile = []
+var hand
+
+func _add_status(action):
+	var status_already_applied = false
+	for status in status_effects:
+		if status.status_name == action.action_name:
+			status_already_applied = true
+			status.duration += action.duration
+	
+	if not status_already_applied:
+		var status_scene = load("res://status_effects.tscn")
+		var status = status_scene.instance()
+		status.attribute = action.attribute
+		status.value_min = action.value_min
+		status.value_max = action.value_max
+		status.status_name = action.action_name
+		status_effects.append(status)
+	update_info_node()
+	
+
+func update_info_node():
+	$CharacterInfo.get_node('Statuses').text = ''
+	for status in status_effects:
+		$CharacterInfo.get_node('Statuses').text += str(status.duration) + ' ' + status.status_name
+
+
+func show_hand():
+	hand.clear_cards()
+	for card in hand_pile:
+		hand.add_child(card)
+		hand.active_hand.append(card)
+		hand.set_card_destinations()
+		hand.organize()
 	
 func _process(delta):
 	overlapping_bodies = get_overlapping_bodies()
@@ -38,6 +71,10 @@ func process_action(action):
 		var value = int(rand_range(action.value_min, action.value_max)+0.5)
 		health += value
 		update_health()
+	elif action.effect == 'status':
+		print('effect is status')
+		_add_status(action)
+	
 	
 func reset_energy():
 	update_energy()
@@ -57,6 +94,44 @@ func _check_alive():
 	if health <= 0:
 		get_parent().queue_free()
 
+func draw_hand():
+	for card in draw_pile:
+		hand_pile.append(card)
+#	show_hand()
+
+func prepare_deck_and_draw_pile():
+	var deck_data = friend_deck.deck_data()
+
+	for card_data in deck_data:
+		
+		var card_scene = load("res://cards/card2.tscn")
+		var card = card_scene.instance()
+
+		card.card_name = card_data['name']
+		card.target = card_data['card_target']
+		card.effect = card_data['effect']
+
+		card.cost = card_data['cost']
+		card.description = card_data['description']
+		for action_data in card_data['actions']:
+			card.load_action(action_data)
+		card.update_display()
+		card.apply_scale(Vector2(0.25,0.25))
+			
+		draw_pile.append(card)
+	draw_hand()
+		
+func _ready():
+	hand = get_parent().get_node('Hand')
+	prepare_deck_and_draw_pile()
+
+	connect("mouse_entered", self, "_mouse_over", [true])
+	connect("mouse_exited",  self, "_mouse_over", [false])
+
+	update_health()
+	$HealthBar.max_value = starting_health
+	$HealthBar.min_value = 0
+
 func _mouse_over(over):	
 	if over == true:
 		is_hovering = true
@@ -67,7 +142,7 @@ func _mouse_over(over):
 
 func _input(event):
 	if event is InputEventMouseButton && event.pressed && is_hovering == true:
-		print('switch decks')
+		show_hand()
 		
 # may be useful later
 #func _input(ev):
