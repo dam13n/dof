@@ -14,6 +14,6 @@ func _mouse_over(over):
 
 func _input(event):
 	if event is InputEventMouseButton && event.pressed && is_hovering == true:
-		print('draw')
+		print('draw disabled here')
 #		var deck_data = get_parent().get_node('Deck').get_deck_data()
-		get_parent().get_node('Deck').make_cards()
+#		get_parent().get_node('Deck').make_cards()

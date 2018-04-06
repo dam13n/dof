@@ -44,7 +44,6 @@ func _process(delta):
 						ovlb.move_to_destination = false
 						ovlb.active = false
 						do_not_remove = true
-						
 
 					
 				_check_alive()

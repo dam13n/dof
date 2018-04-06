@@ -16,8 +16,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-player_deck="*res://player_deck.tscn"
-friend_deck="*res://friend_deck.tscn"
+friend_deck="*res://decks/friend_deck.tscn"
+player_deck="*res://decks/player_deck.tscn"
 
 [display]
 
