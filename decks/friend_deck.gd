@@ -19,7 +19,7 @@ func deck_data():
           'turn' : 0,
           'duration' : 1,
           'attribute' : 'health',
-          'target' : 'single',
+          'target' : 'card_target',
           'value_min' : 5,
           'value_max' : 10,
           'status' : null
@@ -43,7 +43,7 @@ func deck_data():
           'turn' : 0,
           'duration' : 1,
           'attribute' : 'health',
-          'target' : 'single',
+          'target' : 'card_target',
           'value_min' : 5,
           'value_max' : 10,
           'status' : null

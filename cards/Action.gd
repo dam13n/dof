@@ -1,5 +1,6 @@
 extends Node
 
+var card_owner
 var action_name
 var description
 

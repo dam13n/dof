@@ -4,6 +4,7 @@ func deck_data():
 	return [
 		{ 
 			"name" : "slash",
+			"image_path" : '',
 			"card_target" : 'enemy',
 			"effect" : "attack",
 			"cost" : 2,
@@ -19,7 +20,7 @@ func deck_data():
 					'turn' : 0,
 					'duration' : 1,
 					'attribute' : 'health',
-					'target' : 'single',
+					'target' : 'card_target',
 					'value_min' : 10,
 					'value_max' : 20,
 					'status' : null
@@ -39,11 +40,11 @@ func deck_data():
 					'description' : '',
 					'priority' : 'fast',
 					'trigger' : null,
-					'multiplier' : null,
+					'multiplier'  : null,
 					'turn' : 0,
 					'duration' : 1,
 					'attribute' : 'health',
-					'target' : 'single',
+					'target' : 'card_target',
 					'value_min' : 3,
 					'value_max' : 3,
 					'status' : null
@@ -59,7 +60,7 @@ func deck_data():
 					'turn' : 0,
 					'duration' : 1,
 					'attribute' : 'health',
-					'target' : 'single',
+					'target' : 'enemy',
 					'value_min' : 3,
 					'value_max' : 3,
 					'status' : null
@@ -69,13 +70,13 @@ func deck_data():
 		{ 
 			"name" : "team heal",
 			"card_target" : 'friend',
-			"effect" : "attack",
+			"effect" : "heal",
 			"cost" : 2,
 			"description" : '',
 			"actions" : [
 				{
-					'action_name' : 'attack',
-					"effect" : "attack",
+					'action_name' : 'heal',
+					"effect" : "heal",
 					'description' : 'Heals postle for 20 hp.',
 					'priority' : 'fast',
 					'trigger' : null,
@@ -83,14 +84,14 @@ func deck_data():
 					'turn' : 0,
 					'duration' : 1,
 					'attribute' : 'health',
-					'target' : 'single',
+					'target' : 'card_target',
 					'value_min' : 20,
 					'value_max' : 20,
 					'status' : null
 				},
 				{
-					'action_name' : 'attack',
-					"effect" : "attack",
+					'action_name' : 'heal',
+					"effect" : "heal",
 					'description' : 'Heals main for 10 hp.',
 					'priority' : 'fast',
 					'trigger' : null,
@@ -98,7 +99,7 @@ func deck_data():
 					'turn' : 0,
 					'duration' : 1,
 					'attribute' : 'health',
-					'target' : 'single',
+					'target' : 'card_owner',
 					'value_min' : 10,
 					'value_max' : 10,
 					'status' : null
@@ -122,7 +123,7 @@ func deck_data():
 					'turn' : 0,
 					'duration' : 1,
 					'attribute' : 'defense',
-					'target' : 'single',
+					'target' : 'card_target',
 					'value_min' : 0.75,
 					'value_max' : 0.75,
 					'status' : null	

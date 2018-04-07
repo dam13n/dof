@@ -9,13 +9,15 @@ func _ready():
 #	set_card_destinations()
 #	organize()
 
-func add_card(card_data):
-	var card = make_card(card_data)
+func add_card(card_data, card_owner):
+	var card = make_card(card_data, card_owner)
 	add_child(card)
 
-func make_card(card_data ):
+func make_card(card_data, card_owner):
 	var card_scene = load("res://cards/card2.tscn")
 	var card = card_scene.instance()
+	
+	card.card_owner = card_owner
 
 	card.card_name = card_data['name']
 	card.target = card_data['card_target']

@@ -16,6 +16,61 @@ var draw_pile = []
 var discard_pile = []
 var hand
 
+func process_action(action):
+	if action.target == 'card_target':
+		if action.attribute == 'health':
+	#		action.enemy_targeting['attribute']
+			var value = int(rand_range(action.value_min, action.value_max)+0.5)
+			health += value
+			update_health()
+		elif action.effect == 'status':
+			print('effect is status')
+			_add_status(action)
+	elif action.target == 'card_owner':
+		var card_owner = action.card_owner
+		# this is a hackish way to stop an endless loop of trying to retarget card owner
+		action.target = 'card_target'
+		card_owner.process_action(action)
+
+func draw_hand():
+	for card in draw_pile:
+		hand_pile.append(card)
+	show_hand()
+
+func show_hand():
+	hand.clear_cards()
+	for card in hand_pile:
+		hand.add_card(card.to_data(), self)
+		#hand.active_hand.append(card)
+		hand.set_card_destinations()
+		hand.organize()
+
+func prepare_deck_and_draw_pile():
+	var deck_data = player_deck.deck_data()
+	for card_data in deck_data:
+		var card = make_card(card_data)
+		draw_pile.append(card)
+	draw_hand()
+
+func make_card(card_data):
+		var card_scene = load("res://cards/card2.tscn")
+		var card = card_scene.instance()
+		
+		card.card_owner = self
+
+		card.card_name = card_data['name']
+		card.target = card_data['card_target']
+		card.effect = card_data['effect']
+
+		card.cost = card_data['cost']
+		card.description = card_data['description']
+		for action_data in card_data['actions']:
+			card.load_action(action_data)
+		card.update_display()
+		card.apply_scale(Vector2(0.25,0.25))
+
+		return card
+	
 func _ready():
 	hand = get_parent().get_node('Hand')
 	prepare_deck_and_draw_pile()
@@ -26,6 +81,8 @@ func _ready():
 	$PlayerShape/HealthBar.max_value = starting_health
 	$PlayerShape/HealthBar.min_value = 0
 	update_energy()
+	
+	
 
 
 func reset_energy():
@@ -59,46 +116,6 @@ func _mouse_over(over):
 func _input(event):
 	if event is InputEventMouseButton && event.pressed && is_hovering == true:
 		show_hand()
-
-func draw_hand():
-	for card in draw_pile:
-		hand_pile.append(card)
-	show_hand()
-
-func show_hand():
-	hand.clear_cards()
-	for card in hand_pile:
-		hand.add_card(card.to_data())
-		#hand.active_hand.append(card)
-		hand.set_card_destinations()
-		hand.organize()
-
-func prepare_deck_and_draw_pile():
-	var deck_data = player_deck.deck_data()
-	for card_data in deck_data:
-		var card = make_card(card_data)
-		draw_pile.append(card)
-	draw_hand()
-
-func make_card(card_data ):
-		var card_scene = load("res://cards/card2.tscn")
-		var card = card_scene.instance()
-		
-		card.card_owner = self
-
-		card.card_name = card_data['name']
-		card.target = card_data['card_target']
-		card.effect = card_data['effect']
-
-		card.cost = card_data['cost']
-		card.description = card_data['description']
-		for action_data in card_data['actions']:
-			card.load_action(action_data)
-		card.update_display()
-		card.apply_scale(Vector2(0.25,0.25))
-
-		return card
-	
 		
 # may be useful later
 #func _input(ev):

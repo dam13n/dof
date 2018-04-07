@@ -1,7 +1,5 @@
 extends KinematicBody2D
 
-var card_owner
-
 #############################################
 ### card physics and display
 #############################################
@@ -31,6 +29,7 @@ var player
 # active means it's available in the game
 var active = true
 
+var card_owner
 var card_name = 'blank'
 var description = ''
 
@@ -100,6 +99,7 @@ func load_action(action_data):
 	
 	action.action_name = action_data['action_name']
 	action.description = action_data['description']
+	action.target = action_data['target']
 	
 	action.priority = action_data['priority']
 	action.trigger = action_data['trigger']
@@ -117,6 +117,8 @@ func load_action(action_data):
 	action.effect	 = action_data['effect']
 	action.value_min = action_data['value_min']
 	action.value_max = action_data['value_max']
+	
+	action.card_owner = card_owner
 	
 	actions.append(action)
 	

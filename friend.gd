@@ -43,7 +43,7 @@ func update_info_node():
 func show_hand():
 	hand.clear_cards()
 	for card in hand_pile:
-		hand.add_card(card.to_data())
+		hand.add_card(card.to_data(), self)
 		#hand.active_hand.append(card)
 		hand.set_card_destinations()
 		hand.organize()
@@ -58,7 +58,6 @@ func _process(delta):
 			var actions = ovlb.get_playable_actions(self)
 			if actions.size() > 0:
 				for action in actions:
-	#				health -= ovlb.damage
 					process_action(action)
 					update_health()
 					
@@ -66,14 +65,20 @@ func _process(delta):
 			ovlb.remove()
 
 func process_action(action):
-	if action.attribute == 'health':
-#		action.enemy_targeting['attribute']
-		var value = int(rand_range(action.value_min, action.value_max)+0.5)
-		health += value
-		update_health()
-	elif action.effect == 'status':
-		print('effect is status')
-		_add_status(action)
+	if action.target == 'card_target':
+		if action.attribute == 'health':
+	#		action.enemy_targeting['attribute']
+			var value = int(rand_range(action.value_min, action.value_max)+0.5)
+			health += value
+			update_health()
+		elif action.effect == 'status':
+			print('effect is status')
+			_add_status(action)
+	elif action.target == 'card_owner':
+		var card_owner = action.card_owner
+		# this is a hackish way to stop an endless loop of trying to retarget card owner
+		action.target = 'card_target'
+		card_owner.process_action(action)
 	
 	
 func reset_energy():

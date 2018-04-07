@@ -65,14 +65,15 @@ func _process(delta):
 
 func process_action(action):
 	print('process_action: ', action.effect)
-	if action.attribute == 'health':
-		var current_defense = get_defense()
-		var value = int(rand_range(action.value_min, action.value_max)+0.5)
-		value = (1+(1-current_defense))*value
-		health -= value
-	elif action.effect == 'status':
-		print('effect is status')
-		_add_status(action)
+	if action.target == 'card_target':
+		if action.attribute == 'health':
+			var current_defense = get_defense()
+			var value = int(rand_range(action.value_min, action.value_max)+0.5)
+			value = (1+(1-current_defense))*value
+			health -= value
+		elif action.effect == 'status':
+			print('effect is status')
+			_add_status(action)
 		
 func _add_status(action):
 	var status_already_applied = false
