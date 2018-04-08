@@ -17,6 +17,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 alignment = 0
 script = ExtResource( 1 )
-_sections_unfolded = [ "Rect", "Size Flags" ]
+_sections_unfolded = [ "Mouse", "Rect", "Size Flags" ]
 
 

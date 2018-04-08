@@ -1,19 +1,8 @@
 extends HBoxContainer
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+
+
 var enemy_1_count = 0
-
-func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
 
 func spawn(type):
 	print('spawn enemy')
@@ -26,3 +15,4 @@ func spawn(type):
 	enemy.get_node('EnemyShape').get_node('Name').text = 'baddie ' + str(enemy_1_count)
 	mc.add_child(enemy)
 	
+	connect("mouse_exited",  self, "_mouse_over", [false])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://world.gd" type="Script" id=1]
 [ext_resource path="res://images/backgrounds/sunsetintheswamp.png" type="Texture" id=2]
@@ -8,9 +8,10 @@
 [ext_resource path="res://draw_pile.gd" type="Script" id=6]
 [ext_resource path="res://player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://mob.tscn" type="PackedScene" id=8]
-[ext_resource path="res://SpawnButton.gd" type="Script" id=9]
-[ext_resource path="res://EndTurn.gd" type="Script" id=10]
-[ext_resource path="res://friend.tscn" type="PackedScene" id=11]
+[ext_resource path="res://mob_detection_area.tscn" type="PackedScene" id=9]
+[ext_resource path="res://SpawnButton.gd" type="Script" id=10]
+[ext_resource path="res://EndTurn.gd" type="Script" id=11]
+[ext_resource path="res://friend.tscn" type="PackedScene" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -193,7 +194,12 @@ margin_top = 291.0
 margin_right = 1917.0
 margin_bottom = 543.0
 
-[node name="SpawnButton1" type="Button" parent="." index="7"]
+[node name="MobDetectionArea" parent="." index="7" instance=ExtResource( 9 )]
+
+position = Vector2( 1501.16, 415.577 )
+scale = Vector2( 14.5933, 3.92252 )
+
+[node name="SpawnButton1" type="Button" parent="." index="8"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -216,9 +222,9 @@ group = null
 text = "Enemy 1"
 flat = false
 align = 1
-script = ExtResource( 9 )
+script = ExtResource( 10 )
 
-[node name="EndTurn" type="Button" parent="." index="8"]
+[node name="EndTurn" type="Button" parent="." index="9"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -241,9 +247,9 @@ group = null
 text = "End Turn"
 flat = false
 align = 1
-script = ExtResource( 10 )
+script = ExtResource( 11 )
 
-[node name="Postle" parent="." index="9" instance=ExtResource( 11 )]
+[node name="Postle" parent="." index="10" instance=ExtResource( 12 )]
 
 position = Vector2( 515.439, 330.78 )
 

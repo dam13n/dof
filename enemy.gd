@@ -26,7 +26,6 @@ func _update_health():
 func _process(delta):
 	overlapping_bodies = get_overlapping_bodies()
 	if overlapping_bodies.size() > 0:
-#		print("overlapping body count: ", overlapping_bodies.size())
 		var ovlb = overlapping_bodies[0]
 	
 		if is_hovering && ovlb.playable(self):
@@ -35,11 +34,9 @@ func _process(delta):
 
 
 			if actions.size() > 0:
-				print('actioning')
 				for action in actions:
 					if action.priority == 'fast':
 						process_action(action)
-						_update_health()
 					elif action.priority == 'slow':
 						ovlb.move_to_destination = false
 						ovlb.active = false
@@ -74,6 +71,8 @@ func process_action(action):
 		elif action.effect == 'status':
 			print('effect is status')
 			_add_status(action)
+			
+	_update_health()
 		
 func _add_status(action):
 	var status_already_applied = false

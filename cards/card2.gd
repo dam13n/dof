@@ -126,7 +126,6 @@ func enough_energy():
 	return get_parent().get_parent().get_node('Player').energy >= cost
 	
 func playable(target_object):
-#	print('active: ', active)
 	return active && enough_energy() && !grabbed && active && target == target_object.type
 	
 func get_playable_actions(target):
