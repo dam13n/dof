@@ -105,9 +105,7 @@ func clear_statuses():
 func get_defense():
 	for status in status_effects:
 		if status.status_name == 'vulnerable':
-			print('vulned')
 			return status.value_min
-		
 	return defense
 
 

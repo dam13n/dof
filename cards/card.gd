@@ -16,6 +16,10 @@ var speed = 10
 
 var scale_ratio = 1.25
 var inverse_scale_ratio = pow(scale_ratio, -1)
+
+var scale_ratio_slow = 10
+var inverse_scale_ratio_slow = pow(scale_ratio_slow, -1)
+
 var player
 
 #############################################
@@ -25,6 +29,7 @@ var player
 # active means it's available in the game
 var active = true
 
+var card_owner
 var card_name = 'blank'
 var description = ''
 
@@ -32,62 +37,121 @@ var damage = 5
 var cost = 1
 var effect
 var actions = []
+var target = ''
 
 #############################################
 
+#onready var card_display = get_node('Display')
+#onready var card_title = $Display/Name
+#onready var card_cost = $Display/Cost
+#onready var card_description = $Display/Description
+
+var card_display
+var card_title
+var card_cost
+var card_description
+
+func to_data():
+	return { 
+		"name" : card_name,
+		"card_target" : target,
+		"effect" : effect,
+		"cost" : cost,
+		"description" : card_description,
+		"actions" : action_data()
+	}
+
+func action_data():
+	var action_data_temp = [] 
+	for action in actions:
+		action_data_temp.append(action.to_data())
+	return action_data_temp
+
 func _ready():
-	randomize()
+	card_display = get_node('Display')
+	card_title = get_node('Display').get_node('Name')
+	card_cost = $Display/Cost
+	card_description = $Display/Description
+
+	
 	#    set_fixed_process(true)
 	connect("mouse_entered", self, "_mouse_over", [true])
 	connect("mouse_exited",  self, "_mouse_over", [false])
 #	print(get_viewport().get_size())
 
+	randomize()
 	var redness = rand_range(0,1)
+	randomize()
 	var blueness = rand_range(0,1)
+	randomize()
 	var greenness = rand_range(0,1)
-	$Container/Display/Background.color = Color(redness, greenness, blueness, 1)
+	
+#	$Container/Display/Background.color = Color(redness, greenness, blueness, 1)
 	player = get_parent().get_parent().get_node('Player')
 	
 	update_display()
 	
+	print(to_data())
+	
 func load_action(action_data):
-	var action_scene = load("res://cards/Action.tscn")
+	var action_scene = load("res://cards/action.tscn")
 	var action = action_scene.instance()
 	
 	action.action_name = action_data['action_name']
 	action.description = action_data['description']
+	action.target = action_data['target']
 	
 	action.priority = action_data['priority']
 	action.trigger = action_data['trigger']
 	action.multiplier = action_data['multiplier']
 	action.turn = action_data['turn']
 	action.duration = action_data['duration']
-	action.enemy_targeting = action_data['enemy_targeting']
-#	action.enemy_targeting = {
-#		'attribute' : 'health',
-#		'target' : 'single',
-#		'value_min' : 10,
-#		'value_max' : 20,
-#		'status' : null
-#	}	
+#	if action_data.has('enemy_targeting'):
+#		action.enemy_targeting = action_data['enemy_targeting']
+#	if action_data.has('friend_targeting'):
+#		action.friend_targeting = action_data['friend_targeting']
+#	if action_data.has('main_targeting'):	
+#		action.main_targeting = action_data['main_targeting']
+	
+	action.attribute = action_data['attribute']
+	action.effect	 = action_data['effect']
+	action.value_min = action_data['value_min']
+	action.value_max = action_data['value_max']
+	
+	action.card_owner = card_owner
 	
 	actions.append(action)
+	
+func enough_energy():
+	return get_parent().get_parent().get_node('Player').energy >= cost
+	
+func playable(target_object):
+	return active && enough_energy() && !grabbed && active && target == target_object.type
 	
 func get_playable_actions(target):
 	var playable_actions = []
 	for action in actions:
-		if target.type == 'enemy' && action.enemy_targeting != null:
-			playable_actions.append(action)
+		playable_actions.append(action)
+#		if target.type == 'enemy' && action.enemy_targeting != null:
+#			playable_actions.append(action)
+#		if target.type == 'friend' && action.friend_targeting != null:
+#			playable_actions.append(action)
+#		if target.type == 'main' && action.main_targeting != null:
+#			playable_actions.append(action)
+
 	if not player.energy >= cost:
 		playable_actions = []
 	return playable_actions
 
 func update_display():
-	$Container/Display/CardName.text = card_name
-	$Container/Display/Cost.text = str(cost)
-	for action in actions:
-		description += action.description
-	$Container/Display/Description.text = description
+	if card_display != null:
+		card_title.text = card_name
+		card_cost.text = str(cost)
+		for action in actions:
+			if description == null:
+				description = ''
+			description += action.description
+		card_description.text = description
 
 func _mouse_over(over):
 	if over == true:
@@ -100,19 +164,26 @@ func _mouse_over(over):
 
 			
 func _scale_up():
-	$Container/Display.apply_scale(Vector2(scale_ratio,scale_ratio))
+	card_display.apply_scale(Vector2(scale_ratio,scale_ratio))
 	is_scaled_up = true
-	$Container/Display.z_index = 10
+	card_display.z_index = 10
 	
 func _scale_down():
-	$Container/Display.apply_scale(Vector2(inverse_scale_ratio,inverse_scale_ratio))
+	card_display.apply_scale(Vector2(inverse_scale_ratio,inverse_scale_ratio))
 	is_scaled_up = false
-	$Container/Display.z_index = 1
+	card_display.z_index = 1
+	
+func scale_for_slow_card():
+	card_display.apply_scale(Vector2(inverse_scale_ratio_slow,inverse_scale_ratio_slow))
+	input_pickable = false
 
 func _input(event):
 #	if Input.is_mouse_button_pressed(BUTTON_LEFT):
 	if event is InputEventMouseButton && event.pressed:
+
 		if is_hovering == true && grabbed == false:
+#			print("input_pickable is: ")
+#			print(input_pickable)
 			grabbed = true
 			local_mouse_pos = get_local_mouse_position()
 		else:
@@ -153,7 +224,14 @@ func remove():
 func _move_by_mouse():
 	var mouse_pos = get_parent().get_local_mouse_position() # get_global_mouse_position()
 #	var mouse_pos = get_parent().get_global_mouse_position()
-	var this_pos = mouse_pos-(local_mouse_pos)
+
+	var this_pos = mouse_pos #-(local_mouse_pos)
+#	print('mouse pos')
+#	print(mouse_pos)
+#	print('local mouse pos')
+#	print(local_mouse_pos)
+#	print('dif: ')
+#	print(this_pos)
 
 #	var view_size = OS.get_screen_size()
 
@@ -168,4 +246,6 @@ func _move_by_mouse():
 #		this_pos.y = view_size.y
 
 	position = this_pos
+	
+
 

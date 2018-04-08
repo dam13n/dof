@@ -53,7 +53,7 @@ func prepare_deck_and_draw_pile():
 	draw_hand()
 
 func make_card(card_data):
-		var card_scene = load("res://cards/card2.tscn")
+		var card_scene = load("res://cards/card.tscn")
 		var card = card_scene.instance()
 		
 		card.card_owner = self

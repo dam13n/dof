@@ -13,7 +13,7 @@ func make_cards():
 	deck_data = get_deck_data()
 	for card_data in deck_data:
 		
-		var card_scene = load("res://cards/card2.tscn")
+		var card_scene = load("res://cards/card.tscn")
 		var card = card_scene.instance()
 #		card.set_name("card")
 		

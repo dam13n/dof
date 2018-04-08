@@ -14,7 +14,7 @@ func add_card(card_data, card_owner):
 	add_child(card)
 
 func make_card(card_data, card_owner):
-	var card_scene = load("res://cards/card2.tscn")
+	var card_scene = load("res://cards/card.tscn")
 	var card = card_scene.instance()
 	
 	card.card_owner = card_owner

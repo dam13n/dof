@@ -1,9 +1,11 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://player.gd" type="Script" id=1]
+[ext_resource path="res://characters/player.gd" type="Script" id=1]
 [ext_resource path="res://images/Yggdrasil_Player_Databook_07.png" type="Texture" id=2]
-[ext_resource path="res://RowButton.gd" type="Script" id=3]
-[ext_resource path="res://character_info.tscn" type="PackedScene" id=4]
+[ext_resource path="res://characters/row_button.gd" type="Script" id=3]
+[ext_resource path="res://characters/character_info.tscn" type="PackedScene" id=4]
+
+
 
 [sub_resource type="RectangleShape2D" id=1]
 

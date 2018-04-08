@@ -10,7 +10,7 @@ func spawn(type):
 	var mc = MarginContainer.new()
 	mc.rect_min_size = Vector2(250,70)
 	add_child(mc)
-	var enemy_scene = load("res://enemy.tscn")
+	var enemy_scene = load("res://characters/enemy.tscn")
 	var enemy = enemy_scene.instance()
 	enemy.get_node('EnemyShape').get_node('Name').text = 'baddie ' + str(enemy_1_count)
 	mc.add_child(enemy)

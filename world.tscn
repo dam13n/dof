@@ -6,12 +6,12 @@
 [ext_resource path="res://discard.gd" type="Script" id=4]
 [ext_resource path="res://deck.tscn" type="PackedScene" id=5]
 [ext_resource path="res://draw_pile.gd" type="Script" id=6]
-[ext_resource path="res://player.tscn" type="PackedScene" id=7]
+[ext_resource path="res://characters/player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://mob.tscn" type="PackedScene" id=8]
 [ext_resource path="res://mob_detection_area.tscn" type="PackedScene" id=9]
-[ext_resource path="res://SpawnButton.gd" type="Script" id=10]
-[ext_resource path="res://EndTurn.gd" type="Script" id=11]
-[ext_resource path="res://friend.tscn" type="PackedScene" id=12]
+[ext_resource path="res://spawn_buttons.gd" type="Script" id=10]
+[ext_resource path="res://end_turn.gd" type="Script" id=11]
+[ext_resource path="res://characters/friend.tscn" type="PackedScene" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -42,7 +42,7 @@ func _ready():
 custom_solver_bias = 0.0
 extents = Vector2( 10.4167, 10.3077 )
 
-[node name="world" type="Node" index="0"]
+[node name="world" type="Node"]
 
 script = ExtResource( 1 )
 
