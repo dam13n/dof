@@ -91,8 +91,6 @@ func _ready():
 	
 	update_display()
 	
-	print(to_data())
-	
 func load_action(action_data):
 	var action_scene = load("res://cards/action.tscn")
 	var action = action_scene.instance()
@@ -123,7 +121,7 @@ func load_action(action_data):
 	actions.append(action)
 	
 func enough_energy():
-	return get_parent().get_parent().get_node('Player').energy >= cost
+	return get_parent().get_parent().get_node('Player').stats.energy >= cost
 	
 func playable(target_object):
 	return active && enough_energy() && !grabbed && active && target == target_object.type
@@ -139,7 +137,7 @@ func get_playable_actions(target):
 #		if target.type == 'main' && action.main_targeting != null:
 #			playable_actions.append(action)
 
-	if not player.energy >= cost:
+	if not player.stats.energy >= cost:
 		playable_actions = []
 	return playable_actions
 
@@ -214,7 +212,7 @@ func _physics_process(delta):
 			
 func remove():
 	if active == true:
-		player.energy -= cost
+		player.stats.energy -= cost
 		player.update_energy()
 		
 		active = false

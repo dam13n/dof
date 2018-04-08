@@ -5,8 +5,6 @@ var hand
 var deck_owner
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	hand = get_parent().get_node('Hand')
 		
 func make_cards():

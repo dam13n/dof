@@ -1,14 +1,11 @@
 extends Area2D
 
-var starting_health = 80
-var health = 80
-var max_energy = 4
-var energy = 4
-var front_row = true
-
-var is_hovering = false
-
+var type = 'main'
+var stats
 var status_effects = []
+
+var overlapping_bodies = []
+var is_hovering = false
 
 var deck
 var hand_pile = []
@@ -16,12 +13,23 @@ var draw_pile = []
 var discard_pile = []
 var hand
 
+func set_stats():
+	stats.character_name = 'main'
+	stats.max_energy = 4
+	stats.energy = 4
+	
+	stats.starting_health = 80
+	stats.health = 80
+	stats.defense = 1 # base defense
+	
+	stats.front_row = true
+
 func process_action(action):
 	if action.target == 'card_target':
 		if action.attribute == 'health':
 	#		action.enemy_targeting['attribute']
 			var value = int(rand_range(action.value_min, action.value_max)+0.5)
-			health += value
+			stats.health += value
 			update_health()
 		elif action.effect == 'status':
 			print('effect is status')
@@ -77,32 +85,37 @@ func _ready():
 	
 	connect("mouse_entered", self, "_mouse_over", [true])
 	connect("mouse_exited",  self, "_mouse_over", [false])
-	update_health()
-	$PlayerShape/HealthBar.max_value = starting_health
-	$PlayerShape/HealthBar.min_value = 0
-	update_energy()
+	var stats_scene = load("res://characters/stats.tscn")
+	stats = stats_scene.instance()
+	stats.character = self
+	set_stats()
 	
+	$PlayerShape/HealthBar.max_value = stats.starting_health
+	$PlayerShape/HealthBar.min_value = 0	
+	update_health()
+
+	update_energy()
 	
 
 
 func reset_energy():
-	energy = max_energy
+	stats.energy = stats.max_energy
 	update_energy()
 	
 func update_health():
-	$PlayerShape/HP.text = "hp: " + str(health)
-	$PlayerShape/HealthBar.value = health
-	if health <= 0:
+	$PlayerShape/HP.text = "hp: " + str(stats.health)
+	$PlayerShape/HealthBar.value = stats.health
+	if stats.health <= 0:
 		you_dead()
 
 func you_dead():
 	print('dead')
 	
 func update_energy():
-	$PlayerShape/Energy.text = "Energy: " + str(energy)
+	$PlayerShape/Energy.text = "Energy: " + str(stats.energy)
 	
 func _check_alive():
-	if health <= 0:
+	if stats.health <= 0:
 		get_parent().queue_free()
 
 func _mouse_over(over):

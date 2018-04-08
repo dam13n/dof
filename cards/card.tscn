@@ -33,7 +33,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 custom_solver_bias = 0.0
 extents = Vector2( 10.1724, 10.626 )
 
-[node name="Card2" type="KinematicBody2D" index="0"]
+[node name="Card2" type="KinematicBody2D"]
 
 input_pickable = true
 collision_layer = 1

@@ -1,27 +1,19 @@
 extends Area2D
 
-var starting_health = 20
-var health = 20
+var type = 'enemy'
+var stats
+
 var overlapping_bodies = []
 var is_hovering = false
 
-var enemy_name = 'baddie'
-var damage = 10
-var defense = 1 # base defense
-var type = 'enemy'
-
 var status_effects = []
 
-func _ready():
-	connect("mouse_entered", self, "_mouse_over", [true])
-	connect("mouse_exited",  self, "_mouse_over", [false])
-	_update_health()
-	$EnemyShape/HealthBar.max_value = starting_health
-	$EnemyShape/HealthBar.min_value = 0	
-
-func _update_health():
-	$EnemyShape/HP.text = "hp: " + str(health)
-	$EnemyShape/HealthBar.value = health
+func set_stats():
+	stats.character_name = 'baddie'
+	stats.starting_health = 20
+	stats.health = 20
+	stats.damage = 10
+	stats.defense = 1 # base defense
 
 func _process(delta):
 	overlapping_bodies = get_overlapping_bodies()
@@ -64,15 +56,14 @@ func process_action(action):
 	print('process_action: ', action.effect)
 	if action.target == 'card_target':
 		if action.attribute == 'health':
-			var current_defense = get_defense()
-			var value = int(rand_range(action.value_min, action.value_max)+0.5)
-			value = (1+(1-current_defense))*value
-			health -= value
+			var base_damage = int(rand_range(action.value_min, action.value_max)+0.5)
+			stats.inflict_damage(base_damage)
+			
 		elif action.effect == 'status':
 			print('effect is status')
 			_add_status(action)
 			
-	_update_health()
+	update_health()
 		
 func _add_status(action):
 	var status_already_applied = false
@@ -82,7 +73,7 @@ func _add_status(action):
 			status.duration += action.duration
 	
 	if not status_already_applied:
-		var status_scene = load("res://status_effects.tscn")
+		var status_scene = load("res://characters/status_effects.tscn")
 		var status = status_scene.instance()
 		status.attribute = action.attribute
 		status.value_min = action.value_min
@@ -101,12 +92,6 @@ func clear_statuses():
 	for status in status_effects:
 		if status.duration == 0:
 			status_effects.erase(status)
-	
-func get_defense():
-	for status in status_effects:
-		if status.status_name == 'vulnerable':
-			return status.value_min
-	return defense
 
 
 func process_slow_cards():
@@ -114,18 +99,35 @@ func process_slow_cards():
 		var actions = card.get_playable_actions(self)
 		for action in actions:
 			process_action(action)
-			_update_health()
 		$SlowCards.remove_child(card)
 		card.remove()
 	_check_alive()
 			
 func _check_alive():
-	if health <= 0:
+	if stats.health <= 0:
 		# free up all tree (to take care of slow cards)
 		propagate_call("queue_free", [])
 		
 		# free parent holder
 		get_parent().queue_free()
+		
+func _ready():
+	connect("mouse_entered", self, "_mouse_over", [true])
+	connect("mouse_exited",  self, "_mouse_over", [false])
+
+	var stats_scene = load("res://characters/stats.tscn")
+	stats = stats_scene.instance()
+	stats.character = self
+	set_stats()
+	
+	$EnemyShape/HealthBar.max_value = stats.starting_health
+	$EnemyShape/HealthBar.min_value = 0
+
+	update_health()
+
+func update_health():
+	$EnemyShape/HP.text = "hp: " + str(stats.health)
+	$EnemyShape/HealthBar.value = stats.health
 		
 func _mouse_over(over):
 	if over == true:

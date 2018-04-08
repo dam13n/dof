@@ -49,7 +49,6 @@ func set_card_destinations():
 		child.destination = Vector2(pos_x, 0)
 
 func organize():
-	print('active hand size: ', get_children().size())
 	for i in range(0, get_children().size()):
 		var child = get_children()[i]
 		child.reset_position()

@@ -9,7 +9,7 @@ func _ready():
 func load_friends():
 	friends = []
 	var player = get_node('Player')
-	var postle = get_node('Postle')
+	var postle = get_node('Friend')
 	
 	#check for deleted nodes
 	if player != null:
@@ -19,7 +19,6 @@ func load_friends():
 
 func next_turn():
 	if friends.size() > 0:
-		print(friends)
 		process_enemy_actions()
 		process_slow_cards()
 		for enemy in enemies():
@@ -45,8 +44,8 @@ func process_enemy_actions():
 	for enemy in $Mob.get_children():
 		load_friends()
 		var enemy_target = find_enemys_target(enemy)
-		enemy_target.health -= enemy.get_node('Enemy').damage
-		enemy_target.update_health()
+		var damage = enemy.get_node('Enemy').stats.get_damage()
+		enemy_target.stats.inflict_damage(damage)
 		
 func find_enemys_target(enemy):
 	if front_row_friends(friends).size() > 0:
@@ -62,8 +61,6 @@ func shuffled_friends(some_friends):
 		var index_list = range(some_friends.size())
 		for i in range(friends.size()):
 			randomize()
-			print(index_list.size())
-			print(randi()%index_list.size())
 			var x = randi()%index_list.size()
 			shuffled_friends_array.append(some_friends[x])
 			index_list.remove(x)
@@ -73,14 +70,14 @@ func shuffled_friends(some_friends):
 func front_row_friends(some_friends):
 	var front_row_friends_array = []
 	for friend in some_friends:
-		if friend.front_row:
+		if friend.stats.front_row:
 			front_row_friends_array.append(friend)
 	return front_row_friends_array
 	
 func back_row_friends(some_friends):
 	var back_row_friends_array = []
 	for friend in some_friends:
-		if not friend.front_row:
+		if not friend.stats.front_row:
 			back_row_friends_array.append(friend)
 	return back_row_friends_array
 	

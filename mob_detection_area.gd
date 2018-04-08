@@ -12,7 +12,6 @@ func _process(delta):
 	if overlapping_bodies.size() > 0:
 		var ovlb = overlapping_bodies[0]
 	
-		print('mob playable: ', ovlb.playable(self))
 		if is_hovering && ovlb.playable(self):
 			var do_not_remove = false
 			var actions = ovlb.get_playable_actions(self)

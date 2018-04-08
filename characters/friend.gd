@@ -1,20 +1,26 @@
 extends Area2D
 
-var starting_health = 60
-var health = 60
-var front_row = true
 var type = 'friend'
+
+var stats
+var status_effects = []
 
 var overlapping_bodies = []
 var is_hovering = false
-
-var status_effects = []
 
 var deck
 var hand_pile = []
 var draw_pile = []
 var discard_pile = []
 var hand
+
+func set_stats():
+	stats.character_name = 'friend'
+	stats.starting_health = 60
+	stats.health = 60
+	stats.defense = 1 # base defense
+	
+	stats.front_row = true
 
 func _add_status(action):
 	var status_already_applied = false
@@ -24,7 +30,7 @@ func _add_status(action):
 			status.duration += action.duration
 	
 	if not status_already_applied:
-		var status_scene = load("res://status_effects.tscn")
+		var status_scene = load("res://characters/status_effects.tscn")
 		var status = status_scene.instance()
 		status.attribute = action.attribute
 		status.value_min = action.value_min
@@ -51,7 +57,6 @@ func show_hand():
 func _process(delta):
 	overlapping_bodies = get_overlapping_bodies()
 	if overlapping_bodies.size() > 0:
-		print("found object")
 		var ovlb = overlapping_bodies[0]
 
 		if is_hovering && ovlb.playable(self):
@@ -69,7 +74,7 @@ func process_action(action):
 		if action.attribute == 'health':
 	#		action.enemy_targeting['attribute']
 			var value = int(rand_range(action.value_min, action.value_max)+0.5)
-			health += value
+			stats.health += value
 			update_health()
 		elif action.effect == 'status':
 			print('effect is status')
@@ -85,18 +90,18 @@ func reset_energy():
 	update_energy()
 	
 func update_health():
-	if health >= starting_health:
-		health = starting_health
-	$HP.text = "hp: " + str(health)
-	$HealthBar.value = health
-	if health <= 0:
+	if stats.health >= stats.starting_health:
+		stats.health = stats.starting_health
+	$HP.text = "hp: " + str(stats.health)
+	$HealthBar.value = stats.health
+	if stats.health <= 0:
 		you_dead()
 
 func you_dead():
 	queue_free()
 	
 func _check_alive():
-	if health <= 0:
+	if stats.health <= 0:
 		get_parent().queue_free()
 
 func draw_hand():
@@ -133,9 +138,13 @@ func _ready():
 
 	connect("mouse_entered", self, "_mouse_over", [true])
 	connect("mouse_exited",  self, "_mouse_over", [false])
+	var stats_scene = load("res://characters/stats.tscn")
+	stats = stats_scene.instance()
+	stats.character = self
+	set_stats()
 
 	update_health()
-	$HealthBar.max_value = starting_health
+	$HealthBar.max_value = stats.starting_health
 	$HealthBar.min_value = 0
 
 func _mouse_over(over):	

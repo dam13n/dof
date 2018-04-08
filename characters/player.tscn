@@ -5,8 +5,6 @@
 [ext_resource path="res://characters/row_button.gd" type="Script" id=3]
 [ext_resource path="res://characters/character_info.tscn" type="PackedScene" id=4]
 
-
-
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0

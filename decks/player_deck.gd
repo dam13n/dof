@@ -114,7 +114,7 @@ func deck_data():
 			"description" : 'Gives enemy a 25% vulnerability.',
 			"actions" : [
 				{
-					'action_name' : 'vulnerable',
+					'action_name' : 'vulnerability',
 					'effect' : 'status',
 					'description' : '',
 					'priority' : 'fast',
