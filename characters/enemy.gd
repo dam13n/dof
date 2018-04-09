@@ -26,13 +26,17 @@ func _process(delta):
 
 
 			if actions.size() > 0:
+				var quicken = false
+				if ovlb.card_owner.stats.quickened():
+						quicken = true
 				for action in actions:
-					if action.priority == 'fast':
+					if action.priority == 'fast' || quicken:
 						process_action(action)
 					elif action.priority == 'slow':
-						ovlb.move_to_destination = false
-						ovlb.active = false
-						do_not_remove = true
+						
+							ovlb.move_to_destination = false
+							ovlb.active = false
+							do_not_remove = true
 
 					
 				_check_alive()

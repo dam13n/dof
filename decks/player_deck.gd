@@ -85,8 +85,8 @@ func deck_data():
 					'duration' : 1,
 					'attribute' : 'health',
 					'target' : 'card_target',
-					'value_min' : 20,
-					'value_max' : 20,
+					'value_min' : -20,
+					'value_max' : -20,
 					'status' : null
 				},
 				{
@@ -100,8 +100,8 @@ func deck_data():
 					'duration' : 1,
 					'attribute' : 'health',
 					'target' : 'card_owner',
-					'value_min' : 10,
-					'value_max' : 10,
+					'value_min' : -10,
+					'value_max' : -10,
 					'status' : null
 				}
 			]

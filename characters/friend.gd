@@ -14,6 +14,12 @@ var draw_pile = []
 var discard_pile = []
 var hand
 
+func add_test_status():
+	var status_scene = load("res://characters/status_effects.tscn")
+	var status = status_scene.instance()
+	status.status_name = 'quicken'
+	status_effects.append(status)
+
 func set_stats():
 	stats.character_name = 'friend'
 	stats.starting_health = 60
@@ -64,7 +70,6 @@ func _process(delta):
 			if actions.size() > 0:
 				for action in actions:
 					process_action(action)
-					update_health()
 					
 				_check_alive()
 			ovlb.remove()
@@ -73,9 +78,9 @@ func process_action(action):
 	if action.target == 'card_target':
 		if action.attribute == 'health':
 	#		action.enemy_targeting['attribute']
-			var value = int(rand_range(action.value_min, action.value_max)+0.5)
-			stats.health += value
-			update_health()
+			var base_damage = int(rand_range(action.value_min, action.value_max)+0.5)
+			stats.inflict_damage(base_damage)
+
 		elif action.effect == 'status':
 			print('effect is status')
 			_add_status(action)
@@ -133,6 +138,8 @@ func prepare_deck_and_draw_pile():
 	draw_hand()
 		
 func _ready():
+	add_test_status()
+	
 	hand = get_parent().get_node('Hand')
 	prepare_deck_and_draw_pile()
 

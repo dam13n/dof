@@ -191,13 +191,13 @@ _sections_unfolded = [ "Pickable" ]
 
 margin_left = 1055.0
 margin_top = 291.0
-margin_right = 1917.0
+margin_right = 1979.0
 margin_bottom = 543.0
 
 [node name="MobDetectionArea" parent="." index="7" instance=ExtResource( 9 )]
 
-position = Vector2( 1501.16, 415.577 )
-scale = Vector2( 14.5933, 3.92252 )
+position = Vector2( 1484.94, 444.186 )
+scale = Vector2( 16.8366, 6.8829 )
 _sections_unfolded = [ "Pickable", "Transform", "Visibility" ]
 
 [node name="SpawnButton1" type="Button" parent="." index="8"]

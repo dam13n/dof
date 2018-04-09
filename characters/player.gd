@@ -1,4 +1,4 @@
-extends Area2D
+	extends Area2D
 
 var type = 'main'
 var stats
@@ -12,6 +12,12 @@ var hand_pile = []
 var draw_pile = []
 var discard_pile = []
 var hand
+
+func add_test_status():
+	var status_scene = load("res://characters/status_effects.tscn")
+	var status = status_scene.instance()
+	status.status_name = 'quicken'
+	status_effects.append(status)
 
 func set_stats():
 	stats.character_name = 'main'
@@ -27,13 +33,12 @@ func set_stats():
 func process_action(action):
 	if action.target == 'card_target':
 		if action.attribute == 'health':
-	#		action.enemy_targeting['attribute']
-			var value = int(rand_range(action.value_min, action.value_max)+0.5)
-			stats.health += value
-			update_health()
+			var base_damage = int(rand_range(action.value_min, action.value_max)+0.5)
+			stats.inflict_damage(base_damage)
 		elif action.effect == 'status':
 			print('effect is status')
 			_add_status(action)
+			
 	elif action.target == 'card_owner':
 		var card_owner = action.card_owner
 		# this is a hackish way to stop an endless loop of trying to retarget card owner
@@ -80,6 +85,8 @@ func make_card(card_data):
 		return card
 	
 func _ready():
+	add_test_status()
+	
 	hand = get_parent().get_node('Hand')
 	prepare_deck_and_draw_pile()
 	

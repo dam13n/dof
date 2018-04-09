@@ -13,20 +13,26 @@ var damage = 10
 var defense = 1.0
 var strength = 0 
 var weakness = 1.0
+var block = 1.0
+var accuracy = 1.0
 
 var front_row = true
 
-func get_weakness():
+func quickened():
+	var quicken_check = false
+	for modifier in get_card_modifiers():
+		if modifier == 'quicken':
+			return true
+	return false	
+		
+
+func get_card_modifiers():
+	var modifiers = []
 	for status in character.status_effects:
-		if status.status_name == 'weakness':
-			return status.value_min
-	return weakness
-	
-func get_strength():
-	for status in character.status_effects:
-		if status.status_name == 'strength':
-			return status.value_min
-	return strength
+			if status.status_name == 'quicken':
+				modifiers.append('quicken')
+	return modifiers
+
 	
 func get_damage():
 	# add strength modifier to damage
@@ -46,3 +52,27 @@ func get_defense():
 		if status.status_name == 'vulnerability':
 			return status.value_min
 	return defense
+	
+func get_accuracy():
+	for status in character.status_effects:
+		if status.status_name == 'accuracy':
+			return status.value_min
+	return accuracy
+	
+func get_block():
+	for status in character.status_effects:
+		if status.status_name == 'block':
+			return status.value_min
+	return block
+	
+func get_weakness():
+	for status in character.status_effects:
+		if status.status_name == 'weakness':
+			return status.value_min
+	return weakness
+	
+func get_strength():
+	for status in character.status_effects:
+		if status.status_name == 'strength':
+			return status.value_min
+	return strength

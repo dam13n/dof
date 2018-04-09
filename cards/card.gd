@@ -50,6 +50,7 @@ var card_display
 var card_title
 var card_cost
 var card_description
+var card_status_description
 
 func to_data():
 	return { 
@@ -66,30 +67,6 @@ func action_data():
 	for action in actions:
 		action_data_temp.append(action.to_data())
 	return action_data_temp
-
-func _ready():
-	card_display = get_node('Display')
-	card_title = get_node('Display').get_node('Name')
-	card_cost = $Display/Cost
-	card_description = $Display/Description
-
-	
-	#    set_fixed_process(true)
-	connect("mouse_entered", self, "_mouse_over", [true])
-	connect("mouse_exited",  self, "_mouse_over", [false])
-#	print(get_viewport().get_size())
-
-	randomize()
-	var redness = rand_range(0,1)
-	randomize()
-	var blueness = rand_range(0,1)
-	randomize()
-	var greenness = rand_range(0,1)
-	
-#	$Container/Display/Background.color = Color(redness, greenness, blueness, 1)
-	player = get_parent().get_parent().get_node('Player')
-	
-	update_display()
 	
 func load_action(action_data):
 	var action_scene = load("res://cards/action.tscn")
@@ -155,12 +132,27 @@ func _mouse_over(over):
 	if over == true:
 		is_hovering = true
 		_scale_up()
+		card_status_description.text = card_modifier_description()
 	else:
 		is_hovering = false
 		if is_scaled_up == true:
 			_scale_down()
+		card_status_description.text = ''
 
+func has_slow_actions():
+	for action in actions:
+		if action.priority == 'slow':
+			return true
+	return false
 			
+func card_modifier_description():
+	var modifier_string = ''
+	var modifiers = card_owner.stats.get_card_modifiers()
+	for modifier in modifiers:
+		if modifier == 'quicken' && has_slow_actions():
+			modifier_string += "Card plays fast. "
+	return modifier_string
+	
 func _scale_up():
 	card_display.apply_scale(Vector2(scale_ratio,scale_ratio))
 	is_scaled_up = true
@@ -244,6 +236,28 @@ func _move_by_mouse():
 #		this_pos.y = view_size.y
 
 	position = this_pos
-	
 
+func _ready():
+	card_display = get_node('Display')
+	card_title = get_node('Display').get_node('Name')
+	card_cost = $Display/Cost
+	card_description = $Display/Description
+	card_status_description = $Display/StatusDescription
+	
+	#    set_fixed_process(true)
+	connect("mouse_entered", self, "_mouse_over", [true])
+	connect("mouse_exited",  self, "_mouse_over", [false])
+#	print(get_viewport().get_size())
+
+	randomize()
+	var redness = rand_range(0,1)
+	randomize()
+	var blueness = rand_range(0,1)
+	randomize()
+	var greenness = rand_range(0,1)
+	
+#	$Container/Display/Background.color = Color(redness, greenness, blueness, 1)
+	player = get_parent().get_parent().get_node('Player')
+	
+	update_display()
 
