@@ -13,8 +13,13 @@ var duration = 1
 # health defense accuracy block attack
 
 func next_turn():
-	duration -= 1
-	if duration == 0:
-		queue_free()
+	if status_name == 'quicken':
+		pass
+	elif status_name == 'strengthen':
+		pass
+	else:
+		duration -= 1
+		if duration == 0:
+			queue_free()
 		
 		

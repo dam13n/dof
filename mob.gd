@@ -12,7 +12,7 @@ func spawn(type):
 	add_child(mc)
 	var enemy_scene = load("res://characters/enemy.tscn")
 	var enemy = enemy_scene.instance()
-	enemy.get_node('EnemyShape').get_node('Name').text = 'baddie ' + str(enemy_1_count)
+#	enemy.get_node('EnemyShape').get_node('Name').text = 'baddie ' + str(enemy_1_count)
 	mc.add_child(enemy)
 	
 	connect("mouse_exited",  self, "_mouse_over", [false])

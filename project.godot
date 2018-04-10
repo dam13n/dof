@@ -18,6 +18,7 @@ config/icon="res://icon.png"
 
 friend_deck="*res://decks/friend_deck.tscn"
 player_deck="*res://decks/player_deck.tscn"
+enemies_list="*res://decks/enemies_list.tscn"
 
 [display]
 

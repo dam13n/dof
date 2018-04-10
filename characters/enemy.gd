@@ -1,6 +1,9 @@
 extends Area2D
 
 var type = 'enemy'
+var enemy_type = 'standard'
+var character_name = ''
+var image_path = ''
 var stats
 
 var overlapping_bodies = []
@@ -9,11 +12,27 @@ var is_hovering = false
 var status_effects = []
 
 func set_stats():
-	stats.character_name = 'baddie'
-	stats.starting_health = 20
-	stats.health = 20
+#	var enemies_list_instance = load("res://decks/enemies_list.tscn").instance
+	var enemies_data = enemies_list.enemies_data()
+
+	randomize()
+	var x = randi()%enemies_data.size()
+	var enemy_data = enemies_data[x]
+
+
+	character_name = enemy_data['name']
+	enemy_type = enemy_data['enemy_type']
+	image_path = enemy_data['image_path']
+	stats.starting_health = enemy_data['health']
+	stats.health = enemy_data['health']
 	stats.damage = 10
 	stats.defense = 1 # base defense
+	
+func choose_target():
+	pass
+	
+func attack():
+	pass
 
 func _process(delta):
 	overlapping_bodies = get_overlapping_bodies()
@@ -24,20 +43,23 @@ func _process(delta):
 			var do_not_remove = false
 			var actions = ovlb.get_playable_actions(self)
 
-
 			if actions.size() > 0:
-				var quicken = false
+				var quickened = false
 				if ovlb.card_owner.stats.quickened():
-						quicken = true
+					quickened = true
+					
 				for action in actions:
-					if action.priority == 'fast' || quicken:
+					if action.priority == 'fast':
 						process_action(action)
-					elif action.priority == 'slow':
 						
-							ovlb.move_to_destination = false
-							ovlb.active = false
-							do_not_remove = true
-
+					elif quickened:
+						ovlb.card_owner.stats.remove_quicken()
+						process_action(action)
+						
+					elif action.priority == 'slow':
+						ovlb.move_to_destination = false
+						ovlb.active = false
+						do_not_remove = true
 					
 				_check_alive()
 			if do_not_remove:
@@ -60,7 +82,19 @@ func process_action(action):
 	print('process_action: ', action.effect)
 	if action.target == 'card_target':
 		if action.attribute == 'health':
-			var base_damage = int(rand_range(action.value_min, action.value_max)+0.5)
+#			var strengthened = false
+#			if action.card_owner.stats.strengthened():
+#				strengthened = true
+			var critical_damage_multiplier = 1.0
+			if action.card_owner.stats.will_critical():
+				print('will critical')
+				critical_damage_multiplier = 2.0
+			var base_damage = int(
+				(rand_range(action.value_min, action.value_max)+0.5)*
+				 action.card_owner.stats.get_strength()*
+				 critical_damage_multiplier
+			  )
+			action.card_owner.stats.remove_strengthen()
 			stats.inflict_damage(base_damage)
 			
 		elif action.effect == 'status':
@@ -85,6 +119,9 @@ func _add_status(action):
 		status.status_name = action.action_name
 		status_effects.append(status)
 	update_info_node()
+	
+func update_display():
+	get_node('EnemyShape').get_node('Name').text = character_name
 	
 
 func update_info_node():
@@ -128,6 +165,7 @@ func _ready():
 	$EnemyShape/HealthBar.min_value = 0
 
 	update_health()
+	update_display()
 
 func update_health():
 	$EnemyShape/HP.text = "hp: " + str(stats.health)

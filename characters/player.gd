@@ -18,6 +18,10 @@ func add_test_status():
 	var status = status_scene.instance()
 	status.status_name = 'quicken'
 	status_effects.append(status)
+	
+	var status2 = status_scene.instance()
+	status2.status_name = 'quicken'
+	status_effects.append(status2)
 
 func set_stats():
 	stats.character_name = 'main'

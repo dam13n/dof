@@ -151,6 +151,8 @@ func card_modifier_description():
 	for modifier in modifiers:
 		if modifier == 'quicken' && has_slow_actions():
 			modifier_string += "Card plays fast. "
+		if modifier == 'strengthen':
+			modifier_string += "Attacks are strengthened. "
 	return modifier_string
 	
 func _scale_up():

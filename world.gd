@@ -45,7 +45,9 @@ func process_enemy_actions():
 		load_friends()
 		var enemy_target = find_enemys_target(enemy)
 		var damage = enemy.get_node('Enemy').stats.get_damage()
-		enemy_target.stats.inflict_damage(damage)
+		var response = enemy_target.stats.inflict_damage(damage)
+		if response.has('parry'):
+			enemy.get_node('Enemy').stats.inflict_damage_pass(response['parry'])
 		
 func find_enemys_target(enemy):
 	if front_row_friends(friends).size() > 0:

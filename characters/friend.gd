@@ -16,15 +16,27 @@ var hand
 
 func add_test_status():
 	var status_scene = load("res://characters/status_effects.tscn")
-	var status = status_scene.instance()
-	status.status_name = 'quicken'
-	status_effects.append(status)
+	var quicken_status = status_scene.instance()
+	quicken_status.status_name = 'quicken'
+	status_effects.append(quicken_status)
+
+	var parry_status = status_scene.instance()
+	parry_status.status_name = 'parry'
+	parry_status.value_min = 5
+	status_effects.append(parry_status)
+	
+#	var strength_status = status_scene.instance()
+#	strength_status.status_name = 'strengthen'
+#	strength_status.value_min = 0.25
+#	status_effects.append(strength_status)
 
 func set_stats():
 	stats.character_name = 'friend'
 	stats.starting_health = 60
 	stats.health = 60
-	stats.defense = 1 # base defense
+	stats.defense = 1.0 # base defense
+	stats.strength = 1.0
+	stats.critical_chance = 0.50
 	
 	stats.front_row = true
 
