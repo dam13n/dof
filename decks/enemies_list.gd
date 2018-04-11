@@ -15,48 +15,58 @@ func enemies_data():
           'description' : 'Does 10-15 damage.',
           'notes' : '',
           
-          'target_priority' : ['poisoned', 'front', 'low health'],
-          'target_restriction' : [],
+          'target_priorities' : ['poisoned', 'front', 'low health'],
+          'target_restrictions' : [],
 
           'actions' : [
             {
+              'action_name' : 'rep',
+              'target' : 'card_target',
+              'description' : '',
               'multiplier' : null,
               'turn' : 0,
               'duration' : 1,
               'attribute' : 'health',
               'value_min' : 10,
               'value_max' : 15,
-              'status' : null
+              'effect' : 'attack'
             }
           ]
         },
         { 
-          'action_name' : 'Deathcap',
+          'name' : 'Deathcap',
           'type' : 'special',
           'card_target' : 'friend',
           'description' : 'Poisons.',
           'notes' : '',
           
-          'target_priority' : ['front'],
-          'target_restriction' : [],
+          'target_priorities' : ['front'],
+          'target_restrictions' : [],
 
           'actions': [
             {
+              'action_name' : 'deathcap - attack',
+              'target' : 'card_target',
+              'description' : '',
               'multiplier' : null,
               'turn' : 0,
               'duration' : 1,
               'attribute' : 'health',
               'value_min' : 15,
               'value_max' : 25,
-              'status' : null
+              'effect' : 'attack'
             },
             {
+              'action_name' : 'poison',
+              'target' : 'card_target',
+              'description' : '',
               'multiplier' : null,
               'turn' : 0,
               'duration' : 3,
-              'attribute' : 'health',
+              'attribute' : '',
               'value_min' : 5,
               'value_max' : 5,
+              'effect' : 'status',
               'status' : 'poison'
             }
           ]
