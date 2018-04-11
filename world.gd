@@ -1,24 +1,25 @@
 extends Node
 
-var allies = []
+#var allies = []
 
 func _ready():
-  load_allies()
+  pass
+#  load_allies()
 #	get_node('Deck').make_cards()
   
-func load_allies():
-  allies = []
-  var player = get_node('Player')
-  var friend = get_node('Friend')
-  
-  #check for deleted nodes
-  if player != null:
-    allies.append(player)
-  if friend != null:
-    allies.append(friend)
+#func load_allies():
+#  allies = []
+#  var player = get_node('Player')
+#  var friend = get_node('Friend')
+#
+#  #check for deleted nodes
+#  if player != null:
+#    allies.append(player)
+#  if friend != null:
+#    allies.append(friend)
 
 func next_turn():
-  if allies.size() > 0:
+  if reference.allies.size() > 0:
     process_enemy_actions()
     process_slow_cards()
     
@@ -35,22 +36,30 @@ func next_turn():
       friend.stats.update_info_node()	
       
     $Player.reset_energy()
+    reference.load_all()
     
     
-func enemies():
-  var enemies = []
-  for container in $Mob.get_children():
-    enemies.append(container.get_children()[0])
-  return enemies
+    
+#func enemies():
+#  var enemies = []
+#  for container in $Mob.get_children():
+#    enemies.append(container.get_children()[0])
+#  return enemies
     
     
 func process_slow_cards():
-  for enemy_container in $Mob.get_children():
-    enemy_container.get_children()[0].process_slow_cards()	
+  for enemy in reference.enemies:
+    enemy.process_slow_cards()
+#  for enemy_container in $Mob.get_children():
+#    enemy_container.get_children()[0].process_slow_cards()	
     
 func process_enemy_actions():
-  for enemy in $Mob.get_children():
-    enemy.get_node('Enemy').process_turn()
+  for enemy in reference.enemies:
+    enemy.process_turn()
+    reference.load_all()
+#  for enemy in $Mob.get_children():
+#    enemy.get_node('Enemy').process_turn()
+
 #		load_allies()
 #		var enemy_target = find_enemys_target(enemy)
 #		var damage = enemy.get_node('Enemy').stats.get_damage()
