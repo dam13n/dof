@@ -8,7 +8,7 @@ var energy = 4
 var starting_health = 20
 var health = 20
 
-var damage = 10
+#var damage = 10
 
 var defense = 1.0
 var strength = 1.0
@@ -60,7 +60,7 @@ func update_info_node():
 ### action processing (against)
 ##########################################################
 func process_action(action):
-  print(character_name, ' process_action: ', action.action_name)
+#  print(character_name, ' process_action: ', action.action_name)
   if action.target == 'card_target':
       if action.attribute == 'health':
 
@@ -184,13 +184,13 @@ func get_card_modifiers():
   return modifiers
 
   
-func get_damage():
-  # add strength modifier to damage
-  var damage_temp = damage + strength
-  # apply weakness
-  damage_temp = (1-(1-get_weakness())) * damage_temp
-  
-  return damage_temp
+#func get_damage():
+#  # add strength modifier to damage
+#  var damage_temp = damage + strength
+#  # apply weakness
+#  damage_temp = (1-(1-get_weakness())) * damage_temp
+#
+#  return damage_temp
 
 func inflict_damage(base_damage):
   var response = {}

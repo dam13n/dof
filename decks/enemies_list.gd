@@ -15,7 +15,7 @@ func enemies_data():
           'description' : 'Does 10-15 damage.',
           'notes' : '',
           
-          'target_priorities' : ['poisoned', 'front', 'low health'],
+          'target_priorities' : ['poison', 'front', 'lowest health'],
           'target_restrictions' : [],
 
           'actions' : [
@@ -71,6 +71,32 @@ func enemies_data():
             }
           ]
         },
+        { 
+          'name' : 'Sporeburst',
+          'type' : 'special',
+          'card_target' : 'allies',
+          'description' : 'Poisons all.',
+          'notes' : '',
+          
+          'target_priorities' : [],
+          'target_restrictions' : [],
+
+          'actions': [
+            {
+              'action_name' : 'poison',
+              'target' : 'card_target',
+              'description' : '',
+              'multiplier' : null,
+              'turn' : 0,
+              'duration' : 3,
+              'attribute' : '',
+              'value_min' : 5,
+              'value_max' : 5,
+              'effect' : 'status',
+              'status' : 'poison'
+            }
+          ]
+        }
       ]
     }
   ]

@@ -25,7 +25,7 @@ func set_stats():
     image_path = enemy_data['image_path']
     stats.starting_health = enemy_data['health']
     stats.health = enemy_data['health']
-    stats.damage = 10
+#    stats.damage = 10
     stats.defense = 1 # base defense
 
     for ability_data in enemy_data['abilities']:
@@ -145,18 +145,31 @@ func process_slow_cards():
     _check_alive()
     
 func process_turn():
-    var enemy_target = choose_target()
-    attack(enemy_target)
+    var ability = choose_ability()
+    print('enemy uses: ', ability.ability_name)
     
-func choose_target():
+    if ability.card_target == 'allies':
+      print('enemy targeting all allies')
+      for ally in reference.allies:
+        attack(ally)
+    else:
+      var enemy_target = choose_target(ability.target_priorities)
+      attack(enemy_target)
+    
+func choose_target(target_priorities):
     reference.load_all()
+    
+    # implement later cuz complicated
+#    for target_priority in target_priorities:
+#      if target_priority == 
+
     if front_row_allies(reference.allies).size() > 0:
         return shuffled_allies(front_row_allies(reference.allies)).front()
     else:
         return shuffled_allies(back_row_allies(reference.allies)).front()
-    
+
 func attack(enemy_target):
-  var damage = stats.get_damage()
+#  var damage = stats.get_damage()
   var ability = choose_ability()
 #  print(ability)
 #    var response = enemy_target.stats.inflict_damage(damage)
@@ -168,7 +181,7 @@ func attack(enemy_target):
         
 func choose_ability():
   var x = randi()%(abilities.size())
-  print('enemy ability choice index: ', x)
+#  print('enemy ability choice index: ', x)
   var ability_choice = abilities[x]
   for status in stats.status_effects:
     if status.status_name == 'dazed':
