@@ -184,7 +184,7 @@ func shuffled_allies(some_allies):
         return some_allies
     else:
         var index_list = range(some_allies.size())
-        print('shuffled some_allies is:', some_allies)
+#        print('shuffled some_allies is:', some_allies)
         for i in range(reference.allies.size()):
             randomize()
             var x = randi()%index_list.size()
@@ -195,7 +195,7 @@ func shuffled_allies(some_allies):
     
 func front_row_allies(some_allies):
     var front_row_allies_array = []
-    print('front row some_allies is:', some_allies)
+#    print('front row some_allies is:', some_allies)
     for friend in some_allies:
         if friend.stats.front_row:
             front_row_allies_array.append(friend)

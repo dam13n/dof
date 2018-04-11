@@ -25,7 +25,7 @@ func load_friends():
 func load_allies():
   allies = []
   allies = friends + [player]
-  print('reference allies: ', allies)
+  #print('reference allies: ', allies)
 
 func load_enemies():
   enemies = []

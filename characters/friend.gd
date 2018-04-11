@@ -8,11 +8,13 @@ var status_effects = []
 var overlapping_bodies = []
 var is_hovering = false
 
-var deck
-var hand_pile = []
-var draw_pile = []
-var discard_pile = []
+#var deck
+#var hand_pile = []
+#var draw_pile = []
+#var discard_pile = []
 var hand
+
+var deck_manager
 
 func add_test_status():
   var status_scene = load("res://characters/status_effects.tscn")
@@ -64,13 +66,13 @@ func set_stats():
 #    $CharacterInfo.get_node('Statuses').text += str(status.duration) + ' ' + status.status_name
 
 
-func show_hand():
-  hand.clear_cards()
-  for card in hand_pile:
-    hand.add_card(card.to_data(), self)
-    #hand.active_hand.append(card)
-    hand.set_card_destinations()
-    hand.organize()
+#func show_hand():
+#  hand.clear_cards()
+#  for card in hand_pile:
+#    hand.add_card(card.to_data(), self)
+#    #hand.active_hand.append(card)
+#    hand.set_card_destinations()
+#    hand.organize()
   
 func _process(delta):
   overlapping_bodies = get_overlapping_bodies()
@@ -121,39 +123,44 @@ func _check_alive():
   if stats.health <= 0:
     get_parent().queue_free()
 
-func draw_hand():
-  for card in draw_pile:
-    hand_pile.append(card)
+#func draw_hand():
+#  for card in draw_pile:
+#    hand_pile.append(card)
 #	show_hand()
 
-func prepare_deck_and_draw_pile():
-  var deck_data = friend_deck.deck_data()
-
-  for card_data in deck_data:
-    
-    var card_scene = load("res://cards/card.tscn")
-    var card = card_scene.instance()
-    
-    card.card_owner = self
-    card.card_name = card_data['name']
-    card.target = card_data['card_target']
-    card.effect = card_data['effect']
-
-    card.cost = card_data['cost']
-    card.description = card_data['description']
-    for action_data in card_data['actions']:
-      card.load_action(action_data)
-    card.update_display()
-    card.apply_scale(Vector2(0.25,0.25))
-      
-    draw_pile.append(card)
-  draw_hand()
+#func prepare_deck_and_draw_pile():
+#  var deck_data = friend_deck.deck_data()
+#
+#  for card_data in deck_data:
+#
+#    var card_scene = load("res://cards/card.tscn")
+#    var card = card_scene.instance()
+#
+#    card.card_owner = self
+#    card.card_name = card_data['name']
+#    card.target = card_data['card_target']
+#    card.effect = card_data['effect']
+#
+#    card.cost = card_data['cost']
+#    card.description = card_data['description']
+#    for action_data in card_data['actions']:
+#      card.load_action(action_data)
+#    card.update_display()
+#    card.apply_scale(Vector2(0.25,0.25))
+#
+#    draw_pile.append(card)
+#  draw_hand()
     
 func _ready():
   add_test_status()
   
   hand = get_parent().get_node('Hand')
-  prepare_deck_and_draw_pile()
+  
+  deck_manager = load("res://characters/deck_manager.tscn").instance()
+  deck_manager.character = self
+  deck_manager.hand = hand
+  deck_manager.prepare_deck_and_draw_pile(friend_deck)
+#  prepare_deck_and_draw_pile()
 
   connect("mouse_entered", self, "_mouse_over", [true])
   connect("mouse_exited",  self, "_mouse_over", [false])
@@ -176,7 +183,7 @@ func _mouse_over(over):
 
 func _input(event):
   if event is InputEventMouseButton && event.pressed && is_hovering == true:
-    show_hand()
+    deck_manager.show_hand()
     
 # may be useful later
 #func _input(ev):

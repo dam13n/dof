@@ -19,6 +19,7 @@ func _ready():
 #    allies.append(friend)
 
 func next_turn():
+  reference.load_all()  
   if reference.allies.size() > 0:
     process_enemy_actions()
     process_slow_cards()

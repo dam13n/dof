@@ -10,7 +10,7 @@ use_filter = false
 font_data = ExtResource( 1 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="CharacterInfo" type="Area2D" index="0"]
+[node name="CharacterInfo" type="Area2D"]
 
 position = Vector2( 65.1724, 103.754 )
 scale = Vector2( 2.02849, 3.20159 )

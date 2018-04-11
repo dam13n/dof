@@ -35,6 +35,8 @@ func add_status(action):
   if not status_already_applied:
     var status_scene = load("res://characters/status_effects.tscn")
     var status = status_scene.instance()
+    status.status_owner = character
+    status.duration = action.duration
     status.attribute = action.attribute
     status.value_min = action.value_min
     status.value_max = action.value_max
@@ -48,17 +50,17 @@ func clear_statuses():
           status_effects.erase(status)
           
 func update_info_node():
-  var character_info = character.get_node('CharacterInfo')
-  character_info.get_node('Statuses').text = ''
+  var character_info_status = character.get_node('CharacterInfo').get_node('Statuses')
+  character_info_status.text = ''
   for status in status_effects:
-    print("adding status to display: ", status.status_name)
-    character_info.get_node('Statuses').text += str(status.duration) + ' ' + status.status_name
+    print(character_name, " adding status to display: ", status.status_name)
+    character_info_status.text += str(status.duration) + ' ' + status.status_name
 
 ##########################################################
 ### action processing (against)
 ##########################################################
 func process_action(action):
-  print('process_action: ', action.action_name)
+  print(character_name, ' process_action: ', action.action_name)
   if action.target == 'card_target':
       if action.attribute == 'health':
 
@@ -173,7 +175,6 @@ func remove_strengthen():
       character.status_effects.erase(status)
       return
 ##########################################################
-
 
 func get_card_modifiers():
   var modifiers = []
