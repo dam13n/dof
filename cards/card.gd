@@ -98,7 +98,7 @@ func load_action(action_data):
   actions.append(action)
   
 func enough_energy():
-  return get_parent().get_parent().get_node('Player').stats.energy >= cost
+  return reference.player.stats.energy >= cost
   
 func playable(target_object):
   return active && enough_energy() && !grabbed && active && target == target_object.type

@@ -8,6 +8,8 @@ var allies = []
 var friends = []
 var enemies = []
 
+const DRAW = 3
+
 func _ready():
   world = get_parent().get_node('World')
   load_all()

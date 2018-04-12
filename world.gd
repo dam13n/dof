@@ -18,6 +18,14 @@ func _ready():
 #  if friend != null:
 #    allies.append(friend)
 
+func hide_hands():
+  for ally in reference.allies:
+    ally.deck_manager.hand.visible = false
+
+func clear_hands():
+  for ally in reference.allies:
+    ally.deck_manager.hand.clear_cards()
+
 func next_turn():
   reference.load_all()  
   if reference.allies.size() > 0:
@@ -34,9 +42,11 @@ func next_turn():
       for status in friend.stats.status_effects:
         status.next_turn()
       friend.stats.clear_statuses()
-      friend.stats.update_info_node()	
+      friend.stats.update_info_node()
+      friend.deck_manager.discard_hand()
+      friend.deck_manager.drawn_this_turn = false
       
-    $Player.reset_energy()
+    reference.player.reset_energy()
     reference.load_all()
     
     

@@ -154,7 +154,10 @@ func _check_alive():
 func _ready():
   add_test_status()
   
-  hand = get_parent().get_node('Hand')
+  hand = load("res://characters/hand.tscn").instance()
+  hand.character = self
+  add_child(hand)
+#  hand = get_parent().get_node('Hand')
   
   deck_manager = load("res://characters/deck_manager.tscn").instance()
   deck_manager.character = self

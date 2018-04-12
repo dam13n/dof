@@ -1,15 +1,23 @@
 extends HBoxContainer
 
+var character
 var width
-var active_hand = []
+#var active_hand = []
 
 func _ready():
+  rect_position = Vector2(300,600) - character.position
+  print(rect_position)
+  #size = Vector2(1146,284)
   width = get_size().x
 #	active_hand = get_children()
 #	set_card_destinations()
 #	organize()
 
-func add_card(card_data, card_owner):
+#func add_card(card_data, card_owner):
+#  var card = make_card(card_data, card_owner)
+#  add_child(card)
+
+func add_card_from_data(card_data, card_owner):
   var card = make_card(card_data, card_owner)
   add_child(card)
 
@@ -28,7 +36,7 @@ func make_card(card_data, card_owner):
   for action_data in card_data['actions']:
     card.load_action(action_data)
   card.update_display()
-  card.apply_scale(Vector2(0.25,0.25))
+  card.apply_scale(Vector2(0.1,0.1))
 
   return card
 
