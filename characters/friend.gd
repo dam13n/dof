@@ -1,4 +1,4 @@
-extends Area2D
+  extends Area2D
 
 var type = 'friend'
 
@@ -83,7 +83,13 @@ func _process(delta):
       var actions = ovlb.get_playable_actions(self)
       if actions.size() > 0:
         for action in actions:
-          process_action(action)
+          if action.target == 'card_owner':
+            var card_owner = action.card_owner
+            # this is a hackish way to stop an endless loop of trying to retarget card owner
+            action.target = 'card_target'
+            card_owner.stats.process_action(action)
+          else:
+            stats.process_action(action)
           
         _check_alive()
       ovlb.remove()

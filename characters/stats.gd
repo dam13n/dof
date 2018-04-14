@@ -62,7 +62,8 @@ func update_info_node():
 func process_action(action):
 #  print(character_name, ' process_action: ', action.action_name)
   if action.target == 'card_target':
-      if action.attribute == 'health':
+      if action.effect == 'attack':
+#      if action.attribute == 'health':
 
 #			var strengthened = false
 #			if action.card_owner.stats.strengthened():
@@ -83,7 +84,9 @@ func process_action(action):
             inflict_damage_pass(base_damage)
           else:
             inflict_damage(base_damage)
-          
+      elif action.effect == 'heal':
+          print('healing for: ', action.value_min)
+          heal(action.value_min)
       elif action.effect == 'status':
           add_status(action)
           
@@ -191,6 +194,10 @@ func get_card_modifiers():
 #  damage_temp = (1-(1-get_weakness())) * damage_temp
 #
 #  return damage_temp
+
+func heal(amount):
+  health += amount
+  character.update_health()
 
 func inflict_damage(base_damage):
   var response = {}

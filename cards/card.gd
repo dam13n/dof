@@ -114,7 +114,7 @@ func get_playable_actions(target):
 #		if target.type == 'main' && action.main_targeting != null:
 #			playable_actions.append(action)
 
-  if not player.stats.energy >= cost:
+  if not reference.player.stats.energy >= cost:
     playable_actions = []
   return playable_actions
 
@@ -206,8 +206,8 @@ func _physics_process(delta):
       
 func remove():
   if active == true:
-    player.stats.energy -= cost
-    player.update_energy()
+    reference.player.stats.energy -= cost
+    reference.player.update_energy()
     
     active = false
     get_parent().remove_card(self)
