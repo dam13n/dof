@@ -123,18 +123,6 @@ func _process(delta):
 func update_display():
     get_node('EnemyShape').get_node('Name').text = character_name
     
-
-#func update_info_node():
-#    $CharacterInfo.get_node('Statuses').text = ''
-#    for status in status_effects:
-#        $CharacterInfo.get_node('Statuses').text += str(status.duration) + ' ' + status.status_name
-        
-#func clear_statuses():
-#    for status in status_effects:
-#        if status.duration == 0:
-#            status_effects.erase(status)
-
-
 func process_slow_cards():
     for card in $SlowCards.get_children():
         var actions = card.get_playable_actions(self)
@@ -160,13 +148,39 @@ func choose_target(target_priorities):
     reference.load_all()
     
     # implement later cuz complicated
-#    for target_priority in target_priorities:
-#      if target_priority == 
+    var potential_targets = []
+    for x in range(target_priorities.size()):
+      var target_priority = target_priorities[x]
+      if target_priority[0] == 'effect':
+        potential_targets.append([allies_with_effect(reference.allies, target_priority[1]), pow(10, (4-x))])
+      elif target_priority[0] == 'row':
+        potential_targets.append([allies_in_row(reference.allies, target_priority[1]), pow(10, (4-x))])
+      elif target_priority[0] == 'health':
+        potential_targets.append([allies_in_row(reference.allies, target_priority[1]), pow(10, (4-x))])
+      else:
+        potential_targets.append([reference.allies, pow(10, (4-x))])
 
+    if potential_targets.empty():
+      potential_targets.append([reference.allies, 1])
+
+    var scored_potential_targets = score_potential_targets(potential_targets)
+        
     if front_row_allies(reference.allies).size() > 0:
         return shuffled_allies(front_row_allies(reference.allies)).front()
     else:
         return shuffled_allies(back_row_allies(reference.allies)).front()
+
+func score_potential_targets(potential_targets):
+  var scored_potential_targets = {}
+  for targets in potential_targets:
+    print('targets are: ', targets)
+    var score = targets[1]
+    for target in targets[0]:
+      if scored_potential_targets.has(target):
+        scored_potential_targets[target] += score
+      else:
+        scored_potential_targets[target] = score
+  print(scored_potential_targets)
 
 func attack(enemy_target):
 #  var damage = stats.get_damage()
@@ -205,6 +219,19 @@ func shuffled_allies(some_allies):
             index_list.remove(x)
             
         return shuffled_allies_array
+        
+func allies_with_effect(some_allies, effect):
+  var allies_affected_array = []
+  for ally in some_allies:
+    if ally.stats.has_status(effect):
+      allies_affected_array.append(ally)
+  return allies_affected_array
+  
+func allies_in_row(some_allies, row):
+  if row == 'front':
+    front_row_allies(some_allies)
+  elif row == 'back':
+    back_row_allies(some_allies)
     
 func front_row_allies(some_allies):
     var front_row_allies_array = []

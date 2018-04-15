@@ -55,6 +55,12 @@ func update_info_node():
   for status in status_effects:
     print(character_name, " adding status to display: ", status.status_name)
     character_info_status.text += str(status.duration) + ' ' + status.status_name
+    
+func has_status(status_name):
+  for status in status_effects:
+    if status.status_name == status_name:
+      return true
+  return false
 
 ##########################################################
 ### action processing (against)

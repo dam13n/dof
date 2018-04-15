@@ -15,7 +15,7 @@ func enemies_data():
           'description' : 'Does 10-15 damage.',
           'notes' : '',
           
-          'target_priorities' : ['poison', 'front', 'lowest health'],
+          'target_priorities' : [['effect','poison'], ['row','front'], ['health', 'lowest']],
           'target_restrictions' : [],
 
           'actions' : [
