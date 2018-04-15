@@ -39,7 +39,7 @@ func enemies_data():
           'card_target' : 'friend',
           'description' : 'Poisons.',
           'notes' : '',
-          
+
           'target_priorities' : ['front'],
           'target_restrictions' : [],
 
@@ -77,7 +77,7 @@ func enemies_data():
           'card_target' : 'allies',
           'description' : 'Poisons all.',
           'notes' : '',
-          
+
           'target_priorities' : [],
           'target_restrictions' : [],
 

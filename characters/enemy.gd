@@ -156,22 +156,29 @@ func choose_target(target_priorities):
       elif target_priority[0] == 'row':
         potential_targets.append([allies_in_row(reference.allies, target_priority[1]), pow(10, (4-x))])
       elif target_priority[0] == 'health':
-        potential_targets.append([allies_in_row(reference.allies, target_priority[1]), pow(10, (4-x))])
+        potential_targets.append([allies_with_health(reference.allies, target_priority[1]), pow(10, (4-x))])
       else:
         potential_targets.append([reference.allies, pow(10, (4-x))])
 
-    if potential_targets.empty():
-      potential_targets.append([reference.allies, 1])
+#    if potential_targets.empty():
+    potential_targets.append([reference.allies, 1])
 
     var scored_potential_targets = score_potential_targets(potential_targets)
         
-    if front_row_allies(reference.allies).size() > 0:
-        return shuffled_allies(front_row_allies(reference.allies)).front()
-    else:
-        return shuffled_allies(back_row_allies(reference.allies)).front()
+    var scored_potential_targets_array = []
+    for ally in reference.allies:
+      scored_potential_targets_array.append([ally, scored_potential_targets[ally]])
+    
+    scored_potential_targets_array.sort_custom(AllySorter, 'score')
+    return scored_potential_targets_array[0][0]
+#    if front_row_allies(reference.allies).size() > 0:
+#        return shuffled_allies(front_row_allies(reference.allies)).front()
+#    else:
+#        return shuffled_allies(back_row_allies(reference.allies)).front()
 
 func score_potential_targets(potential_targets):
   var scored_potential_targets = {}
+  print('potential targets are: ', potential_targets)
   for targets in potential_targets:
     print('targets are: ', targets)
     var score = targets[1]
@@ -181,6 +188,7 @@ func score_potential_targets(potential_targets):
       else:
         scored_potential_targets[target] = score
   print(scored_potential_targets)
+  return scored_potential_targets
 
 func attack(enemy_target):
 #  var damage = stats.get_damage()
@@ -220,6 +228,30 @@ func shuffled_allies(some_allies):
             
         return shuffled_allies_array
         
+func allies_with_health(some_allies, superlative):
+  print('health check is: ', superlative)
+  print('the allies are: ', some_allies)
+  some_allies.sort_custom(AllySorter, "health")
+  if superlative == 'lowest':
+    return [some_allies[0]]
+  elif superlative == 'highest': 
+    return [some_allies.invert()[0]]
+  
+  
+class AllySorter:
+  static func health(a, b):
+    print('a health: ', a.stats.health)
+    print('b health: ', b.stats.health)
+    if a.stats.health < b.stats.health:
+      return true
+    return false
+  static func score(a, b):
+    print('a score: ', a[1])
+    print('b score: ', b[1])
+    if a[1] > b[1]:
+      return true
+    return false
+        
 func allies_with_effect(some_allies, effect):
   var allies_affected_array = []
   for ally in some_allies:
@@ -228,10 +260,11 @@ func allies_with_effect(some_allies, effect):
   return allies_affected_array
   
 func allies_in_row(some_allies, row):
+  print('row check is: ', row)
   if row == 'front':
-    front_row_allies(some_allies)
+    return front_row_allies(some_allies)
   elif row == 'back':
-    back_row_allies(some_allies)
+    return back_row_allies(some_allies)
     
 func front_row_allies(some_allies):
     var front_row_allies_array = []
