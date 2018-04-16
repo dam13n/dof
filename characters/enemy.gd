@@ -23,6 +23,7 @@ func set_stats():
     character_name = enemy_data['name']
     enemy_type = enemy_data['enemy_type']
     image_path = enemy_data['image_path']
+        
     stats.starting_health = enemy_data['health']
     stats.health = enemy_data['health']
 #    stats.damage = 10
@@ -122,6 +123,9 @@ func _process(delta):
     
 func update_display():
     get_node('EnemyShape').get_node('Name').text = character_name
+    var imagetexture = ImageTexture.new()
+    imagetexture.load("./images/" + image_path)
+    $Sprite.set_texture(imagetexture)
     
 func process_slow_cards():
     for card in $SlowCards.get_children():
@@ -297,6 +301,8 @@ func _ready():
     stats = stats_scene.instance()
     stats.character = self
     set_stats()
+    
+    
     
     $EnemyShape/HealthBar.max_value = stats.starting_health
     $EnemyShape/HealthBar.min_value = 0
