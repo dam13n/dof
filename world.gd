@@ -41,6 +41,8 @@ func next_turn():
     for friend in reference.allies:
       for status in friend.stats.status_effects:
         status.next_turn()
+      friend.stats.slow_card_played_this_turn = false
+      friend.stats.card_played_this_turn = false
       friend.stats.clear_statuses()
       friend.stats.update_info_node()
       friend.deck_manager.discard_hand()
@@ -48,14 +50,6 @@ func next_turn():
       
     reference.player.reset_energy()
     reference.load_all()
-    
-    
-    
-#func enemies():
-#  var enemies = []
-#  for container in $Mob.get_children():
-#    enemies.append(container.get_children()[0])
-#  return enemies
     
     
 func process_slow_cards():

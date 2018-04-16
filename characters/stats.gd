@@ -18,6 +18,9 @@ var block_chance = 0.05
 var critical_chance = 0.05
 
 var front_row = true
+var card_played_this_turn = false
+var slow_card_played_this_turn = false
+
 
 var status_effects = []
 
@@ -95,8 +98,21 @@ func process_action(action):
           heal(action.value_min)
       elif action.effect == 'status':
           add_status(action)
+      
+  if action.target == 'card_owner':
+    if action.effect == 'remove slow card':
+      action.card_owner.stats.remove_slow_card(action)
           
   character.update_health()
+  
+func remove_slow_card(action):
+  print('removing a slow card if there is one')
+  var slow_cards = action.card_owner.get_node('SlowCards')
+  if slow_cards.get_children().size() > 0:
+    print('more than 0 slow cards')
+    # add odds for removal here
+    slow_cards.remove_one()
+
 ##########################################################
 
 ##########################################################

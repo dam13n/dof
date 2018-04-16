@@ -31,11 +31,11 @@ func discard_to_draw_pile():
 
 func discard_hand():
   for card in hand_pile:
-    if character.type == 'main':
-      print('char discard card')
+    #if character.type == 'main':
+    #  print('char discard card')
     discard_pile.append(card)
   hand_pile.clear()
-  print(character.type, ' discard pile size: ', discard_pile.size())
+  #print(character.type, ' discard pile size: ', discard_pile.size())
 
 func show_hand():
   reference.world.hide_hands()

@@ -16,22 +16,24 @@ var hand
 var deck_manager
 
 func add_test_status():
-  var status_scene = load("res://characters/status_effects.tscn")
-  var status = status_scene.instance()
-  status.status_name = 'quicken'
-  status_effects.append(status)
-  
-  var status2 = status_scene.instance()
-  status2.status_name = 'quicken'
-  status_effects.append(status2)
+#  uncomment this shit if you want to test statuses
+#  var status_scene = load("res://characters/status_effects.tscn")
+#  var status = status_scene.instance()
+#  status.status_name = 'quicken'
+#  status_effects.append(status)
+#
+#  var status2 = status_scene.instance()
+#  status2.status_name = 'quicken'
+#  status_effects.append(status2)
+  pass
 
 func set_stats():
   stats.character_name = 'main'
   stats.max_energy = 4
   stats.energy = 4
   
-  stats.starting_health = 80
-  stats.health = 80
+  stats.starting_health = 200
+  stats.health = 200
   stats.defense = 1 # base defense
   
   stats.front_row = true

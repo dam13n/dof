@@ -34,8 +34,8 @@ func add_test_status():
 
 func set_stats():
   stats.character_name = 'friend'
-  stats.starting_health = 60
-  stats.health = 60
+  stats.starting_health = 150
+  stats.health = 150
   stats.defense = 1.0 # base defense
   stats.strength = 1.0
   stats.critical_chance = 0.50

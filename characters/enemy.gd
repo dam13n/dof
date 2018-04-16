@@ -52,12 +52,13 @@ func _process(delta):
                 for action in actions:
                     if action.priority == 'fast':
                         stats.process_action(action)
-                        
+                      
                     elif quickened:
                         ovlb.card_owner.stats.remove_quicken()
                         stats.process_action(action)
                         
                     elif action.priority == 'slow':
+                        print('slow action played')
                         ovlb.move_to_destination = false
                         ovlb.active = false
                         do_not_remove = true
@@ -128,10 +129,11 @@ func update_display():
     $Sprite.set_texture(imagetexture)
     
 func process_slow_cards():
+    print($SlowCards.get_children())
     for card in $SlowCards.get_children():
         var actions = card.get_playable_actions(self)
         for action in actions:
-            process_action(action)
+            stats.process_action(action)
         $SlowCards.remove_child(card)
         card.remove()
     _check_alive()
@@ -161,6 +163,8 @@ func choose_target(target_priorities):
         potential_targets.append([allies_in_row(reference.allies, target_priority[1]), pow(10, (4-x))])
       elif target_priority[0] == 'health':
         potential_targets.append([allies_with_health(reference.allies, target_priority[1]), pow(10, (4-x))])
+      elif target_priority[0] == 'card played':
+        potential_targets.append([allies_with_card_played(reference.allies, target_priority[1]), pow(10, (4-x))])
       else:
         potential_targets.append([reference.allies, pow(10, (4-x))])
 
@@ -171,6 +175,7 @@ func choose_target(target_priorities):
         
     var scored_potential_targets_array = []
     for ally in reference.allies:
+      print('ally is: ', ally)
       scored_potential_targets_array.append([ally, scored_potential_targets[ally]])
     
     scored_potential_targets_array.sort_custom(AllySorter, 'score')
@@ -182,9 +187,9 @@ func choose_target(target_priorities):
 
 func score_potential_targets(potential_targets):
   var scored_potential_targets = {}
-  print('potential targets are: ', potential_targets)
+#  print('potential targets are: ', potential_targets)
   for targets in potential_targets:
-    print('targets are: ', targets)
+#    print('targets are: ', targets)
     var score = targets[1]
     for target in targets[0]:
       if scored_potential_targets.has(target):
@@ -232,26 +237,41 @@ func shuffled_allies(some_allies):
             
         return shuffled_allies_array
         
+func allies_with_card_played(some_allies, speed):
+  var allies_with_card_played_array = []
+  for ally in reference.allies:
+    if speed == 'slow':
+      if ally.stats.slow_card_played_this_turn:
+        allies_with_card_played_array.append(ally)
+    elif speed == 'fast':
+      if ally.stats.card_played_this_turn:
+        allies_with_card_played_array.append(ally)
+    elif speed == 'any':
+      if ally.stats.card_played_this_turn || ally.stats.slow_card_played_this_turn:
+        allies_with_card_played_array.append(ally)
+  return allies_with_card_played_array
+  
+        
+        
 func allies_with_health(some_allies, superlative):
-  print('health check is: ', superlative)
-  print('the allies are: ', some_allies)
+#  print('health check is: ', superlative)
+#  print('the allies are: ', some_allies)
   some_allies.sort_custom(AllySorter, "health")
   if superlative == 'lowest':
     return [some_allies[0]]
   elif superlative == 'highest': 
     return [some_allies.invert()[0]]
   
-  
 class AllySorter:
   static func health(a, b):
-    print('a health: ', a.stats.health)
-    print('b health: ', b.stats.health)
+#    print('a health: ', a.stats.health)
+#    print('b health: ', b.stats.health)
     if a.stats.health < b.stats.health:
       return true
     return false
   static func score(a, b):
-    print('a score: ', a[1])
-    print('b score: ', b[1])
+#    print('a score: ', a[1])
+#    print('b score: ', b[1])
     if a[1] > b[1]:
       return true
     return false

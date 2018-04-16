@@ -6,7 +6,7 @@ var width
 
 func _ready():
   rect_position = Vector2(300,600) - character.position
-  print(rect_position)
+#  print(rect_position)
   #size = Vector2(1146,284)
   width = get_size().x
 #	active_hand = get_children()
