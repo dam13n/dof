@@ -1,6 +1,7 @@
   extends Area2D
 
 var type = 'friend'
+var image_path
 
 var stats
 var status_effects = []
@@ -156,6 +157,11 @@ func _check_alive():
 #
 #    draw_pile.append(card)
 #  draw_hand()
+
+func update_display():
+  var imagetexture = ImageTexture.new()
+  imagetexture.load("./images/" + image_path)
+  $Sprite.set_texture(imagetexture)
     
 func _ready():
   add_test_status()
@@ -169,7 +175,8 @@ func _ready():
   deck_manager.character = self
   deck_manager.hand = hand
   deck_manager.prepare_deck_and_draw_pile(friend_deck)
-#  prepare_deck_and_draw_pile()
+  image_path = 'lazerd.png'
+  
 
   connect("mouse_entered", self, "_mouse_over", [true])
   connect("mouse_exited",  self, "_mouse_over", [false])
@@ -181,6 +188,8 @@ func _ready():
   update_health()
   $HealthBar.max_value = stats.starting_health
   $HealthBar.min_value = 0
+  
+  update_display()
 
 func _mouse_over(over):	
   if over == true:

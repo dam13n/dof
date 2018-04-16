@@ -96,6 +96,10 @@ func process_action(action):
       elif action.effect == 'heal':
           print('healing for: ', action.value_min)
           heal(action.value_min)
+      elif action.effect == "remove an ally's played card":
+        # todo
+        print("todo: ", action.effect)
+        
       elif action.effect == 'status':
           add_status(action)
       

@@ -14,7 +14,7 @@ var abilities = []
 
 func set_stats():
 #	var enemies_list_instance = load("res://decks/enemies_list.tscn").instance
-    var enemies_data = enemies_list.enemies_data()
+    var enemies_data = enemies_list.enabled_enemies_data()
 
     randomize()
     var x = randi()%enemies_data.size()
@@ -124,6 +124,7 @@ func _process(delta):
     
 func update_display():
     get_node('EnemyShape').get_node('Name').text = character_name
+   
     var imagetexture = ImageTexture.new()
     imagetexture.load("./images/" + image_path)
     $Sprite.set_texture(imagetexture)

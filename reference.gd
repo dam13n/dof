@@ -9,6 +9,7 @@ var friends = []
 var enemies = []
 
 const DRAW = 3
+const TEST_MODE = true
 
 func _ready():
   world = get_parent().get_node('World')
