@@ -170,7 +170,9 @@ func choose_target(target_priorities):
 
 #    if potential_targets.empty():
     potential_targets.append([reference.allies, 1])
-
+#    print('potential targets: ', potential_targets)
+#    var shuffled_potential_targets = shuffle_array(potential_targets)
+#    print('shuffled potential targets: ', shuffled_potential_targets)
     var scored_potential_targets = score_potential_targets(potential_targets)
         
     var scored_potential_targets_array = []
@@ -178,8 +180,9 @@ func choose_target(target_priorities):
       print('ally is: ', ally)
       scored_potential_targets_array.append([ally, scored_potential_targets[ally]])
     
-    scored_potential_targets_array.sort_custom(AllySorter, 'score')
-    return scored_potential_targets_array[0][0]
+    var shuffled_scored_potential_targets_array = shuffle_array(scored_potential_targets_array)
+    shuffled_scored_potential_targets_array.sort_custom(AllySorter, 'score')
+    return shuffled_scored_potential_targets_array[0][0]
 #    if front_row_allies(reference.allies).size() > 0:
 #        return shuffled_allies(front_row_allies(reference.allies)).front()
 #    else:
@@ -222,20 +225,33 @@ func choose_ability():
   return ability_choice
     
     
-func shuffled_allies(some_allies):
-    var shuffled_allies_array = []
-    if some_allies.size() == 1:
-        return some_allies
-    else:
-        var index_list = range(some_allies.size())
-#        print('shuffled some_allies is:', some_allies)
-        for i in range(reference.allies.size()):
-            randomize()
-            var x = randi()%index_list.size()
-            shuffled_allies_array.append(some_allies[x])
-            index_list.remove(x)
-            
-        return shuffled_allies_array
+#func shuffled_array(some_allies):
+#    var shuffled_allies_array = []
+#    if some_allies.size() == 1:
+#        return some_allies
+#    else:
+#        var index_list = range(some_allies.size())
+##        print('shuffled some_allies is:', some_allies)
+#        for i in range(some_allies.size()):
+#            randomize()
+#            var x = randi()%index_list.size()
+#            shuffled_allies_array.append(some_allies[x])
+#            index_list.remove(x)
+#
+#        return shuffled_allies_array
+        
+func shuffle_array(array):
+  var shuffled_array = []
+  var index_list = range(array.size())
+#  print('index list is: ', index_list)
+  for i in range(array.size()):
+    randomize()
+    var x = randi()%index_list.size()
+    shuffled_array.append(array[index_list[x]])
+    index_list.remove(x)
+#    print('index list is: ', index_list)
+#    print('shuffled array is: ', shuffled_array)
+  return shuffled_array
         
 func allies_with_card_played(some_allies, speed):
   var allies_with_card_played_array = []
