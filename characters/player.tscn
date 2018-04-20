@@ -10,10 +10,9 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Player" type="Area2D" index="0"]
+[node name="Player" type="Area2D"]
 
 position = Vector2( -0.488926, -2.92902 )
-scale = Vector2( 2.11826, 2.61144 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -22,10 +21,12 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-scale = Vector2( 0.1, 0.1 )
+position = Vector2( -0.698189, -57.1947 )
+scale = Vector2( 0.226961, 0.226961 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Animation", "Material", "Offset", "Region", "Transform", "Visibility" ]
 
@@ -46,6 +47,7 @@ margin_top = 29.0
 margin_right = 26.0
 margin_bottom = 43.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -62,11 +64,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -21.0
-margin_top = -41.0
-margin_right = 29.0
-margin_bottom = -27.0
+margin_left = -28.0
+margin_top = -158.0
+margin_right = 22.0
+margin_bottom = -144.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -88,6 +91,7 @@ margin_top = 49.0
 margin_right = 37.0
 margin_bottom = 65.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -107,11 +111,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -41.0
-margin_top = 78.0
-margin_right = 44.0
-margin_bottom = 98.0
+margin_left = -42.0
+margin_top = 104.0
+margin_right = 43.0
+margin_bottom = 124.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0

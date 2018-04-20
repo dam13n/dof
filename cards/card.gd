@@ -52,50 +52,16 @@ var card_cost
 var card_description
 var card_status_description
 
-func to_data():
-  return { 
-    "name" : card_name,
-    "card_target" : target,
-    "effect" : effect,
-    "cost" : cost,
-    "description" : card_description,
-    "actions" : action_data()
-  }
+func reset_slow_card():
+  unscale_for_slow_card()
+  active = true
+  get_node('DetectionArea').disabled = false
 
-func action_data():
-  var action_data_temp = [] 
-  for action in actions:
-    action_data_temp.append(action.to_data())
-  return action_data_temp
-  
-func load_action(action_data):
-  var action_scene = load("res://cards/action.tscn")
-  var action = action_scene.instance()
-  
-  action.action_name = action_data['action_name']
-  action.description = action_data['description']
-  action.target = action_data['target']
-  
-  action.priority = action_data['priority']
-  action.trigger = action_data['trigger']
-  action.multiplier = action_data['multiplier']
-  action.turn = action_data['turn']
-  action.duration = action_data['duration']
-#	if action_data.has('enemy_targeting'):
-#		action.enemy_targeting = action_data['enemy_targeting']
-#	if action_data.has('friend_targeting'):
-#		action.friend_targeting = action_data['friend_targeting']
-#	if action_data.has('main_targeting'):	
-#		action.main_targeting = action_data['main_targeting']
-  
-  action.attribute = action_data['attribute']
-  action.effect	 = action_data['effect']
-  action.value_min = action_data['value_min']
-  action.value_max = action_data['value_max']
-  
-  action.card_owner = card_owner
-  
-  actions.append(action)
+func return_to_owner_hand_pile():
+  card_owner.deck_manager.add_to_hand_pile(self)
+
+func send_to_owner_discard_pile():
+  card_owner.deck_manager.add_to_discard_pile(self)
   
 func enough_energy():
   return reference.player.stats.energy >= cost
@@ -147,7 +113,9 @@ func has_slow_actions():
       
 func card_modifier_description():
   var modifier_string = ''
-  var modifiers = card_owner.stats.get_card_modifiers()
+  var modifiers = []
+  if card_owner != null:
+    modifiers = card_owner.stats.get_card_modifiers()
   for modifier in modifiers:
     if modifier == 'quicken' && has_slow_actions():
       modifier_string += "Card plays fast. "
@@ -156,18 +124,22 @@ func card_modifier_description():
   return modifier_string
   
 func _scale_up():
-  card_display.apply_scale(Vector2(scale_ratio,scale_ratio))
+  card_display.apply_scale(Vector2(scale_ratio, scale_ratio))
   is_scaled_up = true
   card_display.z_index = 10
   
 func _scale_down():
-  card_display.apply_scale(Vector2(inverse_scale_ratio,inverse_scale_ratio))
+  card_display.apply_scale(Vector2(inverse_scale_ratio, inverse_scale_ratio))
   is_scaled_up = false
   card_display.z_index = 1
   
 func scale_for_slow_card():
-  card_display.apply_scale(Vector2(inverse_scale_ratio_slow,inverse_scale_ratio_slow))
+  card_display.apply_scale(Vector2(inverse_scale_ratio_slow, inverse_scale_ratio_slow))
   input_pickable = false
+  
+func unscale_for_slow_card():
+  card_display.apply_scale(Vector2(scale_ratio_slow, scale_ratio_slow))
+  input_pickable = true
 
 func _input(event):
 #	if Input.is_mouse_button_pressed(BUTTON_LEFT):
@@ -177,6 +149,7 @@ func _input(event):
 #			print("input_pickable is: ")
 #			print(input_pickable)
       grabbed = true
+      print('active: ', active)
       local_mouse_pos = get_local_mouse_position()
     else:
       grabbed = false
@@ -204,14 +177,19 @@ func _physics_process(delta):
     if direction.length() < 0.1:
       move_to_destination = false
       
-func remove():
-  if active == true:
-    reference.player.stats.energy -= cost
-    reference.player.update_energy()
-    
-    active = false
-    get_parent().remove_card(self)
-    queue_free()
+#func remove():
+#  if active == true:
+#    reference.player.stats.energy -= cost
+#    reference.player.update_energy()
+#
+#    active = false
+#    get_parent().remove_card(self)
+#    queue_free()
+
+func discard():
+  reference.player.stats.energy -= cost
+  reference.player.update_energy()
+  send_to_owner_discard_pile()
 
 func _move_by_mouse():
   var mouse_pos = get_parent().get_local_mouse_position() # get_global_mouse_position()
@@ -238,6 +216,51 @@ func _move_by_mouse():
 #		this_pos.y = view_size.y
 
   position = this_pos
+  
+func to_data():
+  return { 
+    "name" : card_name,
+    "card_target" : target,
+    "effect" : effect,
+    "cost" : cost,
+    "description" : card_description,
+    "actions" : action_data()
+  }
+
+func action_data():
+  var action_data_temp = [] 
+  for action in actions:
+    action_data_temp.append(action.to_data())
+  return action_data_temp
+  
+func load_action(action_data):
+  var action_scene = load("res://cards/action.tscn")
+  var action = action_scene.instance()
+  
+  action.action_name = action_data['action_name']
+  action.description = action_data['description']
+  action.target = action_data['target']
+  
+  action.priority = action_data['priority']
+  action.trigger = action_data['trigger']
+  action.multiplier = action_data['multiplier']
+  action.turn = action_data['turn']
+  action.duration = action_data['duration']
+#	if action_data.has('enemy_targeting'):
+#		action.enemy_targeting = action_data['enemy_targeting']
+#	if action_data.has('friend_targeting'):
+#		action.friend_targeting = action_data['friend_targeting']
+#	if action_data.has('main_targeting'):	
+#		action.main_targeting = action_data['main_targeting']
+  
+  action.attribute = action_data['attribute']
+  action.effect	 = action_data['effect']
+  action.value_min = action_data['value_min']
+  action.value_max = action_data['value_max']
+  
+  action.card_owner = card_owner
+  
+  actions.append(action)
 
 func _ready():
   card_display = get_node('Display')
@@ -262,4 +285,7 @@ func _ready():
   player = get_parent().get_parent().get_node('Player')
   
   update_display()
+  
+  # font testing
+  $TestLabel.set("z", 11)
 

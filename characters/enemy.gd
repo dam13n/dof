@@ -66,7 +66,7 @@ func _process(delta):
                 _check_alive()
             if do_not_remove:
                 ovlb.scale_for_slow_card()
-                ovlb.get_parent().remove_card(ovlb)
+#                ovlb.get_parent().remove_card(ovlb)
                 ovlb.get_parent().remove_child(ovlb)
                 var detection_area = ovlb.get_node('DetectionArea')
                 detection_area.disabled = true
@@ -78,7 +78,7 @@ func _process(delta):
                 ovlb.z_index = slow_cards_count
                 print('do not remove')
             else:
-                ovlb.remove()
+              reference.hand.discard_card(ovlb)
 
 #func process_action(action):
 #    print('process_action: ', action.effect)
@@ -136,7 +136,9 @@ func process_slow_cards():
         for action in actions:
             stats.process_action(action)
         $SlowCards.remove_child(card)
-        card.remove()
+        card.send_to_owner_discard_pile()
+        card.reset_slow_card()
+
     _check_alive()
     
 func process_turn():
@@ -178,7 +180,6 @@ func choose_target(target_priorities):
         
     var scored_potential_targets_array = []
     for ally in reference.allies:
-      print('ally is: ', ally)
       scored_potential_targets_array.append([ally, scored_potential_targets[ally]])
     
     var shuffled_scored_potential_targets_array = shuffle_array(scored_potential_targets_array)
@@ -224,22 +225,7 @@ func choose_ability():
         # we rechoose ability until we get a basic attack cuz dazed
         return choose_ability()
   return ability_choice
-    
-    
-#func shuffled_array(some_allies):
-#    var shuffled_allies_array = []
-#    if some_allies.size() == 1:
-#        return some_allies
-#    else:
-#        var index_list = range(some_allies.size())
-##        print('shuffled some_allies is:', some_allies)
-#        for i in range(some_allies.size()):
-#            randomize()
-#            var x = randi()%index_list.size()
-#            shuffled_allies_array.append(some_allies[x])
-#            index_list.remove(x)
-#
-#        return shuffled_allies_array
+
         
 func shuffle_array(array):
   var shuffled_array = []

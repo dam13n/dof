@@ -18,9 +18,10 @@ func _ready():
 #  if friend != null:
 #    allies.append(friend)
 
-func hide_hands():
+func return_hand():
   for ally in reference.allies:
-    ally.deck_manager.hand.visible = false
+#    ally.deck_manager.hand.visible = false
+    reference.hand.return_cards()
 
 func clear_hands():
   for ally in reference.allies:

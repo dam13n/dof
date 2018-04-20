@@ -9,6 +9,12 @@ var hand
 
 var drawn_this_turn = false
 
+func add_to_hand_pile(card):
+  hand_pile.append(card)
+  
+func add_to_discard_pile(card):
+  discard_pile.append(card)
+  
 func draw_hand():
   hand_pile = []
   for i in range(reference.DRAW):
@@ -20,9 +26,6 @@ func draw_hand():
     hand_pile.append(card)
     drawn_this_turn = true
   
-#  for card in draw_pile:
-#    hand_pile.append(card)
-#  show_hand()
 
 func discard_to_draw_pile():
   for card in discard_pile:
@@ -38,16 +41,17 @@ func discard_hand():
   #print(character.type, ' discard pile size: ', discard_pile.size())
 
 func show_hand():
-  reference.world.hide_hands()
+  reference.world.return_hand()
   #hand.clear_cards()
   if !drawn_this_turn:
     draw_hand()
-    for card in hand_pile:
-      hand.add_card_from_data(card.to_data(), character)
-      #hand.active_hand.append(card)
-      hand.set_card_destinations()
-      hand.organize()
-  hand.visible = true
+  for card in hand_pile:
+    
+    hand.move_card(card, character)
+    #hand.active_hand.append(card)
+    hand.set_card_destinations()
+    hand.organize()
+  hand_pile.clear()
 
 func prepare_deck_and_draw_pile(character_deck):
   var deck_data = character_deck.deck_data()

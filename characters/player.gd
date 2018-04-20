@@ -1,4 +1,4 @@
-  extends Area2D
+extends Area2D
 
 var type = 'main'
 var stats
@@ -121,15 +121,15 @@ func set_stats():
 func _ready():
   add_test_status()
   
-  hand = load("res://characters/hand.tscn").instance()
-  hand.character = self
-  add_child(hand)
+#  hand = load("res://characters/hand.tscn").instance()
+#  hand.character = self
+#  add_child(hand)
   
 #  hand = get_parent().get_node('Hand')
   
   deck_manager = load("res://characters/deck_manager.tscn").instance()
   deck_manager.character = self
-  deck_manager.hand = hand
+  deck_manager.hand = reference.hand
   deck_manager.prepare_deck_and_draw_pile(player_deck)
   
 #  prepare_deck_and_draw_pile()

@@ -1,6 +1,7 @@
 extends Node
 
 var world
+var hand
 
 var main
 var player
@@ -13,6 +14,7 @@ const TEST_MODE = true
 
 func _ready():
   world = get_parent().get_node('World')
+  hand = world.get_node('Hand')
   load_all()
 
 func load_player():

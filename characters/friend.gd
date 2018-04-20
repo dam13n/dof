@@ -93,7 +93,8 @@ func _process(delta):
             stats.process_action(action)
           
         _check_alive()
-      ovlb.remove()
+#      ovlb.discard()
+      reference.hand.discard_card(ovlb)
 
 #func process_action(action):
 #  if action.target == 'card_target':
@@ -166,14 +167,14 @@ func update_display():
 func _ready():
   add_test_status()
   
-  hand = load("res://characters/hand.tscn").instance()
-  hand.character = self
-  add_child(hand)
+#  hand = load("res://characters/hand.tscn").instance()
+#  hand.character = self
+#  add_child(hand)
 #  hand = get_parent().get_node('Hand')
   
   deck_manager = load("res://characters/deck_manager.tscn").instance()
   deck_manager.character = self
-  deck_manager.hand = hand
+  deck_manager.hand = reference.hand
   deck_manager.prepare_deck_and_draw_pile(friend_deck)
   image_path = 'lazerd.png'
   
@@ -185,9 +186,10 @@ func _ready():
   stats.character = self
   set_stats()
 
-  update_health()
+  
   $HealthBar.max_value = stats.starting_health
   $HealthBar.min_value = 0
+  update_health()
   
   update_display()
 

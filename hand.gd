@@ -1,21 +1,20 @@
 extends HBoxContainer
 
-var character
+var current_character
 var width
 #var active_hand = []
 
 func _ready():
-  rect_position = Vector2(300,600) - character.position
-#  print(rect_position)
-  #size = Vector2(1146,284)
   width = get_size().x
-#	active_hand = get_children()
-#	set_card_destinations()
-#	organize()
 
-#func add_card(card_data, card_owner):
-#  var card = make_card(card_data, card_owner)
-#  add_child(card)
+func return_cards():
+  for card in get_children():
+    remove_child(card)
+    card.return_to_owner_hand_pile()
+  
+
+func move_card(card, card_owner):
+  add_child(card)
 
 func add_card_from_data(card_data, card_owner):
   var card = make_card(card_data, card_owner)
@@ -36,7 +35,7 @@ func make_card(card_data, card_owner):
   for action_data in card_data['actions']:
     card.load_action(action_data)
   card.update_display()
-  card.apply_scale(Vector2(0.1,0.1))
+  card.apply_scale(Vector2(0.3,0.3))
 
   return card
 
@@ -45,10 +44,10 @@ func clear_cards():
   for child in get_children():
     remove_child(child)
   
-#func discard_cards():
-#	for card in active_hand:		
-#		card.queue_free()
-#	active_hand = []
+func discard_cards():
+  for card in get_children():
+    remove_child(card)
+    card.send_to_owner_discard_pile()
   
 func set_card_destinations():
   for i in range(0, get_children().size()):
@@ -60,12 +59,10 @@ func organize():
   for i in range(0, get_children().size()):
     var child = get_children()[i]
     child.reset_position()
-#		print('child count:', get_children().size())
     
-func remove_card(card):
-#	print('removing card')
-#	var card_index = active_hand.find(card)
-#	active_hand.remove(card_index)
+func discard_card(card):
+  remove_child(card)
+  card.discard()
   set_card_destinations()
   organize()
 

@@ -15,7 +15,8 @@ func remove_one():
   for card in get_children():
     remove_child(card)
     slow_cards.erase(card)
-    card.queue_free()
+    card.send_to_owner_discard_pile()
+    card.reset_slow_card()
     return null
   
 func set_card_destinations():
