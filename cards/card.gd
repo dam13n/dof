@@ -93,6 +93,11 @@ func update_display():
         description = ''
       description += action.description
     card_description.text = description
+    
+  if card_owner.type == 'main':
+    $Display/Background.modulate = Color(1, 0, 1, 1)
+  elif card_owner.type == 'friend':
+    $Display/Background.modulate = Color(1, 1, 0, 1)
 
 func _mouse_over(over):
   if over == true:
@@ -246,12 +251,6 @@ func load_action(action_data):
   action.multiplier = action_data['multiplier']
   action.turn = action_data['turn']
   action.duration = action_data['duration']
-#	if action_data.has('enemy_targeting'):
-#		action.enemy_targeting = action_data['enemy_targeting']
-#	if action_data.has('friend_targeting'):
-#		action.friend_targeting = action_data['friend_targeting']
-#	if action_data.has('main_targeting'):	
-#		action.main_targeting = action_data['main_targeting']
   
   action.attribute = action_data['attribute']
   action.effect	 = action_data['effect']
@@ -269,10 +268,8 @@ func _ready():
   card_description = $Display/Description
   card_status_description = $Display/StatusDescription
   
-  #    set_fixed_process(true)
   connect("mouse_entered", self, "_mouse_over", [true])
   connect("mouse_exited",  self, "_mouse_over", [false])
-#	print(get_viewport().get_size())
 
   randomize()
   var redness = rand_range(0,1)
@@ -281,7 +278,6 @@ func _ready():
   randomize()
   var greenness = rand_range(0,1)
   
-#	$Container/Display/Background.color = Color(redness, greenness, blueness, 1)
   player = get_parent().get_parent().get_node('Player')
   
   update_display()

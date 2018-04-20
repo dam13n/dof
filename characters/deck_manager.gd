@@ -81,6 +81,6 @@ func make_card(card_data):
     for action_data in card_data['actions']:
       card.load_action(action_data)
     card.update_display()
-    card.apply_scale(Vector2(0.25,0.25))
+    card.apply_scale(Vector2(0.3, 0.3))
 
     return card
