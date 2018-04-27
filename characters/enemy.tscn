@@ -11,7 +11,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 26.1048, 23.0275 )
 
-[node name="Enemy" type="Area2D"]
+[node name="Enemy" type="Area2D" index="0"]
 
 position = Vector2( 2.97235, -11.8207 )
 scale = Vector2( 2.41749, 2.41749 )
@@ -33,6 +33,16 @@ centered = false
 flip_h = true
 _sections_unfolded = [ "Offset", "Transform" ]
 
+[node name="Tween" type="Tween" parent="Sprite" index="0"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+_sections_unfolded = [ "playback" ]
+
 [node name="EnemyShape" type="CollisionShape2D" parent="." index="1"]
 
 shape = SubResource( 1 )
@@ -49,6 +59,7 @@ margin_top = 29.0
 margin_right = 21.0
 margin_bottom = 43.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -69,6 +80,7 @@ margin_top = 46.0
 margin_right = 19.0
 margin_bottom = 60.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -90,6 +102,7 @@ margin_top = 66.0
 margin_right = 27.0
 margin_bottom = 82.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -115,6 +128,7 @@ margin_top = 93.0
 margin_right = 42.0
 margin_bottom = 113.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -140,6 +154,7 @@ margin_top = -47.0
 margin_right = 55.0
 margin_bottom = -7.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1

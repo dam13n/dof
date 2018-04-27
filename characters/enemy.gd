@@ -9,34 +9,43 @@ var stats
 var overlapping_bodies = []
 var is_hovering = false
 
-#var status_effects = []
 var abilities = []
 
+var sprite_original_position
+
+func animate_attack():
+  print('tweening')
+  var sprite = $Sprite
+  var tween = sprite.get_node('Tween')
+  tween.interpolate_property(sprite, "position", sprite_original_position, sprite.position - Vector2(-30,0), 1, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+  tween.start()
+  tween.interpolate_property(sprite, "position", sprite.position - Vector2(-30,0), sprite_original_position, 1, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+  tween.start()
+  print('tween done')
+
 func set_stats():
-#	var enemies_list_instance = load("res://decks/enemies_list.tscn").instance
-    var enemies_data = enemies_list.enabled_enemies_data()
+  var enemies_data = enemies_list.enabled_enemies_data()
 
-    randomize()
-    var x = randi()%enemies_data.size()
-    var enemy_data = enemies_data[x]
+  randomize()
+  var x = randi()%enemies_data.size()
+  var enemy_data = enemies_data[x]
 
-    character_name = enemy_data['name']
-    enemy_type = enemy_data['enemy_type']
-    image_path = enemy_data['image_path']
-        
-    stats.starting_health = enemy_data['health']
-    stats.health = enemy_data['health']
-#    stats.damage = 10
-    stats.defense = 1 # base defense
+  character_name = enemy_data['name']
+  enemy_type = enemy_data['enemy_type']
+  image_path = enemy_data['image_path']
+      
+  stats.starting_health = enemy_data['health']
+  stats.health = enemy_data['health']
+  stats.defense = 1 # base defense
 
-    for ability_data in enemy_data['abilities']:
-        var ability = load("res://characters/ability.tscn").instance()
-        ability.ability_owner = self
-        ability.set_attributes(ability_data)
-        abilities.append(ability)
+  for ability_data in enemy_data['abilities']:
+    var ability = load("res://characters/ability.tscn").instance()
+    ability.ability_owner = self
+    ability.set_attributes(ability_data)
+    abilities.append(ability)
 
 func _process(delta):
-    overlapping_bodies = get_overlapping_bodies()
+    overlapping_bodies = get_overlapping_areas()
     if overlapping_bodies.size() > 0:
         var ovlb = overlapping_bodies[0]
     
@@ -79,48 +88,6 @@ func _process(delta):
                 print('do not remove')
             else:
               reference.hand.discard_card(ovlb)
-
-#func process_action(action):
-#    print('process_action: ', action.effect)
-#    if action.target == 'card_target':
-#        if action.attribute == 'health':
-##			var strengthened = false
-##			if action.card_owner.stats.strengthened():
-##				strengthened = true
-#            var critical_damage_multiplier = 1.0
-#            if action.card_owner.stats.will_critical():
-#                print('will critical')
-#                critical_damage_multiplier = 1.5
-#            var base_damage = int(
-#                (rand_range(action.value_min, action.value_max)+0.5)*
-#                 action.card_owner.stats.get_strength()*
-#                 critical_damage_multiplier
-#              )
-#            action.card_owner.stats.remove_strengthen()
-#            stats.inflict_damage(base_damage)
-#
-#        elif action.effect == 'status':
-#            print('effect is status')
-#            _add_status(action)
-#
-#    update_health()
-        
-#func add_status(action):
-#    var status_already_applied = false
-#    for status in stats.status_effects:
-#        if status.status_name == action.action_name:
-#            status_already_applied = true
-#            status.duration += action.duration
-#
-#    if not status_already_applied:
-#        var status_scene = load("res://characters/status_effects.tscn")
-#        var status = status_scene.instance()
-#        status.attribute = action.attribute
-#        status.value_min = action.value_min
-#        status.value_max = action.value_max
-#        status.status_name = action.action_name
-#        status_effects.append(status)
-#    update_info_node()
     
 func update_display():
     get_node('EnemyShape').get_node('Name').text = character_name
@@ -148,9 +115,11 @@ func process_turn():
     if ability.card_target == 'allies':
       print('enemy targeting all allies')
       for ally in reference.allies:
+        animate_attack()
         attack(ally)
     else:
       var enemy_target = choose_target(ability.target_priorities)
+      animate_attack()
       attack(enemy_target)
     
 func choose_target(target_priorities):
@@ -317,6 +286,8 @@ func _check_alive():
         get_parent().queue_free()
         
 func _ready():
+
+    sprite_original_position = $Sprite.position
     connect("mouse_entered", self, "_mouse_over", [true])
     connect("mouse_exited",  self, "_mouse_over", [false])
 
@@ -324,8 +295,6 @@ func _ready():
     stats = stats_scene.instance()
     stats.character = self
     set_stats()
-    
-    
     
     $EnemyShape/HealthBar.max_value = stats.starting_health
     $EnemyShape/HealthBar.min_value = 0

@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Area2D
 
 #############################################
 ### card physics and display
@@ -154,7 +154,6 @@ func _input(event):
 #			print("input_pickable is: ")
 #			print(input_pickable)
       grabbed = true
-      print('active: ', active)
       local_mouse_pos = get_local_mouse_position()
     else:
       grabbed = false
@@ -281,7 +280,3 @@ func _ready():
   player = get_parent().get_parent().get_node('Player')
   
   update_display()
-  
-  # font testing
-  $TestLabel.set("z", 11)
-

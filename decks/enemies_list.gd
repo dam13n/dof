@@ -93,7 +93,7 @@ func enemies_data():
       ]
     },
     {
-      'enabled' : false,
+      'enabled' : true,
       'name' : 'Astral Jelly',
       'enemy_type' : 'standard',
       'health' : 80,
@@ -152,7 +152,7 @@ func enemies_data():
       ]
     },
     {
-      'enabled' : false,
+      'enabled' : true,
       'name' : 'Cordybiceps',
       'enemy_type' : 'standard',
       'health' : 50,

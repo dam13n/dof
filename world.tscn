@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://world.gd" type="Script" id=1]
 [ext_resource path="res://images/backgrounds/sunsetintheswamp.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://end_turn.gd" type="Script" id=10]
 [ext_resource path="res://characters/friend.tscn" type="PackedScene" id=11]
 [ext_resource path="res://hand.tscn" type="PackedScene" id=12]
+[ext_resource path="res://fonts/Lato2OFL/Lato-Medium.ttf" type="DynamicFontData" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -55,9 +56,18 @@ use_filter = false
 font_data = SubResource( 4 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="World" type="Node"]
+[sub_resource type="DynamicFont" id=6]
+
+size = 80
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 13 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[node name="World" type="Node" index="0"]
 
 script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
@@ -275,5 +285,57 @@ margin_left = 440.0
 margin_top = 862.0
 margin_right = 1525.0
 margin_bottom = 1108.0
+
+[node name="EnemyTurnBanner" type="Label" parent="." index="11"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 325.0
+margin_top = 112.0
+margin_right = 1631.0
+margin_bottom = 299.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 6 )
+text = "Enemy Turn"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
+[node name="SlowCardTurnBanner" type="Label" parent="." index="12"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 325.0
+margin_top = 112.0
+margin_right = 1631.0
+margin_bottom = 299.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 6 )
+text = "Slow Cards Playing"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
 
 
