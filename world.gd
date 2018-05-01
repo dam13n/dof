@@ -3,6 +3,15 @@ extends Node
 var enemy_banner_timer
 var slow_card_banner_timer
 
+
+func timer_function(function, duration):
+  var timer = Timer.new()
+  timer.set_one_shot(true)
+  timer.set_wait_time(1)
+  timer.connect("timeout", self, function)
+  add_child(timer)
+  timer.start()
+
 func _ready():
   enemy_banner_timer = Timer.new()
   enemy_banner_timer.set_one_shot(true)
@@ -27,8 +36,14 @@ func clear_hands():
 func next_turn():
   reference.load_all()  
   if reference.allies.size() > 0:
-    $EnemyTurnBanner.visible = true
-    enemy_banner_timer.start()
+    
+    timer_function("process_enemy_actions", 1)
+    timer_function("end_of_turn", 1)
+#    enemy_banner_timer.start()
+
+func enemy_banner():
+  $EnemyTurnBanner.visible = true
+  timer_function("on_enemy_timeout_complete", 1)
     
 func on_slow_card_timeout_complete():
     $SlowCardTurnBanner.visible = false
@@ -36,7 +51,9 @@ func on_slow_card_timeout_complete():
     
 func on_enemy_timeout_complete():
     $EnemyTurnBanner.visible = false
-    process_enemy_actions()
+#    process_enemy_actions()
+    
+func end_of_turn():
     $SlowCardTurnBanner.visible = true
     slow_card_banner_timer.start()
     
