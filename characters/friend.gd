@@ -75,26 +75,32 @@ func set_stats():
 #    hand.set_card_destinations()
 #    hand.organize()
   
-func _process(delta):
-  overlapping_bodies = get_overlapping_bodies()
-  if overlapping_bodies.size() > 0:
-    var ovlb = overlapping_bodies[0]
+func _on_Friend_input_event(viewport, event, shape_idx):
+  var ovlb
+  if event is InputEventMouseButton && !event.pressed:
+    overlapping_bodies = get_overlapping_areas()
+    if overlapping_bodies.size() > 0:
+      ovlb = overlapping_bodies[0]
+    else:
+      return
+  else:
+    return
 
-    if is_hovering && ovlb.playable(self):
-      var actions = ovlb.get_playable_actions(self)
-      if actions.size() > 0:
-        for action in actions:
-          if action.target == 'card_owner':
-            var card_owner = action.card_owner
-            # this is a hackish way to stop an endless loop of trying to retarget card owner
-            action.target = 'card_target'
-            card_owner.stats.process_action(action)
-          else:
-            stats.process_action(action)
-          
-        _check_alive()
+  if ovlb.playable(self):
+    var actions = ovlb.get_playable_actions(self)
+    if actions.size() > 0:
+      for action in actions:
+        if action.target == 'card_owner':
+          var card_owner = action.card_owner
+          # this is a hackish way to stop an endless loop of trying to retarget card owner
+          action.target = 'card_target'
+          card_owner.stats.process_action(action)
+        else:
+          stats.process_action(action)
+        
+      _check_alive()
 #      ovlb.discard()
-      reference.hand.discard_card(ovlb)
+    reference.hand.discard_card(ovlb)
 
 #func process_action(action):
 #  if action.target == 'card_target':

@@ -42,6 +42,7 @@ margin_top = 29.0215
 margin_right = 26.0638
 margin_bottom = 43.0215
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -63,6 +64,7 @@ margin_top = 49.0215
 margin_right = 37.0638
 margin_bottom = 65.0215
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -94,6 +96,7 @@ margin_top = 79.0
 margin_right = 39.0
 margin_bottom = 99.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -113,5 +116,7 @@ script = ExtResource( 3 )
 visible = false
 position = Vector2( 59.607, 17.828 )
 scale = Vector2( 0.916181, 1.44602 )
+
+[connection signal="input_event" from="." to="." method="_on_Friend_input_event"]
 
 

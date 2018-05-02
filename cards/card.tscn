@@ -45,7 +45,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 custom_solver_bias = 0.0
 extents = Vector2( 10.42, 10.626 )
 
-[node name="Card2" type="Area2D" index="0"]
+[node name="Card2" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )

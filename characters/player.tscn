@@ -10,7 +10,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="Area2D" index="0"]
 
 position = Vector2( -0.488926, -2.92902 )
 input_pickable = true
@@ -138,5 +138,7 @@ position = Vector2( 76.3293, 12.554 )
 scale = Vector2( 1.16581, 1.84002 )
 z_index = 1
 _sections_unfolded = [ "Transform", "Z Index" ]
+
+[connection signal="input_event" from="." to="." method="_on_Player_input_event"]
 
 

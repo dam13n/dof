@@ -117,6 +117,33 @@ func set_stats():
 #    card.apply_scale(Vector2(0.25,0.25))
 #
 #    return card
+
+func _on_Player_input_event(viewport, event, shape_idx):
+  var ovlb
+  if event is InputEventMouseButton && !event.pressed:
+    overlapping_bodies = get_overlapping_areas()
+    if overlapping_bodies.size() > 0:
+      ovlb = overlapping_bodies[0]
+    else:
+      return
+  else:
+    return
+
+  if ovlb.playable(self):
+    var actions = ovlb.get_playable_actions(self)
+    if actions.size() > 0:
+      for action in actions:
+        if action.target == 'card_owner':
+          var card_owner = action.card_owner
+          # this is a hackish way to stop an endless loop of trying to retarget card owner
+          action.target = 'card_target'
+          card_owner.stats.process_action(action)
+        else:
+          stats.process_action(action)
+        
+      _check_alive()
+#      ovlb.discard()
+    reference.hand.discard_card(ovlb)
   
 func _ready():
   add_test_status()
@@ -188,3 +215,5 @@ func _input(event):
 #    if ev.type == InputEvent.MOUSE_BUTTON:
 #        if ev.pos > get_pos() && ev.pos < get_pos() + get_size():
 #             #Do Things here, because mouse pointer is inside sprite
+
+
