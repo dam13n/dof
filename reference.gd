@@ -13,7 +13,11 @@ const DRAW = 3
 const TEST_MODE = true
 
 func _ready():
-  world = get_parent().get_node('World')
+  initialize()
+  pass
+  
+func initialize():
+  world = get_tree().get_root().get_node('World')
   hand = world.get_node('Hand')
   load_all()
 

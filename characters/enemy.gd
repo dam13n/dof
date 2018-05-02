@@ -43,51 +43,151 @@ func set_stats():
     ability.ability_owner = self
     ability.set_attributes(ability_data)
     abilities.append(ability)
-
-func _process(delta):
+    
+func _on_Enemy_input_event(viewport, event, shape_idx):
+  var ovlb
+  if event is InputEventMouseButton && !event.pressed:
     overlapping_bodies = get_overlapping_areas()
     if overlapping_bodies.size() > 0:
-        var ovlb = overlapping_bodies[0]
-    
-        if is_hovering && ovlb.playable(self):
-            var do_not_remove = false
-            var actions = ovlb.get_playable_actions(self)
+      ovlb = overlapping_bodies[0]
+    else:
+      return
+  else:
+    return
 
-            if actions.size() > 0:
-                var quickened = false
-                if ovlb.card_owner.stats.quickened():
-                    quickened = true
-                    
-                for action in actions:
-                    if action.priority == 'fast':
-                        stats.process_action(action)
-                      
-                    elif quickened:
-                        ovlb.card_owner.stats.remove_quicken()
-                        stats.process_action(action)
-                        
-                    elif action.priority == 'slow':
-                        print('slow action played')
-                        ovlb.move_to_destination = false
-                        ovlb.active = false
-                        do_not_remove = true
-                    
-                _check_alive()
-            if do_not_remove:
-                ovlb.scale_for_slow_card()
+  if ovlb.playable(self):
+
+      var do_not_remove = false
+      var actions = ovlb.get_playable_actions(self)
+
+      if actions.size() > 0:
+          var quickened = false
+          if ovlb.card_owner.stats.quickened():
+              quickened = true
+
+          for action in actions:
+              if action.priority == 'fast':
+                  stats.process_action(action)
+
+              elif quickened:
+                  ovlb.card_owner.stats.remove_quicken()
+                  stats.process_action(action)
+
+              elif action.priority == 'slow':
+                  print('slow action played')
+                  ovlb.move_to_destination = false
+                  ovlb.active = false
+                  do_not_remove = true
+
+          _check_alive()
+      if do_not_remove:
+          ovlb.scale_for_slow_card()
 #                ovlb.get_parent().remove_card(ovlb)
-                ovlb.get_parent().remove_child(ovlb)
-                var detection_area = ovlb.get_node('DetectionArea')
-                detection_area.disabled = true
-                $SlowCards.add_child(ovlb)
-                
+          ovlb.get_parent().remove_child(ovlb)
+          var detection_area = ovlb.get_node('DetectionArea')
+          detection_area.disabled = true
+          $SlowCards.add_child(ovlb)
+
 #				ovlb.move_to_destination = false
-                var slow_cards_count = $SlowCards.get_children().size()
-                ovlb.position = Vector2((slow_cards_count-1)*10,0)
-                ovlb.z_index = slow_cards_count
-                print('do not remove')
-            else:
-              reference.hand.discard_card(ovlb)
+          var slow_cards_count = $SlowCards.get_children().size()
+          ovlb.position = Vector2((slow_cards_count-1)*10,0)
+          ovlb.z_index = slow_cards_count
+          print('do not remove')
+      else:
+        reference.hand.discard_card(ovlb)
+  
+    
+    
+#func _on_Enemy_area_entered(area):
+#  var ovlb = area
+#
+#  if ovlb.playable(self):
+#
+#      var do_not_remove = false
+#      var actions = ovlb.get_playable_actions(self)
+#
+#      if actions.size() > 0:
+#          var quickened = false
+#          if ovlb.card_owner.stats.quickened():
+#              quickened = true
+#
+#          for action in actions:
+#              if action.priority == 'fast':
+#                  stats.process_action(action)
+#
+#              elif quickened:
+#                  ovlb.card_owner.stats.remove_quicken()
+#                  stats.process_action(action)
+#
+#              elif action.priority == 'slow':
+#                  print('slow action played')
+#                  ovlb.move_to_destination = false
+#                  ovlb.active = false
+#                  do_not_remove = true
+#
+#          _check_alive()
+#      if do_not_remove:
+#          ovlb.scale_for_slow_card()
+##                ovlb.get_parent().remove_card(ovlb)
+#          ovlb.get_parent().remove_child(ovlb)
+#          var detection_area = ovlb.get_node('DetectionArea')
+#          detection_area.disabled = true
+#          $SlowCards.add_child(ovlb)
+#
+##				ovlb.move_to_destination = false
+#          var slow_cards_count = $SlowCards.get_children().size()
+#          ovlb.position = Vector2((slow_cards_count-1)*10,0)
+#          ovlb.z_index = slow_cards_count
+#          print('do not remove')
+#      else:
+#        reference.hand.discard_card(ovlb)
+
+func _process(delta):
+  pass
+#    overlapping_bodies = get_overlapping_areas()
+#    if overlapping_bodies.size() > 0:
+#        var ovlb = overlapping_bodies[0]
+#
+#        if is_hovering && ovlb.playable(self):
+#            print('here')
+#            var do_not_remove = false
+#            var actions = ovlb.get_playable_actions(self)
+#
+#            if actions.size() > 0:
+#                var quickened = false
+#                if ovlb.card_owner.stats.quickened():
+#                    quickened = true
+#
+#                for action in actions:
+#                    if action.priority == 'fast':
+#                        stats.process_action(action)
+#
+#                    elif quickened:
+#                        ovlb.card_owner.stats.remove_quicken()
+#                        stats.process_action(action)
+#
+#                    elif action.priority == 'slow':
+#                        print('slow action played')
+#                        ovlb.move_to_destination = false
+#                        ovlb.active = false
+#                        do_not_remove = true
+#
+#                _check_alive()
+#            if do_not_remove:
+#                ovlb.scale_for_slow_card()
+##                ovlb.get_parent().remove_card(ovlb)
+#                ovlb.get_parent().remove_child(ovlb)
+#                var detection_area = ovlb.get_node('DetectionArea')
+#                detection_area.disabled = true
+#                $SlowCards.add_child(ovlb)
+#
+##				ovlb.move_to_destination = false
+#                var slow_cards_count = $SlowCards.get_children().size()
+#                ovlb.position = Vector2((slow_cards_count-1)*10,0)
+#                ovlb.z_index = slow_cards_count
+#                print('do not remove')
+#            else:
+#              reference.hand.discard_card(ovlb)
     
 func update_display():
     get_node('EnemyShape').get_node('Name').text = character_name
@@ -303,13 +403,13 @@ func _ready():
     update_display()
     
 func update_health():
-    $EnemyShape/HP.text = "hp: " + str(stats.health)
-    $EnemyShape/HealthBar.value = stats.health
+  $EnemyShape/HP.text = "hp: " + str(stats.health)
+  $EnemyShape/HealthBar.value = stats.health
         
 func _mouse_over(over):
-    if over == true:
-        is_hovering = true
-        $CharacterInfo.visible = true
-    else:
-        is_hovering = false
-        $CharacterInfo.visible = false
+  if over == true:
+    is_hovering = true
+    $CharacterInfo.visible = true
+  else:
+    is_hovering = false
+    $CharacterInfo.visible = false

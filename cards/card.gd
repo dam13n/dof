@@ -67,7 +67,15 @@ func enough_energy():
   return reference.player.stats.energy >= cost
   
 func playable(target_object):
-  return active && enough_energy() && !grabbed && active && target == target_object.type
+  var playable_check
+  print('active is: ', active)
+  print('enough energy is: ', enough_energy())
+#  print('let go is: ', !grabbed)
+  print('target correct: ', (target == target_object.type))
+  
+  playable_check = active && enough_energy() && target == target_object.type # && !grabbed
+
+  return playable_check
   
 func get_playable_actions(target):
   var playable_actions = []

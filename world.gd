@@ -13,6 +13,7 @@ func timer_function(function, duration):
   timer.start()
 
 func _ready():
+  reference.initialize()
   enemy_banner_timer = Timer.new()
   enemy_banner_timer.set_one_shot(true)
   enemy_banner_timer.set_wait_time(1)

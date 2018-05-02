@@ -45,7 +45,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 custom_solver_bias = 0.0
 extents = Vector2( 10.42, 10.626 )
 
-[node name="Card2" type="Area2D"]
+[node name="Card2" type="Area2D" index="0"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -89,7 +89,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Grow Direction", "Mouse", "Rect", "Visibility" ]
+_sections_unfolded = [ "Mouse", "Visibility" ]
 
 [node name="Name" type="Label" parent="Display" index="1"]
 
