@@ -95,6 +95,7 @@ func _on_Enemy_input_event(viewport, event, shape_idx):
           print('do not remove')
       else:
         reference.hand.discard_card(ovlb)
+      ovlb.use_energy()
   
     
 func update_display():

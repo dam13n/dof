@@ -169,24 +169,18 @@ func _physics_process(delta):
     var direction = (destination-position)
     
     var motion = direction.normalized() * delta * speed*direction.length()
-#		print(direction)
-#		print(motion)
+
     position += motion
     if direction.length() < 0.1:
       move_to_destination = false
-      
-#func remove():
-#  if active == true:
-#    reference.player.stats.energy -= cost
-#    reference.player.update_energy()
-#
-#    active = false
-#    get_parent().remove_card(self)
-#    queue_free()
+    
 
-func discard():
+func use_energy():
   reference.player.stats.energy -= cost
   reference.player.update_energy()
+
+func discard():
+
   send_to_owner_discard_pile()
 
 func _move_by_mouse():
