@@ -7,7 +7,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10.0324, 10 )
 
-[node name="MobDetectionArea" type="Area2D"]
+[node name="MobDetectionArea" type="Area2D" index="0"]
 
 position = Vector2( 245.252, 46.3949 )
 scale = Vector2( 7.66414, 1.44984 )
@@ -27,5 +27,7 @@ _sections_unfolded = [ "Pickable", "Transform" ]
 position = Vector2( -0.0168591, -0.606813 )
 scale = Vector2( 3.20397, 3.19744 )
 shape = SubResource( 1 )
+
+[connection signal="input_event" from="." to="." method="_on_MobDetectionArea_input_event"]
 
 

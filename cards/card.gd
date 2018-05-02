@@ -41,11 +41,6 @@ var target = ''
 
 #############################################
 
-#onready var card_display = get_node('Display')
-#onready var card_title = $Display/Name
-#onready var card_cost = $Display/Cost
-#onready var card_description = $Display/Description
-
 var card_display
 var card_title
 var card_cost
@@ -68,10 +63,10 @@ func enough_energy():
   
 func playable(target_object):
   var playable_check
-  print('active is: ', active)
-  print('enough energy is: ', enough_energy())
-#  print('let go is: ', !grabbed)
-  print('target correct: ', (target == target_object.type))
+#  print('active is: ', active)
+#  print('enough energy is: ', enough_energy())
+##  print('let go is: ', !grabbed)
+#  print('target correct: ', (target == target_object.type))
   
   playable_check = active && enough_energy() && target == target_object.type # && !grabbed
 
@@ -81,12 +76,6 @@ func get_playable_actions(target):
   var playable_actions = []
   for action in actions:
     playable_actions.append(action)
-#		if target.type == 'enemy' && action.enemy_targeting != null:
-#			playable_actions.append(action)
-#		if target.type == 'friend' && action.friend_targeting != null:
-#			playable_actions.append(action)
-#		if target.type == 'main' && action.main_targeting != null:
-#			playable_actions.append(action)
 
   if not reference.player.stats.energy >= cost:
     playable_actions = []
@@ -155,12 +144,9 @@ func unscale_for_slow_card():
   input_pickable = true
 
 func _input(event):
-#	if Input.is_mouse_button_pressed(BUTTON_LEFT):
-  if event is InputEventMouseButton && event.pressed:
+  if event is InputEventMouseButton && Input.is_mouse_button_pressed(BUTTON_LEFT) && event.pressed:
 
     if is_hovering == true && grabbed == false:
-#			print("input_pickable is: ")
-#			print(input_pickable)
       grabbed = true
       local_mouse_pos = get_local_mouse_position()
     else:
@@ -208,24 +194,6 @@ func _move_by_mouse():
 #	var mouse_pos = get_parent().get_global_mouse_position()
 
   var this_pos = mouse_pos #-(local_mouse_pos)
-#	print('mouse pos')
-#	print(mouse_pos)
-#	print('local mouse pos')
-#	print(local_mouse_pos)
-#	print('dif: ')
-#	print(this_pos)
-
-#	var view_size = OS.get_screen_size()
-
-  # make sure object does not get dragged out of screen
-#	if this_pos.x < 0:
-#		this_pos.x = 0
-#	if this_pos.y < 0:
-#		this_pos.y = 0
-#	if this_pos.x > view_size.x:
-#		this_pos.x = view_size.x
-#	if this_pos.y > view_size.y:
-#		this_pos.y = view_size.y
 
   position = this_pos
   

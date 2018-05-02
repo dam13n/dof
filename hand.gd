@@ -2,7 +2,6 @@ extends HBoxContainer
 
 var current_character
 var width
-#var active_hand = []
 
 func _ready():
   width = get_size().x

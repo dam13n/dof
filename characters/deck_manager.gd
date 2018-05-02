@@ -34,21 +34,17 @@ func discard_to_draw_pile():
 
 func discard_hand():
   for card in hand_pile:
-    #if character.type == 'main':
-    #  print('char discard card')
     discard_pile.append(card)
   hand_pile.clear()
-  #print(character.type, ' discard pile size: ', discard_pile.size())
 
 func show_hand():
   reference.world.return_hand()
-  #hand.clear_cards()
+
   if !drawn_this_turn:
     draw_hand()
   for card in hand_pile:
     
     hand.move_card(card, character)
-    #hand.active_hand.append(card)
     hand.set_card_destinations()
     hand.organize()
   hand_pile.clear()
